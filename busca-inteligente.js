@@ -199,13 +199,21 @@
 
     campo.addEventListener("input", () => executarBusca(false));
 
-    campo.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") executarBusca(true);
-    });
+   
+   if (botao) {
+  botao.addEventListener("click", function () {
+    const itens = Array.from(
+      resultado.querySelectorAll(".busca-item")
+    );
 
-    if (botao) {
-      botao.addEventListener("click", () => executarBusca(true));
+    if (qaBuscaIndex >= 0 && itens[qaBuscaIndex]) {
+      itens[qaBuscaIndex].click();
+      return;
     }
+
+    executarBusca(true);
+  });
+}
 
     document.addEventListener("click", function (e) {
       if (!campo.contains(e.target) && !resultado.contains(e.target)) {
