@@ -59,7 +59,7 @@ function iniciarAreaCliente() {
     }
   }
 }
-function cadastrarCliente(event) {
+function cadastrarCliente(event) {async function cadastrarCliente(event) {
   event.preventDefault();
 
   const nome = document
@@ -67,16 +67,16 @@ function cadastrarCliente(event) {
     .value
     .trim();
 
-  const email = QAStorage.normalizarEmail(
-    document.getElementById("cadEmail").value
-  );
+  const email = document
+    .getElementById("cadEmail")
+    .value
+    .trim()
+    .toLowerCase();
 
-  const telefone = aplicarMascaraTelefone(
-    document
-      .getElementById("cadTelefone")
-      .value
-      .trim()
-  );
+  const telefone = document
+    .getElementById("cadTelefone")
+    .value
+    .trim();
 
   const senha =
     document.getElementById("cadSenha").value;
@@ -92,45 +92,91 @@ function cadastrarCliente(event) {
     return;
   }
 
+  if (senha.length < 6) {
+    alert("A senha deve ter pelo menos 6 caracteres.");
+    return;
+  }
+
   if (senha !== confirmar) {
     alert("As senhas não conferem.");
     return;
   }
 
-  const clienteExistente =
-    QAStorage.buscarClientePorEmail(email);
-
-  if (clienteExistente) {
-    alert(
-      "Já existe uma conta cadastrada com este e-mail."
-    );
+  if (!window.supabaseClient) {
+    alert("A conexão com o Supabase não foi carregada.");
     return;
   }
 
-  const cliente = QAStorage.salvarCliente({
-    nome,
-    email,
-    telefone,
-    senha,
-    newsletter,
-    criadoEm: new Date().toISOString()
-  });
+  try {
+    const { data, error } =
+      await window.supabaseClient.auth.signUp({
+        email,
+        password: senha,
+        options: {
+          data: {
+            nome: nome,
+            telefone: telefone,
+            newsletter: newsletter
+          }
+        }
+      });
 
-  QAStorage.definirClienteLogado(cliente);
+    if (error) {
+      console.error("Erro ao cadastrar:", error);
 
-  migrarDadosVisitanteParaCliente();
+      if (
+        error.message
+          .toLowerCase()
+          .includes("already registered")
+      ) {
+        alert("Este e-mail já possui cadastro.");
+        return;
+      }
 
-  alert("Conta criada com sucesso!");
+      alert(
+        "Erro ao criar a conta: " +
+        error.message
+      );
+      return;
+    }
 
-  window.location.href = "meus-pedidos.html";
+    console.log("Cadastro realizado:", data);
+
+    if (data.session) {
+      alert("Conta criada com sucesso!");
+
+      window.location.href =
+        "meus-pedidos.html";
+    } else {
+      alert(
+        "Conta criada. Verifique seu e-mail para confirmar o cadastro."
+      );
+
+      document
+        .getElementById("formCadastro")
+        .reset();
+    }
+  } catch (erro) {
+    console.error(
+      "Falha inesperada no cadastro:",
+      erro
+    );
+
+    alert(
+      "Não foi possível conectar ao cadastro."
+    );
+  }
+}dow.location.href = "meus-pedidos.html";
 }
 
-function entrarCliente(event) {
+async function entrarCliente(event) {
   event.preventDefault();
 
-  const email = QAStorage.normalizarEmail(
-    document.getElementById("loginEmail").value
-  );
+  const email = document
+    .getElementById("loginEmail")
+    .value
+    .trim()
+    .toLowerCase();
 
   const senha =
     document.getElementById("loginSenha").value;
@@ -140,19 +186,67 @@ function entrarCliente(event) {
     return;
   }
 
-  const cliente =
-    QAStorage.buscarClientePorEmail(email);
-
-  if (!cliente || cliente.senha !== senha) {
-    alert("E-mail ou senha incorretos.");
+  if (!window.supabaseClient) {
+    alert("A conexão com o Supabase não foi carregada.");
     return;
   }
 
-  QAStorage.definirClienteLogado(cliente);
+  try {
+    const { data, error } =
+      await window.supabaseClient.auth
+        .signInWithPassword({
+          email,
+          password: senha
+        });
 
-  migrarDadosVisitanteParaCliente();
+    if (error) {
+      console.error("Erro ao entrar:", error);
 
-  window.location.href = "meus-pedidos.html";
+      const mensagem =
+        error.message.toLowerCase();
+
+      if (
+        mensagem.includes(
+          "invalid login credentials"
+        )
+      ) {
+        alert("E-mail ou senha incorretos.");
+        return;
+      }
+
+      if (
+        mensagem.includes(
+          "email not confirmed"
+        )
+      ) {
+        alert(
+          "Confirme seu e-mail antes de entrar."
+        );
+        return;
+      }
+
+      alert(
+        "Erro ao entrar: " +
+        error.message
+      );
+      return;
+    }
+
+    console.log("Usuário conectado:", data.user);
+
+    window.location.href =
+      "meus-pedidos.html";
+
+  } catch (erro) {
+    console.error(
+      "Falha inesperada no login:",
+      erro
+    );
+
+    alert(
+      "Não foi possível conectar ao login."
+    );
+  }
 }
 function migrarDadosVisitanteParaCliente() {
   const cliente = QAStorage.obterClienteLogado();
