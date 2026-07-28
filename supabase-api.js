@@ -1,5 +1,4 @@
 // CONEXÃO COM O SUPABASE
-
 const SUPABASE_URL =
   "https://elcqvwnsoucbhuqhwify.supabase.co";
 
