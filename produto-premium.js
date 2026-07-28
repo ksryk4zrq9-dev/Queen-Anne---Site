@@ -555,17 +555,14 @@ async function loadProduct() {
       .slice(0, 8);
 
   if (relacionados.length === 0) {
-    relacionados =
-      listaProdutos
-        .filter(item => {
-          return (
-            item &&
-            String(item.id) !==
-              String(produtoAtual.id)
-          );
-        })
-        .slice(0, 8);
-  }
+  relacionadosBox.innerHTML = `
+    <p class="sem-relacionados">
+      Nenhum produto relacionado encontrado.
+    </p>
+  `;
+
+  return;
+}
 
   relacionadosBox.innerHTML =
     relacionados
