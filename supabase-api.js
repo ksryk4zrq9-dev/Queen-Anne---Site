@@ -56,7 +56,7 @@ async function getProdutos() {
     `${data.length} produtos recebidos do Supabase.`
   );
 
-  return data;
+  return data || [];
 }
 
 window.getProdutos = getProdutos;
