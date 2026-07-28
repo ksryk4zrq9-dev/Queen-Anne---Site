@@ -77,9 +77,7 @@ function obterChaveProdutosVistos() {
   // ===== PRODUTOS =====
 
 // Usa temporariamente os produtos locais do produto.js
-let produtos = Array.isArray(window.produtos)
-  ? window.produtos
-  : [];
+let produtos = [];
 
 async function carregarProdutosDoSite() {
   try {
@@ -126,22 +124,19 @@ async function carregarProdutosDoSite() {
       `${produtos.length} produtos carregados do Supabase.`
     );
 
-  } catch (erro) {
+   } catch (erro) {
     console.error(
-      "Não foi possível carregar o Supabase. Usando produtos locais:",
+      "Não foi possível carregar os produtos do Supabase:",
       erro
     );
 
-    produtos = Array.isArray(window.produtos)
-      ? window.produtos
-      : [];
-
-    console.log(
-      `${produtos.length} produtos locais utilizados.`
-    );
+    produtos = [];
+    window.produtos = [];
   }
 
   renderProdutos();
+  montarSlider();
+  carregarProdutosParaVoce();
 }
 
 carregarProdutosDoSite();
@@ -231,7 +226,7 @@ atualizarContadorCarrinho();
 
 
   // ===== INICIAL =====
-  renderProdutos();
+  
 
 // ===== BANNER HOME =====
 const banners = [
@@ -361,6 +356,9 @@ setInterval(proximoBanner, 5000);
   `;
 }
 
+const linha1 = document.getElementById("linha1");
+const linha2 = document.getElementById("linha2");
+
   function montarSlider() {
   if (!linha1 || !linha2) return;
 
@@ -396,7 +394,29 @@ function carregarProdutosParaVoce() {
 
   if (vistos.length > 0) {
   listaParaMostrar = vistos
-    .filter(p => !String(p.nome || "").toLowerCase().includes("triciclo"));
+    .map(visto => {
+      return produtos.find(
+        produto =>
+          String(produto.id) ===
+          String(visto.id)
+      );
+    })
+    .filter(Boolean)
+    .filter(p =>
+      !String(p.nome || "")
+        .toLowerCase()
+        .includes("triciclo")
+    )
+    .map(p => ({
+      id: p.id,
+      nome: p.nome,
+      preco: p.preco,
+      imagem:
+        p.images?.[0] ||
+        p.imagem ||
+        "img/placeholder.jpg",
+      url: `produto.html?id=${p.id}`
+    }));
 } else {
   listaParaMostrar = produtos
     .filter(p => !String(p.nome || "").toLowerCase().includes("triciclo"))
@@ -479,9 +499,7 @@ function carregarProdutosParaVoce() {
   setTimeout(atualizarSetas, 700);
 }
 
-carregarProdutosParaVoce();
 
-montarSlider();
 });
 window.addEventListener("load", () => {
   document.querySelectorAll(".linha").forEach(linha => {
