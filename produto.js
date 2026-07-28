@@ -1449,12 +1449,41 @@ window.produtos = produtos;
 // Atualiza lista de produtos a partir do Supabase (se estiver configurado)
 (async () => {
   try {
-    if (typeof window.getProdutos === 'function') {
-      produtos = await window.getProdutos();
-      window.produtos = produtos;
+    if (typeof window.getProdutos !== "function") {
+      throw new Error(
+        "A função getProdutos não foi carregada."
+      );
     }
+
+    const dados =
+      await window.getProdutos();
+
+    produtos = dados.map(produto => ({
+      ...produto,
+
+      id: Number(produto.id),
+
+      preco: Number(produto.preco) || 0,
+
+      images: [
+        produto.imagem ||
+        produto.images?.[0] ||
+        "img/placeholder.jpg"
+      ],
+
+      desc:
+        produto.descricao ||
+        produto.desc ||
+        ""
+    }));
+
+    window.produtos = produtos;
+
   } catch (e) {
-    console.warn('Falha ao buscar produtos no Supabase, usando fallback local.', e);
+    console.error(
+      "Erro ao carregar produtos do Supabase:",
+      e
+    );
   }
 })();
 
