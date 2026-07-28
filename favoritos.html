@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Favoritos | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <main class="cliente-dashboard-page">
+
+    <aside class="cliente-sidebar">
+
+      <div class="cliente-sidebar-title">
+        <i class="fa-regular fa-user"></i>
+        <strong>Minha Conta</strong>
+      </div>
+
+      <nav class="cliente-menu">
+
+        <a href="meus-pedidos.html">
+          <i class="fa-solid fa-box"></i>
+          Meus pedidos
+        </a>
+
+        <a href="meus-dados.html">
+          <i class="fa-regular fa-user"></i>
+          Meus dados
+        </a>
+
+        <a href="favoritos.html" class="ativo">
+          <i class="fa-regular fa-heart"></i>
+          Favoritos
+        </a>
+
+        <button type="button" onclick="sairCliente()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          Sair
+        </button>
+
+      </nav>
+
+      <div class="cliente-sidebar-security">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div>
+          <strong>Sua segurança é nossa prioridade</strong>
+          <span>Seus dados estão protegidos e não serão compartilhados.</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <section class="cliente-dashboard-content">
+
+      <section class="cliente-page-card">
+
+        <div class="cliente-page-head">
+          <div>
+            <h1>Favoritos</h1>
+            <p>Produtos salvos por você para consultar depois.</p>
+          </div>
+
+          <a href="index.html" class="cliente-voltar-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Continuar comprando
+          </a>
+        </div>
+
+        <div id="listaFavoritosCliente" class="cliente-favoritos-grid"></div>
+
+<div
+  id="favoritosVazio"
+  class="cliente-empty-state"
+  style="display:none;"
+>
+  <i class="fa-regular fa-heart"></i>
+
+  <h2>Nenhum produto visto ainda</h2>
+
+  <p>
+    Os produtos que você visualizar
+    aparecerão aqui.
+  </p>
+
+  <a href="index.html">
+    Ver produtos
+  </a>
+</div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <div id="footer"></div>
+
+</div>
+
+<script src="cliente-storage.js"></script>
+<script src="script.js"></script>
+<script src="cliente-area.js"></script>
+
+</body>
+</html>

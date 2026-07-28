@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Entrar | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <main class="cliente-auth-page">
+
+    <section class="cliente-auth-box">
+
+      <div class="cliente-auth-benefits">
+
+        <div>
+          <i class="fa-solid fa-box-open"></i>
+          <strong>Acompanhe seus pedidos</strong>
+          <span>Veja o status e o histórico das suas compras.</span>
+        </div>
+
+        <div>
+          <i class="fa-regular fa-user"></i>
+          <strong>Salve seus dados</strong>
+          <span>Mais praticidade nas próximas compras.</span>
+        </div>
+
+        <div>
+          <i class="fa-solid fa-tag"></i>
+          <strong>Receba ofertas exclusivas</strong>
+          <span>Promoções e novidades para você.</span>
+        </div>
+
+      </div>
+
+      <div class="cliente-auth-content">
+
+        <section class="cliente-login-card">
+
+          <h1>Área do Cliente</h1>
+          <p>Acesse sua conta ou crie uma nova para continuar.</p>
+
+          <div class="cliente-auth-tabs cliente-auth-tabs-unica">
+          <button type="button" class="ativo" id="tabEntrar">Entrar</button>
+          </div>
+          <form id="formLogin" class="cliente-form">
+
+            <label for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" placeholder="Digite seu e-mail" required>
+
+            <label for="loginSenha">Senha</label>
+            <div class="cliente-password">
+              <input type="password" id="loginSenha" placeholder="Digite sua senha" required>
+              <button type="button" onclick="toggleSenha('loginSenha')">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <div class="cliente-login-options">
+              <label>
+                <input type="checkbox" id="lembrarCliente">
+                Lembrar meus dados
+              </label>
+
+              <a href="#">Esqueci minha senha</a>
+            </div>
+
+            <button type="submit" class="cliente-btn-black">Entrar</button>
+
+          </form>
+
+        </section>
+
+        <section class="cliente-cadastro-card" id="cadastroArea">
+
+          <h2>Criar conta</h2>
+          <p>Preencha seus dados para criar sua conta.</p>
+
+          <form id="formCadastro" class="cliente-form">
+
+            <label for="cadNome">Nome completo</label>
+            <input type="text" id="cadNome" placeholder="Digite seu nome completo" required>
+
+            <label for="cadEmail">E-mail</label>
+            <input type="email" id="cadEmail" placeholder="Digite seu e-mail" required>
+
+            <label for="cadTelefone">Telefone</label>
+            <input type="text" id="cadTelefone" placeholder="(00) 00000-0000">
+
+            <label for="cadSenha">Senha</label>
+            <div class="cliente-password">
+              <input type="password" id="cadSenha" placeholder="Crie uma senha" required>
+              <button type="button" onclick="toggleSenha('cadSenha')">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <label for="cadConfirmar">Confirmar senha</label>
+            <div class="cliente-password">
+              <input type="password" id="cadConfirmar" placeholder="Confirme sua senha" required>
+              <button type="button" onclick="toggleSenha('cadConfirmar')">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <label class="cliente-checkbox-news">
+              <input type="checkbox" id="cadNewsletter">
+              Quero receber ofertas e novidades por e-mail e WhatsApp.
+            </label>
+
+            <button type="submit" class="cliente-btn-red">Criar conta</button>
+
+          </form>
+
+        </section>
+
+      </div>
+
+    </section>
+
+    <section class="cliente-security-row">
+      <i class="fa-solid fa-shield-halved"></i>
+      <div>
+        <strong>Sua segurança é nossa prioridade</strong>
+        <span>Seus dados estão protegidos e não serão compartilhados.</span>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer"></div>
+
+</div>
+
+<script src="cliente-storage.js"></script>
+<script src="script.js"></script>
+<script src="cliente-area.js"></script>
+
+</body>
+</html> 

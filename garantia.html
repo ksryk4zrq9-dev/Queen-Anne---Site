@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Garantia | Queen Anne Importados</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome, caso já use no projeto -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body class="cliente-sem-bg cliente-modelo-02">
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <main class="qa-garantia-page">
+
+    <div class="qa-garantia-breadcrumb">
+      <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        Home
+      </a>
+      <span>›</span>
+      <a href="#">Institucional</a>
+      <span>›</span>
+      <strong>Garantia</strong>
+    </div>
+
+    <section class="qa-garantia-hero">
+      <div class="qa-garantia-hero-text">
+        <h1>Garantia</h1>
+        <div class="qa-garantia-line"></div>
+
+        <p>
+          Informações sobre garantia, análise e suporte após a compra.
+        </p>
+
+        <p>
+          A Queen Anne trabalha para oferecer produtos com qualidade e segurança.
+          Caso o cliente identifique algum problema no produto recebido, nossa equipe
+          estará disponível para orientar sobre os próximos passos.
+        </p>
+      </div>
+
+      <div class="qa-garantia-hero-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>
+          <i class="fa-solid fa-check"></i>
+        </span>
+      </div>
+    </section>
+
+    <section class="qa-garantia-grid">
+
+      <article class="qa-garantia-card">
+        <div class="qa-garantia-card-icon">
+          <i class="fa-solid fa-clipboard-list"></i>
+        </div>
+
+        <div class="qa-garantia-card-number">1</div>
+
+        <h2>Como solicitar atendimento</h2>
+        <div class="qa-garantia-small-line"></div>
+
+        <p>
+          Para iniciar a análise de garantia, entre em contato com nossa equipe
+          de suporte e informe os dados principais da compra e do produto.
+        </p>
+      </article>
+
+      <article class="qa-garantia-card">
+        <div class="qa-garantia-card-icon">
+          <i class="fa-solid fa-camera"></i>
+        </div>
+
+        <div class="qa-garantia-card-number">2</div>
+
+        <h2>O que enviar</h2>
+        <div class="qa-garantia-small-line"></div>
+
+        <ul>
+          <li>Nome completo do comprador;</li>
+          <li>Número do pedido, se disponível;</li>
+          <li>Produto adquirido;</li>
+          <li>Descrição detalhada do problema;</li>
+          <li>Fotos ou vídeos que ajudem na análise.</li>
+        </ul>
+      </article>
+
+      <article class="qa-garantia-card">
+        <div class="qa-garantia-card-icon">
+          <i class="fa-solid fa-shield-heart"></i>
+        </div>
+
+        <div class="qa-garantia-card-number">3</div>
+
+        <h2>Condições gerais</h2>
+        <div class="qa-garantia-small-line"></div>
+
+        <p>
+          A garantia pode variar conforme o tipo de produto, fabricante e fornecedor.
+          O atendimento será realizado conforme as condições aplicáveis a cada item.
+        </p>
+      </article>
+
+      <article class="qa-garantia-card">
+        <div class="qa-garantia-card-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <div class="qa-garantia-card-number">4</div>
+
+        <h2>O que não é coberto</h2>
+        <div class="qa-garantia-small-line"></div>
+
+        <p>
+          Produtos com sinais de mau uso, danos físicos, queda, contato com líquidos,
+          violação, alterações indevidas ou uso inadequado podem não ser cobertos
+          pela garantia.
+        </p>
+      </article>
+
+      <article class="qa-garantia-card">
+        <div class="qa-garantia-card-icon">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+
+        <div class="qa-garantia-card-number">5</div>
+
+        <h2>Prazo de análise</h2>
+        <div class="qa-garantia-small-line"></div>
+
+        <p>
+          Após o recebimento das informações e evidências, nossa equipe fará a análise
+          e retornará com a orientação adequada sobre os próximos passos.
+        </p>
+      </article>
+
+      <article class="qa-garantia-card qa-garantia-card-cta">
+        <div class="qa-garantia-card-icon">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+
+        <div class="qa-garantia-card-number">6</div>
+
+        <h2>Fale com o suporte</h2>
+        <div class="qa-garantia-small-line"></div>
+
+        <p>
+          Se precisar iniciar sua solicitação de garantia, nossa equipe está pronta
+          para orientar você.
+        </p>
+
+        <a href="atendimento.html" class="qa-garantia-btn">
+          Falar com o suporte
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+
+    </section>
+
+    
+
+  </main>
+
+  <div id="footer"></div>
+
+</div>
+
+<script>
+  fetch("header.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("header").innerHTML = data;
+    });
+
+  fetch("footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("footer").innerHTML = data;
+    });
+</script>
+
+<script src="script.js"></script>
+<script src="busca-inteligente.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Queen Anne | Produto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Ajustes LOCAIS (somente nesta página) -->
+  <style>
+    body.pagina-produto { background: #070707; color: #fff; }
+
+    .pdp-meta {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: rgba(255,255,255,.78);
+      font-size: 14px;
+    }
+    .pdp-meta strong { color: rgba(255,255,255,.92); }
+
+    .pdp-longdesc { padding: 18px 0 0; }
+    .pdp-longdesc h3 { margin: 0 0 10px; font-size: 18px; }
+    .pdp-longdesc p { margin: 0; line-height: 1.75; color: rgba(255,255,255,.78); }
+
+    .pdp-video { padding: 18px 0 0; }
+    .pdp-video h3 { margin: 0 0 12px; font-size: 18px; }
+    .pdp-video-box {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .pdp-video-box iframe {
+      width: 100%;
+      height: min(520px, 55vw);
+      display: block;
+    }
+
+    /* relacionados (cartão simples) */
+    .pdp-rel-inner{
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .pdp-rel-inner img{
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+    }
+    .pdp-rel-inner h4{ color:#fff; margin:10px 0 6px; font-size:14px; }
+    .pdp-rel-inner p{ color:#ff2a2a; margin:0; font-weight:800; }
+  </style>
+</head>
+
+<body class="pagina-produto">
+  <div id="header"></div>
+
+  <div id="toastCarrinho" class="toast-carrinho">
+  <div class="toast-carrinho-icon">
+    <i class="fa-solid fa-check"></i>
+  </div>
+
+  <div class="toast-carrinho-texto">
+    <strong>Produto adicionado!</strong>
+    <span>O item foi colocado no seu carrinho.</span>
+  </div>
+
+  <a href="carrinho.html">Ver carrinho</a>
+</div>
+
+  <main class="pdp">
+ <section class="pdp-hero pdp-clean-hero">
+  <div class="pdp-clean-shell">
+
+    <div class="pdp-clean-gallery">
+      <div class="pdp-thumbs-col" id="pdpThumbs"></div>
+
+      <div class="pdp-image-card">
+        <img id="pdpHeroImg" class="pdp-hero-img" src="" alt="">
+      </div>
+    </div>
+
+    <div class="pdp-clean-info">
+      
+
+      <h1 id="pdpTitle" class="pdp-title">Carregando...</h1>
+
+<div id="pdpSpecsResumo" class="pdp-specs-resumo"></div>
+
+      <div class="pdp-price-row">
+        <div id="pdpPrice" class="pdp-price">U$ 0.00</div>
+        <div class="pdp-price-sub">Consulte disponibilidade e condições pelo WhatsApp</div>
+      </div>
+
+      <div class="pdp-benefits-row">
+        <div>🚚 <strong>Retirada rápida</strong><span>Produtos previamente separados</span></div>
+        <div>💬 <strong>Suporte dedicado</strong><span>Atendimento via WhatsApp</span></div>
+        <div>🔒 <strong>Compra segura</strong><span>Pedido conferido manualmente</span></div>
+      </div>
+
+      <div class="pdp-cta-row">
+        <button class="pdp-btn primary" id="btnAddCart">Adicionar ao carrinho</button>
+        <a class="pdp-btn ghost" id="btnWhats" href="#" target="_blank" rel="noopener">Comprar pelo WhatsApp</a>
+      </div>
+
+  </div>
+</section>
+    <!-- SECTION 1 -->
+    <section class="pdp-section">
+      <div class="pdp-section-inner reveal">
+        <h2 class="pdp-h2" id="pdpH2_1">Sobre este produto</h2>
+        
+
+<div class="pdp-longdesc reveal">
+  <p id="pdpDescFull"></p>
+</div>
+
+        <div class="pdp-video reveal" id="pdpVideoWrap" style="display:none;">
+          <h3>Vídeo</h3>
+          <div class="pdp-video-box">
+            <iframe id="pdpVideo" src="" title="Vídeo do produto" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- RELATED -->
+  <section class="pdp-related">
+  <div class="pdp-related-inner">
+
+    <div class="pdp-related-head">
+      <div>
+        <span class="pdp-related-kicker">TALVEZ VOCÊ TAMBÉM GOSTE</span>
+        <h3 class="pdp-h3">Produtos relacionados</h3>
+      </div>
+    </div>
+
+    <div class="pdp-carousel-wrap">
+
+      <div class="pdp-hover-zone pdp-hover-left">
+        <button class="pdp-car-btn pdp-car-left" type="button">‹</button>
+      </div>
+
+      <div id="relacionados" class="pdp-related-grid"></div>
+
+      <div class="pdp-hover-zone pdp-hover-right">
+        <button class="pdp-car-btn pdp-car-right" type="button">›</button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+  </main>
+
+ 
+<footer class="footer-qa">
+  
+
+  <div class="footer-container-qa">
+
+    <div class="footer-brand">
+      <img src="img/logo-queen-anne.png" alt="Queen Anne">
+      <div class="footer-social">
+  <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+
+  <a href="https://wa.me/595987374159" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+    <i class="fa-brands fa-facebook-f"></i>
+  </a>
+</div>
+    </div>
+
+    <div class="footer-col">
+  <h4>Atendimento</h4>
+
+  <p>
+    <a href="mailto:atendimento@queenanne.com">
+      ✉ atendimento@queenanne.com
+    </a>
+  </p>
+
+  <p>
+    <a href="tel:+595987374159">
+      ☎ +595 987374159
+    </a>
+  </p>
+
+  <p>
+    <a href="https://wa.me/595987374159" target="_blank" rel="noopener">
+      💬 Fale conosco no WhatsApp
+    </a>
+  </p>
+
+  <p>
+    🕘 Seg a Sex: 08h às 18h<br>
+    Sáb: 08h às 12h
+  </p>
+</div>
+
+   <div class="footer-col">
+  <h4>Institucional</h4>
+
+  <a href="quem-somos.html">Quem Somos</a>
+  <a href="garantia.html">Garantia</a>
+  <a href="politica-privacidade.html">Política de Privacidade</a>
+  <a href="termos-de-uso.html">Termos de Uso</a>
+</div>
+
+    <div class="footer-col">
+  <h4>Minha Conta</h4>
+
+  <a href="entrar.html">Entrar</a>
+  <a href="meus-pedidos.html">Meus Pedidos</a>
+  <a href="meus-dados.html">Meus Dados</a>
+  <a href="favoritos.html">Favoritos</a>
+</div>
+
+    <div class="footer-col footer-security">
+      <h4>Confiança & Segurança</h4>
+      <p>🛡 <strong>Pagamento Seguro</strong><br>Ambiente 100% protegido</p>
+      <p>🏅 <strong>Empresa Certificada</strong><br>Compromisso com você</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Nossas Lojas</h4>
+      <p>📍 Visite nossas lojas e conheça de perto a experiência Queen Anne.</p>
+    </div>
+
+    <div class="footer-col footer-payments">
+      <h4>Formas de Pagamento</h4>
+      <span>VISA</span>
+      <span>MASTER</span>
+      <span>AMEX</span>
+      <span>PIX</span>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom-qa">
+    🔒 © 2026 Queen Anne — Todos os direitos reservados.<br>
+    <span>Ambiente seguro e protegido.</span>
+  </div>
+</footer>
+  <!-- SCRIPTS -->
+
+
+<script src="cliente-storage.js"></script>
+<script src="supabase-api.js"></script>
+<script src="produto.js"></script>
+<script src="produto-premium.js"></script>
+<script src="script.js"></script>
+
+
+</body>
+</html>

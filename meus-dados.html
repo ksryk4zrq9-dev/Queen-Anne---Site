@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Meus Dados | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <main class="cliente-dashboard-page">
+
+    <aside class="cliente-sidebar">
+
+      <div class="cliente-sidebar-title">
+        <i class="fa-regular fa-user"></i>
+        <strong>Minha Conta</strong>
+      </div>
+
+      <nav class="cliente-menu">
+
+        <a href="meus-pedidos.html">
+          <i class="fa-solid fa-box"></i>
+          Meus pedidos
+        </a>
+
+        <a href="meus-dados.html" class="ativo">
+          <i class="fa-regular fa-user"></i>
+          Meus dados
+        </a>
+
+        <a href="favoritos.html">
+          <i class="fa-regular fa-heart"></i>
+          Favoritos
+        </a>
+
+        <button type="button" onclick="sairCliente()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          Sair
+        </button>
+
+      </nav>
+
+      <div class="cliente-sidebar-security">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div>
+          <strong>Sua segurança é nossa prioridade</strong>
+          <span>Seus dados estão protegidos e não serão compartilhados.</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <section class="cliente-dashboard-content">
+
+      <section class="cliente-page-card">
+
+        <div class="cliente-page-head">
+          <div>
+            <h1>Meus dados</h1>
+            <p>Confira e atualize suas informações de cadastro.</p>
+          </div>
+
+          <a href="meus-pedidos.html" class="cliente-voltar-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Voltar aos pedidos
+          </a>
+        </div>
+
+        <form id="formMeusDados" class="cliente-dados-form">
+
+          <div class="cliente-form-grid">
+
+            <div>
+              <label for="dadosNome">Nome completo</label>
+              <input type="text" id="dadosNome" placeholder="Digite seu nome completo">
+            </div>
+
+            <div>
+              <label for="dadosEmail">E-mail</label>
+              <input type="email" id="dadosEmail" placeholder="Digite seu e-mail">
+            </div>
+
+            <div>
+              <label for="dadosTelefone">Telefone</label>
+              <input type="text" id="dadosTelefone" placeholder="(00) 00000-0000">
+            </div>
+
+            <div>
+              <label for="dadosCpf">CPF</label>
+              <input type="text" id="dadosCpf" placeholder="000.000.000-00">
+            </div>
+
+            <div>
+              <label for="dadosNascimento">Data de nascimento</label>
+              <input type="date" id="dadosNascimento">
+            </div>
+
+            <div>
+              <label for="dadosSenha">Nova senha</label>
+              <input type="password" id="dadosSenha" placeholder="Deixe em branco para manter a atual">
+            </div>
+
+          </div>
+
+          <label class="cliente-checkbox-news dados-news">
+            <input type="checkbox" id="dadosNewsletter">
+            Quero receber novidades, ofertas e promoções por e-mail e WhatsApp.
+          </label>
+
+          <div class="cliente-dados-actions">
+            <button type="submit" class="cliente-btn-red">Salvar alterações</button>
+            <a href="meus-pedidos.html" class="cliente-btn-outline">Cancelar</a>
+          </div>
+
+        </form>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <div id="footer"></div>
+
+</div>
+
+<script src="cliente-storage.js"></script>
+<script src="script.js"></script>
+<script src="cliente-area.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Produto | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .premium {
+      max-width: 1200px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.92);
+    }
+    .premium-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .galeria img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      background: #fafafa;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    .info h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .info p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .preco {
+      font-size: 26px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .acoes-premium button,
+    .acoes-premium a {
+      margin-top: 15px;
+      margin-right: 10px;
+    }
+
+    .descricao {
+      margin-top: 40px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .video {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .video iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      border-radius: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .premium-top {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header"></div>
+
+
+<a href="index.html" class="voltar">← Voltar</a>
+
+<div id="produtoPremium" class="premium"></div>
+
+<script src="cliente-storage.js"></script>
+<script src="supabase-api.js"></script>
+<script src="produto.js"></script>
+<script src="produto-premium.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = Number(params.get("id"));
+  const produto = produtos.find(p => p.id === id);
+
+  if (!produto) {
+    document.getElementById("produtoPremium").innerHTML = "<p>Produto não encontrado.</p>";
+  } else {
+    document.getElementById("produtoPremium").innerHTML = `
+      <div class="premium-top">
+        <div class="galeria">
+          <img src="${produto.images[0]}" alt="${produto.nome}">
+        </div>
+
+        <div class="info">
+          <h1>${produto.nome}</h1>
+          <p>${produto.desc}</p>
+          <p class="preco">U$ ${produto.preco.toFixed(2)}</p>
+
+          <div class="acoes-premium">
+            <button onclick="adicionarCarrinho()">Adicionar ao carrinho</button>
+            <a href="#" class="whatsapp" onclick="finalizarWhatsApp()">Finalizar pelo WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="descricao">
+        <h2>Descrição completa</h2>
+        <p>${produto.desc}</p>
+      </div>
+
+      ${produto.video ? `
+        <div class="video">
+          <h2>Vídeo do produto</h2>
+          <iframe src="${produto.video}" frameborder="0" allowfullscreen></iframe>
+        </div>
+      ` : ""}
+    `;
+  }
+
+  function adicionarCarrinho() {
+  if (!produto) {
+    alert("Produto não encontrado.");
+    return;
+  }
+
+  const carrinho =
+    QAStorage.obterCarrinho();
+
+  carrinho.push({
+    id: produto.id,
+    nome: produto.nome,
+    preco: Number(produto.preco || 0),
+
+    imagem:
+      produto.imagem ||
+      produto.image ||
+      produto.images?.[0] ||
+      "img/placeholder.jpg",
+
+    desc:
+      produto.desc ||
+      produto.descricao ||
+      ""
+  });
+
+  QAStorage.salvarCarrinho(carrinho);
+
+  alert("Produto adicionado ao carrinho!");
+}
+
+  function finalizarWhatsApp() {
+    let mensagem =
+      `Olá, gostaria de finalizar a compra:%0A%0A` +
+      `• ${produto.nome} - U$ ${produto.preco.toFixed(2)}`;
+    window.open(`https://wa.me/595987374159?text=${mensagem}`, "_blank");
+  }
+</script>
+<script src="busca-inteligente.js"></script>
+
+</body>
+</html>

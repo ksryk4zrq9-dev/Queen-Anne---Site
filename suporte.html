@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Suporte | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <main class="pagina-institucional">
+    <section class="pagina-card">
+      <h1>Suporte</h1>
+      <p class="pagina-subtitulo">Precisa de ajuda? Fale com a Queen Anne.</p>
+
+      <p>
+        Nossa equipe está disponível para ajudar com dúvidas sobre produtos, pedidos,
+        garantia, rastreamento e atendimento após a compra.
+      </p>
+
+      <h2>Antes de entrar em contato</h2>
+      <p>
+        Para agilizar o atendimento, tenha em mãos o número do pedido, nome do comprador
+        e uma breve descrição da solicitação.
+      </p>
+
+      <form class="form-institucional" onsubmit="event.preventDefault(); enviarSuporteQueenAnne();">
+        <div>
+          <label for="nomeSuporte">Nome</label>
+          <input type="text" id="nomeSuporte" placeholder="Digite seu nome">
+        </div>
+
+        <div>
+          <label for="emailSuporte">E-mail</label>
+          <input type="email" id="emailSuporte" placeholder="Digite seu e-mail">
+        </div>
+
+        <div>
+          <label for="assuntoSuporte">Assunto</label>
+          <input type="text" id="assuntoSuporte" placeholder="Ex: Pedido, garantia, rastreamento">
+        </div>
+
+        <div>
+          <label for="mensagemSuporte">Mensagem</label>
+          <textarea id="mensagemSuporte" rows="6" placeholder="Descreva sua solicitação"></textarea>
+        </div>
+
+        <button type="submit">Enviar Solicitação</button>
+      </form>
+
+      <div class="pagina-box-destaque">
+        <p>
+          Também é possível falar conosco pelos canais oficiais de atendimento da Queen Anne.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+</div>
+
+<script src="script.js"></script>
+<script src="busca-inteligente.js"></script>
+
+<script>
+function enviarSuporteQueenAnne() {
+  const nome = document.getElementById("nomeSuporte").value.trim();
+  const email = document.getElementById("emailSuporte").value.trim();
+  const assunto = document.getElementById("assuntoSuporte").value.trim();
+  const mensagem = document.getElementById("mensagemSuporte").value.trim();
+
+  if (!nome || !email || !assunto || !mensagem) {
+    alert("Por favor, preencha todos os campos.");
+    return;
+  }
+
+  const texto = `Olá, preciso de suporte.%0A%0ANome: ${nome}%0AE-mail: ${email}%0AAssunto: ${assunto}%0AMensagem: ${mensagem}`;
+
+  const numeroWhatsApp = "5541999999999";
+
+  window.open(`https://wa.me/${numeroWhatsApp}?text=${texto}`, "_blank");
+}
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Categoria | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* Mantém a página de categoria organizada antes do rodapé */
+    .categoria-page {
+      min-height: 60vh;
+    }
+
+    /* Rodapé igual ao padrão da home */
+    .footer-qa {
+      margin-top: 70px;
+    }
+
+    .footer-container-qa {
+      grid-template-columns: 1.25fr 1.4fr 1.15fr .95fr 1.15fr .95fr .95fr !important;
+      align-items: stretch !important;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .footer-brand img {
+      width: 210px;
+      max-width: 100%;
+      margin: 30px auto 40px;
+      display: block;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: auto;
+    }
+
+    .footer-social a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #d4af37;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-size: 19px;
+      text-decoration: none;
+    }
+
+    .footer-social a:hover {
+      background: #d4af37;
+      color: #111;
+    }
+
+    .footer-payments span {
+      display: block;
+      width: max-content;
+      margin-bottom: 14px;
+      padding: 6px 16px;
+      background: rgba(255,255,255,.95);
+      color: #111;
+      border-radius: 6px;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .footer-bottom-qa {
+      margin-top: 58px;
+    }
+
+    @media (max-width: 1200px) {
+      .footer-container-qa {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .footer-container-qa {
+        grid-template-columns: 1fr !important;
+      }
+
+      .footer-brand,
+      .footer-col {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255,255,255,.22);
+        padding-bottom: 28px;
+      }
+
+      .footer-col:last-child {
+        border-bottom: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <div id="categoriasLateral" class="categorias-lateral">
+    <button onclick="location.href='categoria.html?cat=Todos'">Todos</button>
+    <button onclick="location.href='categoria.html?cat=Consoles'">Consoles</button>
+    <button onclick="location.href='categoria.html?cat=TVs'">TVs</button>
+    <button onclick="location.href='categoria.html?cat=Áudio'">Áudio</button>
+    <button onclick="location.href='categoria.html?cat=Eletrodomésticos'">Eletrodomésticos</button>
+    <button onclick="location.href='categoria.html?cat=Perfumes'">Perfumes</button>
+    <button onclick="location.href='categoria.html?cat=Ferramentas'">Ferramentas</button>
+    <button onclick="location.href='categoria.html?cat=Eletrônicos'">Eletrônicos</button>
+    <button onclick="location.href='categoria.html?cat=Celulares'">Celulares</button>
+    <button onclick="location.href='categoria.html?cat=Beleza'">Beleza</button>
+    <button onclick="location.href='categoria.html?cat=Esportes'">Esportes</button>
+    <button onclick="location.href='categoria.html?cat=Brinquedos'">Brinquedos</button>
+    <button onclick="location.href='categoria.html?cat=Informática'">Informática</button>
+    <button onclick="location.href='categoria.html?cat=Automotivo'">Automotivo</button>
+  </div>
+
+  <section class="categoria-page qa-categoria-page">
+
+    <div class="categoria-breadcrumb">
+      <a href="index.html">Início</a>
+      <span>/</span>
+      <span id="breadcrumbCategoria">Categoria</span>
+    </div>
+
+    <h1 id="tituloCategoria" class="categoria-titulo">Categoria</h1>
+
+    <div class="categoria-info">
+      <p>
+        Mostrando <strong id="quantidadeProdutos">0</strong> produtos
+      </p>
+    </div>
+
+    <div class="categoria-barra"></div>
+
+    <div class="categoria-controles">
+      <div class="ordenar-box">
+        <strong>Ordenar:</strong>
+        <select id="ordenarProdutos">
+          <option value="relevancia">Relevância</option>
+          <option value="menor-preco">Menor preço</option>
+          <option value="maior-preco">Maior preço</option>
+          <option value="nome">Nome</option>
+        </select>
+      </div>
+
+      <button class="btn-filtro-categoria" type="button">
+        Filtrar por
+      </button>
+    </div>
+
+    <div id="listaProdutos" class="produtos-container"></div>
+
+  </section>
+
+  <div id="footer"></div>
+
+</div>
+
+<script src="supabase-api.js"></script>
+<script src="produto.js"></script>
+<script src="script.js"></script>
+
+<script>
+
+
+  const params = new URLSearchParams(window.location.search);
+  const categoria = params.get("cat") || "Todos";
+
+  document.getElementById("tituloCategoria").innerText =
+    categoria === "Todos" ? "Todos os produtos" : categoria;
+
+  const breadcrumb = document.getElementById("breadcrumbCategoria");
+
+  if (breadcrumb) {
+    breadcrumb.innerText = categoria;
+  }
+
+  function renderCategoria() {
+    const container = document.getElementById("listaProdutos");
+    const contador = document.getElementById("quantidadeProdutos");
+
+    if (!container || !Array.isArray(window.produtos)) return;
+
+    let lista = window.produtos.filter(p =>
+      categoria === "Todos" || p.categoria === categoria
+    );
+
+    const seletorOrdenar = document.getElementById("ordenarProdutos");
+    const ordem = seletorOrdenar ? seletorOrdenar.value : "relevancia";
+
+    if (ordem === "menor-preco") {
+      lista.sort((a, b) => Number(a.preco) - Number(b.preco));
+    }
+
+    if (ordem === "maior-preco") {
+      lista.sort((a, b) => Number(b.preco) - Number(a.preco));
+    }
+
+    if (ordem === "nome") {
+      lista.sort((a, b) => String(a.nome).localeCompare(String(b.nome)));
+    }
+
+    container.innerHTML = "";
+
+    lista.forEach(p => {
+      const link =
+        typeof gerarLinkProduto === "function"
+          ? gerarLinkProduto(p)
+          : `produto.html?id=${p.id}`;
+
+      const img =
+        p.images && p.images[0]
+          ? p.images[0]
+          : "img/placeholder.jpg";
+
+      container.innerHTML += `
+        <div class="produto-card">
+          <a href="${link}">
+            <img src="${img}" alt="${p.nome}">
+          </a>
+
+          <h3>${p.nome}</h3>
+
+          <p class="preco">U$ ${Number(p.preco).toFixed(2)}</p>
+
+          <a href="${link}" class="btn-ver">
+            Ver produto
+          </a>
+        </div>
+      `;
+    });
+
+    if (contador) {
+      contador.innerText = lista.length;
+    }
+  }
+
+  const seletorOrdenar = document.getElementById("ordenarProdutos");
+
+  if (seletorOrdenar) {
+    seletorOrdenar.addEventListener("change", renderCategoria);
+  }
+
+  setTimeout(renderCategoria, 300);
+  setTimeout(renderCategoria, 800);
+</script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Minha Conta | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body class="cliente-sem-bg">
+
+<div class="page-wrapper">
+
+  <div id="header"></div>
+
+  <main class="cliente-dashboard-page">
+
+    <aside class="cliente-sidebar">
+
+      <div class="cliente-sidebar-title">
+        <i class="fa-regular fa-user"></i>
+        <strong>Minha Conta</strong>
+      </div>
+
+      <nav class="cliente-menu">
+
+  <a href="meus-pedidos.html" class="ativo">
+    <i class="fa-solid fa-box"></i>
+    Meus pedidos
+  </a>
+
+  <a href="meus-dados.html">
+    <i class="fa-regular fa-user"></i>
+    Meus dados
+  </a>
+
+  <a href="favoritos.html">
+    <i class="fa-regular fa-heart"></i>
+    Favoritos
+  </a>
+
+  <button type="button" onclick="sairCliente()">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    Sair
+  </button>
+
+</nav>
+
+      <div class="cliente-sidebar-security">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div>
+          <strong>Sua segurança é nossa prioridade</strong>
+          <span>Seus dados estão protegidos e não serão compartilhados.</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <section class="cliente-dashboard-content">
+
+      <section class="cliente-welcome-card">
+
+        <div>
+          <h1>Olá, <span id="clienteNomeTela">Cliente</span>! 👋</h1>
+          <p>Bem-vindo(a) de volta à Queen Anne.</p>
+          <p>Aqui você acompanha seus pedidos, atualiza seus dados e muito mais.</p>
+        </div>
+
+        <div class="cliente-since-badge">
+          <i class="fa-regular fa-crown"></i>
+          <span>Cliente desde</span>
+          <strong>2026</strong>
+        </div>
+
+      </section>
+
+     
+
+      <section class="cliente-dashboard-main">
+
+        <div class="cliente-pedidos-card" id="pedidosRecentes">
+
+          <div class="cliente-card-head">
+          </div>
+          <div class="cliente-pedidos-card" id="pedidosRecentes">
+
+  <div class="cliente-card-head">
+    <h2>Pedidos recentes</h2>
+    <a href="meus-pedidos.html">Ver todos</a>
+  </div>
+
+  <div id="listaPedidosCliente"></div>
+
+  <div id="pedidosVazio" class="cliente-empty-pedidos">
+    <i class="fa-solid fa-box-open"></i>
+    <h3>Nenhum pedido encontrado</h3>
+    <p>Quando você finalizar uma compra pelo carrinho ou WhatsApp, seus pedidos aparecerão aqui.</p>
+    <a href="index.html" class="cliente-empty-btn">
+  Continuar comprando
+</a>
+  </div>
+
+</div> 
+
+        </div>
+
+        <aside class="cliente-dados-card" id="meusDados">
+
+  <div class="cliente-card-head">
+    <h2>Meus dados</h2>
+  </div>
+
+  <div class="cliente-dados-top">
+    <div class="cliente-avatar">
+      <i class="fa-regular fa-user"></i>
+    </div>
+
+    <div>
+      <h3 id="clienteNomeLista">Cliente</h3>
+      <p id="clienteEmailLista">email@exemplo.com</p>
+      <p id="clienteTelefoneLista">(00) 00000-0000</p>
+    </div>
+  </div>
+
+  <div class="cliente-dados-lista">
+    <div>
+      <span><i class="fa-regular fa-envelope"></i> E-mail</span>
+      <strong id="clienteEmailDados">email@exemplo.com</strong>
+    </div>
+
+    <div>
+      <span><i class="fa-solid fa-phone"></i> Telefone</span>
+      <strong id="clienteTelefoneDados">(00) 00000-0000</strong>
+    </div>
+
+    
+  </div>
+
+  <a href="meus-dados.html" class="cliente-btn-outline full">
+    Ver todos os dados
+  </a>
+
+</aside>
+
+      </section>
+
+
+    </section>
+
+  </main>
+
+  <div id="footer"></div>
+
+</div>
+
+<script src="cliente-storage.js"></script>
+<script src="script.js"></script>
+<script src="cliente-area.js"></script>
+
+</body>
+</html>

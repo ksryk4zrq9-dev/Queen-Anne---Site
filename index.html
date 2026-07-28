@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Queen Anne | Loja Online</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+
+.destaque-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* IMAGEM */
+.ps5-img-wrapper {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.ps5-img-wrapper img {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+
+.ps5-img-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 12px solid #f3f3f3;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ps5-info h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.ps5-info p {
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 14px;
+}
+
+.ps5-preco {
+  font-size: 22px;
+  font-weight: bold;
+  color: #d80000;
+  margin-bottom: 15px;
+}
+
+
+.ps5-info a {
+  display: inline-block;
+  background: #d80000;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<div id="header"></div>
+
+<div id="categoriasLateral" class="categorias-lateral">
+  <button data-cat="Todos">Todos</button>
+  <button data-cat="Consoles">Consoles</button>
+  <button data-cat="TVs">TVs</button>
+  <button data-cat="Áudio">Áudio</button>
+  <button data-cat="Eletrodomésticos">Eletrodomésticos</button>
+  <button data-cat="Perfumes">Perfumes</button>
+  <button data-cat="Ferramentas">Ferramentas</button>
+  <button data-cat="Eletrônicos">Eletrônicos</button>
+  <button data-cat="Celulares">Celulares</button>
+</div>
+
+<section class="banner">
+  <button id="prevBanner" class="banner-btn banner-prev">‹</button>
+
+  <div class="banner-fade">
+    <img id="bannerImgA" class="banner-img ativo" src="img/banner1.jpg" alt="Banner Queen Anne">
+    <img id="bannerImgB" class="banner-img" src="img/banner1.jpg" alt="Banner Queen Anne">
+  </div>
+
+  <button id="nextBanner" class="banner-btn banner-next">›</button>
+</section>
+
+<section class="qa-categorias-home">
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Consoles'">
+    <span>Games</span>
+    <div class="qa-cat-img"><img src="img/imgps5.jpg" alt="Games"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Celulares'">
+    <span>Smartphones</span>
+    <div class="qa-cat-img"><img src="img/iphone-17pro.jpg" alt="Smartphones"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Informática'">
+    <span>Informática</span>
+    <div class="qa-cat-img"><img src="img/rx9060xt.jpg" alt="Informática"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Eletrônicos'">
+    <span>Eletrônicos</span>
+    <div class="qa-cat-img"><img src="img/fire-tv.jpg" alt="Eletrônicos"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Eletroportáteis'">
+    <span>Eletroportáteis</span>
+    <div class="qa-cat-img"><img src="img/airfryer-rca-5l.jpg" alt="Eletroportáteis"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Beleza'">
+    <span>Beleza</span>
+    <div class="qa-cat-img"><img src="img/secador-mondial.jpg" alt="Beleza"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Perfumes'">
+    <span>Perfumes</span>
+    <div class="qa-cat-img"><img src="img/chanel-allure.jpg" alt="Perfumes"></div>
+  </button>
+
+  <button class="qa-cat-card" onclick="window.location.href='categoria.html?cat=Ferramentas'">
+    <span>Ferramentas</span>
+    <div class="qa-cat-img"><img src="img/esmerilhadeira-dewalt.jpg" alt="Ferramentas"></div>
+  </button>
+
+</section>
+
+
+
+<section class="produtos-slider">
+  <div class="linha linha-esq" id="linha1"></div>
+  <div class="linha linha-dir" id="linha2"></div>
+</section>
+
+<section class="produtos-para-voce">
+
+  <div class="produtos-para-voce-head">
+    <h2>Produtos para Você</h2>
+  </div>
+
+  <div class="pfv-carousel-wrap">
+
+    <div class="pfv-hover-zone pfv-hover-left">
+      <button class="pfv-car-btn pfv-car-left" type="button">‹</button>
+    </div>
+
+    <div id="produtosParaVoce" class="produtos-para-voce-grid"></div>
+
+    <div class="pfv-hover-zone pfv-hover-right">
+      <button class="pfv-car-btn pfv-car-right" type="button">›</button>
+    </div>
+
+  </div>
+
+</section>
+
+<div id="footer"></div>
+
+<script src="cliente-storage.js"></script>
+<script src="supabase-api.js"></script>
+<script src="produto.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

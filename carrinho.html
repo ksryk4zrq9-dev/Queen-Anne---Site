@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrinho | Queen Anne</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    h2 { text-align: center; margin: 30px 0 20px; }
+
+    .lista-carrinho { max-width: 900px; margin: 0 auto; padding: 10px; }
+    .item-carrinho {
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .item-dados { display: flex; gap: 18px; }
+    .item-dados img {
+      width: 80px; height: 80px;
+      object-fit: contain;
+      background: r#fff;
+      border-radius: 8px;
+      padding: 6px;
+    }
+    .item-info strong { font-size: 17px; color: #222; display: block; margin-bottom: 4px; }
+    .item-info span { font-size: 14px; color: #777; }
+    .quantidade-box { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .quantidade-box button {
+      width: 28px; height: 28px; border: none; border-radius: 6px;
+      background: #fff;; font-weight: bold; cursor: pointer;
+    }
+    .quantidade { font-weight: bold; min-width: 24px; text-align: center; }
+    .lado-direito { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+    .subtotal-produto { font-size: 18px; font-weight: bold; color: #111; }
+    .remover { color: #d80000; cursor: pointer; font-weight: bold; font-size: 14px; }
+    .remover:hover { text-decoration: underline; }
+    #total { max-width: 900px; margin: 30px auto 10px; font-size: 24px; font-weight: bold; text-align: right; }
+    .linha-confianca { max-width: 900px; margin: 10px auto 25px; text-align: right; font-size: 14px; color: #666; }
+    .acoes { max-width: 900px; margin: 40px auto 60px; display: flex; justify-content: space-between; align-items: center; }
+    .acoes button { background: #d80000; color: #fff; border: none; padding: 14px 26px; font-size: 16px; border-radius: 10px; cursor: pointer; }
+    .voltar-link { text-decoration: none; color: #555; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div id="header"></div>
+
+<div class="page-wrapper">
+
+
+<main class="cart-premium">
+  <div class="cart-left">
+    <div class="cart-table-head">
+      <span>Produto</span>
+      <span>Preço</span>
+      <span>Quantidade</span>
+      <span>Subtotal</span>
+    </div>
+
+    <div id="itens" class="lista-carrinho"></div>
+
+    <a href="index.html" class="cart-voltar">← Continuar comprando</a>
+
+  </div>
+
+  <aside class="cart-summary">
+    <h3>Resumo do pedido</h3>
+
+    <div class="summary-line">
+      <span>Subtotal</span>
+      <strong id="subtotalResumo">U$ 0.00</strong>
+    </div>
+
+    <div class="summary-total">
+      <span>Total</span>
+      <strong id="totalResumo">U$ 0.00</strong>
+    </div>
+
+    <button onclick="finalizarWhatsApp()" class="cart-whats">💬 Finalizar pelo WhatsApp</button>
+
+    <p class="cart-accept">Aceitamos cartões internacionais:</p>
+    <div class="cart-payments">
+      <span>VISA</span>
+      <span>MASTER</span>
+      <span>AMEX</span>
+      <span>PIX</span>
+    </div>
+  </aside>
+</main>
+
+<section class="produtos-para-voce">
+
+  <div class="produtos-para-voce-head">
+    <h2>Produtos para Você</h2>
+  </div>
+
+  <div class="pfv-carousel-wrap">
+
+    <button class="pfv-car-btn pfv-car-left" type="button">‹</button>
+
+    <div id="produtosParaVoce" class="produtos-para-voce-grid"></div>
+
+    <button class="pfv-car-btn pfv-car-right" type="button">›</button>
+
+  </div>
+
+</section>
+
+<div class="cart-trust-row">
+  <div>🛡️ <strong>Compra segura</strong><span>Ambiente 100% protegido</span></div>
+  <div>🎧 <strong>Atendimento rápido</strong><span>Pelo WhatsApp</span></div>
+  <div>📦 <strong>Pedido conferido</strong><span>Manualmente</span></div>
+</div>
+
+<script src="cliente-storage.js"></script>
+
+<script>
+let carrinho = QAStorage.obterCarrinho();
+
+  carrinho = carrinho.map(p => ({
+    ...p,
+    imagem: p.imagem || "img/placeholder.jpg"
+  }));
+
+  QAStorage.salvarCarrinho(carrinho);
+
+  function agruparCarrinho() {
+    const agrupado = {};
+    carrinho.forEach(p => {
+      if (!agrupado[p.nome]) {
+        agrupado[p.nome] = { ...p, qtd: 1 };
+      } else {
+        agrupado[p.nome].qtd++;
+      }
+    });
+    return agrupado;
+  }
+
+  function renderCarrinho() {
+    const div = document.getElementById("itens");
+    div.innerHTML = "";
+
+    const produtos = Object.values(agruparCarrinho()).sort((a,b) => a.nome.localeCompare(b.nome));
+
+    let total = 0;
+    let mensagem = "Olá, gostaria de finalizar a compra:%0A%0A";
+
+    if (produtos.length === 0) {
+      div.innerHTML = `<div class="cart-empty">Seu carrinho está vazio.</div>`;
+    }
+
+    produtos.forEach(p => {
+      const subtotal = p.preco * p.qtd;
+      total += subtotal;
+
+      div.innerHTML += `
+        <div class="cart-item-premium">
+          <div class="cart-produto">
+            <img src="${p.imagem || 'img/placeholder.jpg'}" alt="${p.nome}">
+            <div>
+              <strong>${p.nome}</strong>
+              <span>U$ ${p.preco.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div class="cart-price">U$ ${p.preco.toFixed(2)}</div>
+
+          <div class="cart-qty">
+            <button onclick="alterarQtd('${p.nome}', -1)">−</button>
+            <span>${p.qtd}</span>
+            <button onclick="alterarQtd('${p.nome}', 1)">+</button>
+          </div>
+
+          <div class="cart-subtotal">U$ ${subtotal.toFixed(2)}</div>
+
+          <button class="cart-remove" onclick="removerProduto('${p.nome}')">🗑</button>
+        </div>
+      `;
+
+      mensagem += `• ${p.nome} (${p.qtd}x) - U$ ${subtotal.toFixed(2)}%0A`;
+    });
+
+    document.getElementById("subtotalResumo").innerText = "U$ " + total.toFixed(2);
+    document.getElementById("totalResumo").innerText = "U$ " + total.toFixed(2);
+
+    mensagem += `%0ATotal: U$ ${total.toFixed(2)}`;
+    window.mensagemFinal = mensagem;
+  }
+
+  function alterarQtd(nome, delta) {
+    if (delta > 0) {
+      const prod = carrinho.find(p => p.nome === nome);
+      if (prod) carrinho.push(prod);
+    } else {
+      const index = carrinho.findIndex(p => p.nome === nome);
+      if (index > -1) carrinho.splice(index, 1);
+    }
+
+    QAStorage.salvarCarrinho(carrinho);
+    renderCarrinho();
+  }
+
+function removerProduto(nome) {
+  carrinho = carrinho.filter(
+    produto => produto.nome !== nome
+  );
+
+  QAStorage.salvarCarrinho(carrinho);
+
+  renderCarrinho();
+}
+
+// MOSTRA OS PRODUTOS QUANDO A PÁGINA ABRIR
+renderCarrinho();
+
+</script>
+
+
+<script src="produto.js"></script>
+<script src="script.js"></script>
+<script src="busca-inteligente.js"></script>
+
+<script>
+function carregarProdutosParaVoceCarrinho() {
+  const area = document.getElementById("produtosParaVoce");
+  if (!area || !Array.isArray(window.produtos)) return;
+
+  const recomendados = window.produtos.slice(0, 12);
+
+  area.innerHTML = recomendados.map(p => `
+    <div class="produto-card">
+      <a href="produto.html?id=${p.id}">
+        <img src="${p.images?.[0] || 'img/placeholder.jpg'}" alt="${p.nome}">
+      </a>
+      <h3>${p.nome}</h3>
+      <p class="preco">U$ ${p.preco.toFixed(2)}</p>
+      <a href="produto.html?id=${p.id}" class="btn-ver">Ver produto</a>
+    </div>
+  `).join("");
+
+  document.querySelector(".pfv-car-left").onclick = () => {
+    area.scrollBy({ left: -256, behavior: "smooth" });
+  };
+
+  document.querySelector(".pfv-car-right").onclick = () => {
+    area.scrollBy({ left: 256, behavior: "smooth" });
+  };
+}
+
+setTimeout(carregarProdutosParaVoceCarrinho, 100);
+</script>
+  
+ <div id="footer"></div>
+
+
+</div>
+
+</body>
+</html>
