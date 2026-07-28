@@ -337,22 +337,29 @@ setInterval(proximoBanner, 5000);
   }
 
   function criarCardProduto(p) {
-    let link = `produto.html?id=${p.id}`;
-    if (p.id === 1) link = "ps5.html";
-    if (p.id === 3) link = "soundbar-jbl.html";
-    if (p.id === 12) link = "robot-xiaomi-x20.html";
+  const link = `produto.html?id=${p.id}`;
 
-    return `
-      <div class="produto-card">
-        <a href="${link}">
-          <img src="${p.images[0]}" alt="${p.nome}">
-        </a>
-        <h3>${p.nome}</h3>
-        <p class="preco">U$ ${p.preco.toFixed(2)}</p>
-        <a href="${link}" class="btn-ver">Ver produto</a>
-      </div>
-    `;
-  }
+  return `
+    <div class="produto-card">
+      <a href="${link}">
+        <img
+          src="${p.images?.[0] || p.imagem || "img/placeholder.jpg"}"
+          alt="${p.nome}"
+        >
+      </a>
+
+      <h3>${p.nome}</h3>
+
+      <p class="preco">
+        U$ ${Number(p.preco).toFixed(2)}
+      </p>
+
+      <a href="${link}" class="btn-ver">
+        Ver produto
+      </a>
+    </div>
+  `;
+}
 
   function montarSlider() {
   if (!linha1 || !linha2) return;
