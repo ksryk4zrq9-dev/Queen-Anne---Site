@@ -1443,11 +1443,11 @@ Controle: DualSense sem fio
 
 ];
 
-let produtos = produtosFallback;
-window.produtos = produtos;
+let produtos = [];
+window.produtos = [];
 
 // Atualiza lista de produtos a partir do Supabase (se estiver configurado)
-(async () => {
+async function carregarProdutosSupabase() {
   try {
     if (typeof window.getProdutos !== "function") {
       throw new Error(
@@ -1455,8 +1455,7 @@ window.produtos = produtos;
       );
     }
 
-    const dados =
-      await window.getProdutos();
+    const dados = await window.getProdutos();
 
     produtos = dados.map(produto => ({
       ...produto,
@@ -1467,25 +1466,34 @@ window.produtos = produtos;
 
       images: [
         produto.imagem ||
-        produto.images?.[0] ||
         "img/placeholder.jpg"
       ],
 
       desc:
         produto.descricao ||
-        produto.desc ||
         ""
     }));
 
     window.produtos = produtos;
 
-  } catch (e) {
+    window.dispatchEvent(
+      new CustomEvent(
+        "qa:produtos-carregados"
+      )
+    );
+
+  } catch (erro) {
     console.error(
       "Erro ao carregar produtos do Supabase:",
-      e
+      erro
     );
+
+    produtos = [];
+    window.produtos = [];
   }
-})();
+}
+
+carregarProdutosSupabase();
 
 // ===== CONTADOR CARRINHO =====
 function atualizarContadorCarrinho() {
@@ -1547,16 +1555,29 @@ function renderProdutos(cat = "Todos", termo = "") {
 
 
 // ===== INICIAL =====
-if (document.getElementById("listaProdutos")) {
+window.addEventListener(
+  "qa:produtos-carregados",
+  () => {
+    if (
+      !document.getElementById(
+        "listaProdutos"
+      )
+    ) {
+      return;
+    }
 
-  const params = new URLSearchParams(window.location.search);
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
-  const categoria =
-    params.get("cat") || "Todos";
+    const categoria =
+      params.get("cat") ||
+      "Todos";
 
-  renderProdutos(categoria);
-
-}
+    renderProdutos(categoria);
+  }
+);
 const relacionadosContainer = document.getElementById("produtosRelacionados");
 
 function carregarRelacionados(produtoAtual) {
