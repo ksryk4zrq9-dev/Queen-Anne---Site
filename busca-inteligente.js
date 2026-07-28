@@ -33,18 +33,56 @@
     `);
   }
 
-  async function garantirProdutos() {
-    if (Array.isArray(window.produtos) && window.produtos.length) return;
+ async function garantirProdutos() {
+  try {
+    if (typeof window.getProdutos !== "function") {
+      throw new Error(
+        "A função getProdutos não está disponível."
+      );
+    }
 
-    if (typeof window.getProdutos === "function") {
-      try {
-        const lista = await window.getProdutos();
-        if (Array.isArray(lista)) window.produtos = lista;
-      } catch (e) {
-        console.warn("Não foi possível carregar produtos do Supabase.", e);
-      }
+    const lista = await window.getProdutos();
+
+    if (!Array.isArray(lista)) {
+      throw new Error(
+        "O Supabase não retornou uma lista válida."
+      );
+    }
+
+    window.produtos = lista.map(produto => ({
+      ...produto,
+
+      id: Number(produto.id),
+
+      preco: Number(produto.preco) || 0,
+
+      images: [
+        produto.imagem ||
+        produto.images?.[0] ||
+        "img/placeholder.jpg"
+      ],
+
+      desc:
+        produto.descricao ||
+        produto.desc ||
+        ""
+    }));
+
+    console.log(
+      `${window.produtos.length} produtos carregados na busca pelo Supabase.`
+    );
+
+  } catch (erro) {
+    console.error(
+      "Não foi possível carregar os produtos da busca:",
+      erro
+    );
+
+    if (!Array.isArray(window.produtos)) {
+      window.produtos = [];
     }
   }
+}
 
   function buscarProdutos(termo) {
   if (!Array.isArray(window.produtos)) return [];
