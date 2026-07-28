@@ -489,72 +489,87 @@ async function loadProduct() {
     }
 
     // ===== PRODUTOS RELACIONADOS =====
-    const relacionadosBox =
-      document.getElementById(
-        "relacionados"
+   function renderizarProdutosRelacionados(
+  produtoAtual
+) {
+  const relacionadosBox =
+    document.getElementById(
+      "relacionados"
+    );
+
+  if (!relacionadosBox) {
+    return;
+  }
+
+  const listaProdutos =
+    Array.isArray(window.produtos)
+      ? window.produtos
+      : [];
+
+  if (listaProdutos.length === 0) {
+    relacionadosBox.innerHTML = "";
+    return;
+  }
+
+  const categoriaAtual =
+    String(
+      produtoAtual.categoria || ""
+    )
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(
+        /[\u0300-\u036f]/g,
+        ""
       );
 
-    if (
-      relacionadosBox &&
-      Array.isArray(window.produtos)
-    ) {
-      const categoriaAtual =
-        String(
-          p.categoria || ""
-        )
-          .trim()
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(
-            /[\u0300-\u036f]/g,
-            ""
-          );
+  let relacionados =
+    listaProdutos
+      .filter(item => {
+        if (!item) {
+          return false;
+        }
 
-      let relacionados =
-        window.produtos
-          .filter(item => {
-            if (!item) return false;
+        const mesmoProduto =
+          String(item.id) ===
+          String(produtoAtual.id);
 
-            const mesmoProduto =
-              String(item.id) ===
-              String(p.id);
-
-            const categoriaItem =
-              String(
-                item.categoria || ""
-              )
-                .trim()
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(
-                  /[\u0300-\u036f]/g,
-                  ""
-                );
-
-            return (
-              !mesmoProduto &&
-              categoriaItem ===
-                categoriaAtual
+        const categoriaItem =
+          String(
+            item.categoria || ""
+          )
+            .trim()
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(
+              /[\u0300-\u036f]/g,
+              ""
             );
-          })
-          .slice(0, 8);
 
-      if (
-        relacionados.length === 0
-      ) {
-        relacionados =
-          window.produtos
-            .filter(
-              item =>
-                String(item.id) !==
-                String(p.id)
-            )
-            .slice(0, 8);
-      }
+        return (
+          !mesmoProduto &&
+          categoriaItem ===
+            categoriaAtual
+        );
+      })
+      .slice(0, 8);
 
-      relacionadosBox.innerHTML = "";
+  if (relacionados.length === 0) {
+    relacionados =
+      listaProdutos
+        .filter(item => {
+          return (
+            item &&
+            String(item.id) !==
+              String(produtoAtual.id)
+          );
+        })
+        .slice(0, 8);
+  }
 
-      relacionados.forEach(item => {
+  relacionadosBox.innerHTML =
+    relacionados
+      .map(item => {
         const img =
           item.images?.[0] ||
           item.imagem ||
@@ -564,18 +579,18 @@ async function loadProduct() {
         const link =
           `produto.html?id=${item.id}`;
 
-        relacionadosBox.innerHTML += `
+        return `
           <a
             href="${link}"
             class="pdp-rel-inner"
           >
             <img
               src="${img}"
-              alt="${item.nome}"
+              alt="${item.nome || "Produto"}"
             >
 
             <h4>
-              ${item.nome}
+              ${item.nome || "Produto"}
             </h4>
 
             <p>
@@ -583,8 +598,26 @@ async function loadProduct() {
             </p>
           </a>
         `;
-      });
+      })
+      .join("");
+}
+
+if (
+  Array.isArray(window.produtos) &&
+  window.produtos.length > 0
+) {
+  renderizarProdutosRelacionados(p);
+} else {
+  window.addEventListener(
+    "qa:produtos-carregados",
+    function () {
+      renderizarProdutosRelacionados(p);
+    },
+    {
+      once: true
     }
+  );
+}
 
     hideLoadingAndMeta();
     setupReveal();
