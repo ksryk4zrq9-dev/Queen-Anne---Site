@@ -74,51 +74,77 @@ function obterChaveProdutosVistos() {
       })
       .catch(err => console.error("Erro ao carregar footer:", err));
   }
-  // ===== PRODUTOS VINDOS DO SUPABASE =====
-let produtos = [];
+  // ===== PRODUTOS =====
 
-try {
-  if (typeof window.getProdutos !== "function") {
-    throw new Error("A função getProdutos não foi carregada.");
+// Usa temporariamente os produtos locais do produto.js
+let produtos = Array.isArray(window.produtos)
+  ? window.produtos
+  : [];
+
+async function carregarProdutosDoSite() {
+  try {
+    if (typeof window.getProdutos !== "function") {
+      throw new Error(
+        "A função getProdutos não foi carregada."
+      );
+    }
+
+    const dadosSupabase =
+      await window.getProdutos();
+
+    if (
+      !Array.isArray(dadosSupabase) ||
+      dadosSupabase.length === 0
+    ) {
+      throw new Error(
+        "O Supabase não retornou produtos."
+      );
+    }
+
+    produtos = dadosSupabase.map(produto => ({
+      ...produto,
+
+      id: Number(produto.id),
+
+      preco: Number(produto.preco) || 0,
+
+      images: [
+        produto.imagem ||
+        produto.images?.[0] ||
+        "img/placeholder.jpg"
+      ],
+
+      desc:
+        produto.descricao ||
+        produto.desc ||
+        ""
+    }));
+
+    window.produtos = produtos;
+
+    console.log(
+      `${produtos.length} produtos carregados do Supabase.`
+    );
+
+  } catch (erro) {
+    console.error(
+      "Não foi possível carregar o Supabase. Usando produtos locais:",
+      erro
+    );
+
+    produtos = Array.isArray(window.produtos)
+      ? window.produtos
+      : [];
+
+    console.log(
+      `${produtos.length} produtos locais utilizados.`
+    );
   }
 
-  const dadosSupabase = await window.getProdutos();
-
-  produtos = dadosSupabase.map(produto => ({
-    ...produto,
-
-    id: Number(produto.id),
-
-    preco: Number(produto.preco) || 0,
-
-    images: [
-      produto.imagem ||
-      produto.images?.[0] ||
-      "img/placeholder.jpg"
-    ],
-
-    desc:
-      produto.descricao ||
-      produto.desc ||
-      ""
-  }));
-
-  window.produtos = produtos;
-
-  console.log(
-    `${produtos.length} produtos carregados do Supabase.`
-  );
-
-} catch (erro) {
-  console.error(
-    "Erro ao carregar produtos do Supabase:",
-    erro
-  );
-
-  alert(
-    "Não foi possível carregar os produtos atualizados."
-  );
+  renderProdutos();
 }
+
+carregarProdutosDoSite();
 
   // ===== CONTADOR CARRINHO =====
 // Menu lateral de categorias (usado no header)
