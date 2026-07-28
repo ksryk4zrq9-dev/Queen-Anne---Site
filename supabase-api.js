@@ -1,21 +1,26 @@
-// =====================================
 // CONEXÃO COM O SUPABASE
-// =====================================
 
 const SUPABASE_URL =
-  "https://queen-anne-site-guwu.vercel.app/"
+  "https://elcqvwnsoucbhuqhwify.supabase.co";
 
-const SUPABASE_ANON_KEY =
- sb_publishable_1U9sMtJKl324Gn9N0fEuBw_94y8egTY
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_vBIYdnKpF1lTw-g5gP4gsw_lhyQGUBP";
 
-// Cria a conexão com o Supabase
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
-  SUPABASE_ANON_KEY
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
 );
 
-// Torna o cliente acessível aos outros arquivos
 window.supabaseClient = supabaseClient;
+
+console.log("Supabase carregado com sucesso.");
 
 // =====================================
 // BUSCAR TODOS OS PRODUTOS ATIVOS
