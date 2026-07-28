@@ -6886,3 +6886,55 @@ body.pagina-termos-premium{
     font-size:13px;
   }
 }
+.favoritos-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  padding: 60px 20px;
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 18px;
+  min-height: 320px;
+  gap: 16px;
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.favoritos-vazio-icone {
+  font-size: 64px;
+  color: #d60000;
+  line-height: 1;
+}
+
+.favoritos-vazio h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+
+.favoritos-vazio p {
+  font-size: 16px;
+  color: #666;
+  max-width: 500px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.btn-ver-produtos {
+  display: inline-block;
+  background: #d60000;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.btn-ver-produtos:hover {
+  background: #b80000;
+}
