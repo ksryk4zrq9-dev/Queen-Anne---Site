@@ -212,9 +212,7 @@ atualizarContadorCarrinho();
       )
       .forEach(p => {
         let link = `produto.html?id=${p.id}`;
-        if (p.id === 1) link = "ps5.html";
-        if (p.id === 3) link = "soundbar-jbl.html";
-        if (p.id === 12) link = "robot-xiaomi-x20.html";
+       
 
         listaProdutos.innerHTML += `
           <div class="produto-card">
