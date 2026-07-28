@@ -8,11 +8,9 @@
       .replace(/[\u0300-\u036f]/g, "");
   }
 
-  function linkProduto(p) {
-    return typeof window.gerarLinkProduto === "function"
-      ? window.gerarLinkProduto(p)
-      : `produto.html?id=${p.id}`;
-  }
+ function linkProduto(p) {
+  return `produto.html?id=${encodeURIComponent(p.id)}`;
+}
 
   function textoBusca(p) {
     const nome = normalizar(p.nome);
@@ -99,17 +97,33 @@
     }
 
     encontrados.forEach(p => {
-      const item = document.createElement("div");
-      item.className = "busca-item";
-      item.innerHTML = `
-        <img src="${p.images?.[0] || "img/placeholder.jpg"}" alt="${p.nome || "Produto"}">
-        <span>${p.nome || "Produto"}</span>
-      `;
-      item.addEventListener("click", function () {
-        window.location.href = linkProduto(p);
-      });
-      resultado.appendChild(item);
-    });
+  const item = document.createElement("div");
+
+  item.className = "busca-item";
+
+  const imagem =
+    p.imagem ||
+    p.images?.[0] ||
+    "img/placeholder.jpg";
+
+  item.innerHTML = `
+    <img
+      src="${imagem}"
+      alt="${p.nome || "Produto"}"
+    >
+
+    <span>
+      ${p.nome || "Produto"}
+    </span>
+  `;
+
+  item.addEventListener("click", function () {
+    window.location.href =
+      `produto.html?id=${encodeURIComponent(p.id)}`;
+  });
+
+  resultado.appendChild(item);
+});
 
     resultado.style.display = "block";
   }
