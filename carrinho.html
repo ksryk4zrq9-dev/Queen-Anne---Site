@@ -2,237 +2,302 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Termos de Uso | Queen Anne</title>
-
-  <!-- CSS principal do site -->
+  <title>Carrinho | Queen Anne</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    h2 { text-align: center; margin: 30px 0 20px; }
 
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
+    .lista-carrinho { max-width: 900px; margin: 0 auto; padding: 10px; }
+    .item-carrinho {
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .item-dados { display: flex; gap: 18px; }
+    .item-dados img {
+      width: 80px; height: 80px;
+      object-fit: contain;
+      background: r#fff;
+      border-radius: 8px;
+      padding: 6px;
+    }
+    .item-info strong { font-size: 17px; color: #222; display: block; margin-bottom: 4px; }
+    .item-info span { font-size: 14px; color: #777; }
+    .quantidade-box { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .quantidade-box button {
+      width: 28px; height: 28px; border: none; border-radius: 6px;
+      background: #fff;; font-weight: bold; cursor: pointer;
+    }
+    .quantidade { font-weight: bold; min-width: 24px; text-align: center; }
+    .lado-direito { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+    .subtotal-produto { font-size: 18px; font-weight: bold; color: #111; }
+    .remover { color: #d80000; cursor: pointer; font-weight: bold; font-size: 14px; }
+    .remover:hover { text-decoration: underline; }
+    #total { max-width: 900px; margin: 30px auto 10px; font-size: 24px; font-weight: bold; text-align: right; }
+    .linha-confianca { max-width: 900px; margin: 10px auto 25px; text-align: right; font-size: 14px; color: #666; }
+    .acoes { max-width: 900px; margin: 40px auto 60px; display: flex; justify-content: space-between; align-items: center; }
+    .acoes button { background: #d80000; color: #fff; border: none; padding: 14px 26px; font-size: 16px; border-radius: 10px; cursor: pointer; }
+    .voltar-link { text-decoration: none; color: #555; font-weight: bold; }
+  </style>
 </head>
+<body>
 
-<body class="pagina-termos-premium">
-
-  <!-- Header carregado pelo script.js -->
   <div id="header"></div>
 
-  <main class="termos-premium-page">
+<div class="page-wrapper">
 
-    <!-- BREADCRUMB -->
-    <nav class="termos-breadcrumb" aria-label="Navegação estrutural">
-      <a href="index.html">
-        <i class="fa-solid fa-house"></i>
-        <span>Início</span>
+
+<main class="cart-premium">
+  <div class="cart-left">
+    <div class="cart-table-head">
+      <span>Produto</span>
+      <span>Preço</span>
+      <span>Quantidade</span>
+      <span>Subtotal</span>
+    </div>
+
+    <div id="itens" class="lista-carrinho"></div>
+
+    <a href="index.html" class="cart-voltar">← Continuar comprando</a>
+
+  </div>
+
+  <aside class="cart-summary">
+    <h3>Resumo do pedido</h3>
+
+    <div class="summary-line">
+      <span>Subtotal</span>
+      <strong id="subtotalResumo">U$ 0.00</strong>
+    </div>
+
+    <div class="summary-total">
+      <span>Total</span>
+      <strong id="totalResumo">U$ 0.00</strong>
+    </div>
+
+    <button onclick="finalizarWhatsApp()" class="cart-whats">💬 Finalizar pelo WhatsApp</button>
+
+    <p class="cart-accept">Aceitamos cartões internacionais:</p>
+    <div class="cart-payments">
+      <span>VISA</span>
+      <span>MASTER</span>
+      <span>AMEX</span>
+      <span>PIX</span>
+    </div>
+  </aside>
+</main>
+
+<section class="produtos-para-voce">
+
+  <div class="produtos-para-voce-head">
+    <h2>Produtos para Você</h2>
+  </div>
+
+  <div class="pfv-carousel-wrap">
+
+    <button class="pfv-car-btn pfv-car-left" type="button">‹</button>
+
+    <div id="produtosParaVoce" class="produtos-para-voce-grid"></div>
+
+    <button class="pfv-car-btn pfv-car-right" type="button">›</button>
+
+  </div>
+
+</section>
+
+<div class="cart-trust-row">
+  <div>🛡️ <strong>Compra segura</strong><span>Ambiente 100% protegido</span></div>
+  <div>🎧 <strong>Atendimento rápido</strong><span>Pelo WhatsApp</span></div>
+  <div>📦 <strong>Pedido conferido</strong><span>Manualmente</span></div>
+</div>
+
+<script src="cliente-storage.js"></script>
+
+<script>
+let carrinho = QAStorage.obterCarrinho();
+
+  carrinho = carrinho.map(p => ({
+    ...p,
+    imagem: p.imagem || "img/placeholder.jpg"
+  }));
+
+  QAStorage.salvarCarrinho(carrinho);
+
+  function agruparCarrinho() {
+    const agrupado = {};
+    carrinho.forEach(p => {
+      if (!agrupado[p.nome]) {
+        agrupado[p.nome] = { ...p, qtd: 1 };
+      } else {
+        agrupado[p.nome].qtd++;
+      }
+    });
+    return agrupado;
+  }
+
+  function renderCarrinho() {
+    const div = document.getElementById("itens");
+    div.innerHTML = "";
+
+    const produtos = Object.values(agruparCarrinho()).sort((a,b) => a.nome.localeCompare(b.nome));
+
+    let total = 0;
+    let mensagem = "Olá, gostaria de finalizar a compra:%0A%0A";
+
+    if (produtos.length === 0) {
+      div.innerHTML = `<div class="cart-empty">Seu carrinho está vazio.</div>`;
+    }
+
+    produtos.forEach(p => {
+      const subtotal = p.preco * p.qtd;
+      total += subtotal;
+
+      div.innerHTML += `
+        <div class="cart-item-premium">
+          <div class="cart-produto">
+            <img src="${p.imagem || 'img/placeholder.jpg'}" alt="${p.nome}">
+            <div>
+              <strong>${p.nome}</strong>
+              <span>U$ ${p.preco.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div class="cart-price">U$ ${p.preco.toFixed(2)}</div>
+
+          <div class="cart-qty">
+            <button onclick="alterarQtd('${p.nome}', -1)">−</button>
+            <span>${p.qtd}</span>
+            <button onclick="alterarQtd('${p.nome}', 1)">+</button>
+          </div>
+
+          <div class="cart-subtotal">U$ ${subtotal.toFixed(2)}</div>
+
+          <button class="cart-remove" onclick="removerProduto('${p.nome}')">🗑</button>
+        </div>
+      `;
+
+      mensagem += `• ${p.nome} (${p.qtd}x) - U$ ${subtotal.toFixed(2)}%0A`;
+    });
+
+    document.getElementById("subtotalResumo").innerText = "U$ " + total.toFixed(2);
+    document.getElementById("totalResumo").innerText = "U$ " + total.toFixed(2);
+
+    mensagem += `%0ATotal: U$ ${total.toFixed(2)}`;
+    window.mensagemFinal = mensagem;
+  }
+
+  function alterarQtd(nome, delta) {
+    if (delta > 0) {
+      const prod = carrinho.find(p => p.nome === nome);
+      if (prod) carrinho.push(prod);
+    } else {
+      const index = carrinho.findIndex(p => p.nome === nome);
+      if (index > -1) carrinho.splice(index, 1);
+    }
+
+    QAStorage.salvarCarrinho(carrinho);
+    renderCarrinho();
+  }
+
+function removerProduto(nome) {
+  carrinho = carrinho.filter(
+    produto => produto.nome !== nome
+  );
+
+  QAStorage.salvarCarrinho(carrinho);
+
+  renderCarrinho();
+}
+function finalizarWhatsApp() {
+  if (!Array.isArray(carrinho) || carrinho.length === 0) {
+    alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  const produtosAgrupados = Object.values(agruparCarrinho());
+
+  let total = 0;
+
+  const itensMensagem = produtosAgrupados.map(produto => {
+    const preco = Number(produto.preco) || 0;
+    const quantidade = Number(produto.qtd) || 1;
+    const subtotal = preco * quantidade;
+
+    total += subtotal;
+
+    return [
+      `• ${produto.nome}`,
+      `Quantidade: ${quantidade}`,
+      `Subtotal: U$ ${subtotal.toFixed(2)}`
+    ].join("\n");
+  });
+
+  const mensagem = [
+    "Olá! Gostaria de finalizar este pedido:",
+    "",
+    itensMensagem.join("\n\n"),
+    "",
+    `Total do pedido: U$ ${total.toFixed(2)}`
+  ].join("\n");
+
+  // Somente números: 595 + número sem o zero inicial
+  const numeroWhatsApp = "595987374159";
+
+  const linkWhatsApp =
+    `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+
+  window.open(linkWhatsApp, "_blank");
+}
+// MOSTRA OS PRODUTOS QUANDO A PÁGINA ABRIR
+renderCarrinho();
+
+</script>
+
+
+<script src="produto.js"></script>
+<script src="script.js"></script>
+<script src="busca-inteligente.js"></script>
+
+<script>
+function carregarProdutosParaVoceCarrinho() {
+  const area = document.getElementById("produtosParaVoce");
+  if (!area || !Array.isArray(window.produtos)) return;
+
+  const recomendados = window.produtos.slice(0, 12);
+
+  area.innerHTML = recomendados.map(p => `
+    <div class="produto-card">
+      <a href="produto.html?id=${p.id}">
+        <img src="${p.images?.[0] || 'img/placeholder.jpg'}" alt="${p.nome}">
       </a>
+      <h3>${p.nome}</h3>
+      <p class="preco">U$ ${p.preco.toFixed(2)}</p>
+      <a href="produto.html?id=${p.id}" class="btn-ver">Ver produto</a>
+    </div>
+  `).join("");
 
-      <i class="fa-solid fa-chevron-right"></i>
+  document.querySelector(".pfv-car-left").onclick = () => {
+    area.scrollBy({ left: -256, behavior: "smooth" });
+  };
 
-      <span>Termos de Uso</span>
-    </nav>
+  document.querySelector(".pfv-car-right").onclick = () => {
+    area.scrollBy({ left: 256, behavior: "smooth" });
+  };
+}
 
-    <!-- CARD PRINCIPAL -->
-    <section class="termos-premium-container">
+setTimeout(carregarProdutosParaVoceCarrinho, 100);
+</script>
+  
+ <div id="footer"></div>
 
-      <!-- APRESENTAÇÃO -->
-      <header class="termos-premium-hero">
 
-        <div class="termos-premium-intro">
-
-          <span class="termos-premium-label">
-            Informações legais
-          </span>
-
-          <h1>Termos de Uso</h1>
-
-          <span class="termos-premium-line"></span>
-
-          <p>
-            Regras gerais para utilização do site Queen Anne Importados.
-          </p>
-
-          <p>
-            Ao acessar e utilizar o site da Queen Anne, o cliente concorda
-            com os termos e condições descritos nesta página.
-          </p>
-
-        </div>
-
-        <!-- ILUSTRAÇÃO -->
-        <div class="termos-illustration" aria-hidden="true">
-
-          <div class="termos-illustration-glow"></div>
-
-          <div class="termos-document">
-
-            <span class="termos-document-title"></span>
-
-            <span class="termos-document-row row-1"></span>
-            <span class="termos-document-row row-2"></span>
-            <span class="termos-document-row row-3"></span>
-
-            <span class="termos-document-check check-1">
-              <i class="fa-solid fa-check"></i>
-            </span>
-
-            <span class="termos-document-check check-2">
-              <i class="fa-solid fa-check"></i>
-            </span>
-
-            <span class="termos-document-check check-3">
-              <i class="fa-solid fa-check"></i>
-            </span>
-
-          </div>
-
-          <div class="termos-shield">
-            <i class="fa-solid fa-check"></i>
-          </div>
-
-          <div class="termos-platform platform-bottom"></div>
-          <div class="termos-platform platform-middle"></div>
-          <div class="termos-platform platform-top"></div>
-
-        </div>
-
-      </header>
-
-      <!-- CONTEÚDO -->
-      <div class="termos-premium-grid">
-
-        <!-- CARD 1 -->
-        <article class="termos-info-card">
-
-          <div class="termos-info-icon">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-
-          <div class="termos-info-content">
-            <span class="termos-info-number">01</span>
-
-            <h2>Uso do site</h2>
-
-            <p>
-              O cliente deve utilizar o site de forma correta, respeitando
-              a legislação vigente, os direitos de terceiros e as informações
-              apresentadas em cada página.
-            </p>
-          </div>
-
-        </article>
-
-        <!-- CARD 2 -->
-        <article class="termos-info-card">
-
-          <div class="termos-info-icon">
-            <i class="fa-solid fa-box-open"></i>
-          </div>
-
-          <div class="termos-info-content">
-            <span class="termos-info-number">02</span>
-
-            <h2>Informações dos produtos</h2>
-
-            <p>
-              Buscamos manter as informações dos produtos sempre atualizadas,
-              incluindo descrições, imagens, valores e disponibilidade.
-              Porém, eventuais ajustes podem ocorrer sem aviso prévio.
-            </p>
-          </div>
-
-        </article>
-
-        <!-- CARD 3 -->
-        <article class="termos-info-card">
-
-          <div class="termos-info-icon">
-            <i class="fa-solid fa-tag"></i>
-          </div>
-
-          <div class="termos-info-content">
-            <span class="termos-info-number">03</span>
-
-            <h2>Preços e disponibilidade</h2>
-
-            <p>
-              Os preços e condições podem variar conforme disponibilidade,
-              promoções ou atualização de estoque. A confirmação final ocorre
-              no momento da conclusão do pedido.
-            </p>
-          </div>
-
-        </article>
-
-        <!-- CARD 4 -->
-        <article class="termos-info-card">
-
-          <div class="termos-info-icon">
-            <i class="fa-regular fa-user"></i>
-          </div>
-
-          <div class="termos-info-content">
-            <span class="termos-info-number">04</span>
-
-            <h2>Responsabilidades do cliente</h2>
-
-            <ul class="termos-responsabilidades">
-              <li>
-                Fornecer informações verdadeiras no cadastro e na compra.
-              </li>
-
-              <li>
-                Conferir os dados do pedido antes da finalização.
-              </li>
-
-              <li>
-                Acompanhar os canais de contato informados durante a compra.
-              </li>
-            </ul>
-          </div>
-
-        </article>
-
-      </div>
-
-      <!-- COMPROMISSO -->
-      <div class="termos-compromisso">
-
-        <div class="termos-compromisso-icon">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-
-        <div class="termos-compromisso-texto">
-          <h2>Compromisso com você</h2>
-
-          <p>
-            A Queen Anne poderá atualizar estes termos sempre que necessário
-            para melhorar a segurança e a clareza da relação com seus clientes.
-          </p>
-        </div>
-
-        <span class="termos-compromisso-marca">
-          A
-        </span>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- Footer carregado pelo script.js -->
-  <div id="footer"></div>
-
-  <!-- Script principal do site -->
-  <script src="script.js"></script>
+</div>
 
 </body>
 </html>
