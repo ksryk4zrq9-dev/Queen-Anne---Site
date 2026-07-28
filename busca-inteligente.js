@@ -49,26 +49,46 @@
   }
 
   function buscarProdutos(termo) {
-    if (!Array.isArray(window.produtos)) return [];
+  if (!Array.isArray(window.produtos)) return [];
 
-    return window.produtos
-      .map(p => {
-        const nome = normalizar(p.nome);
-        const texto = textoBusca(p);
-        let pontos = 0;
+  const termoNormalizado = normalizar(termo).trim();
 
-        if (nome.startsWith(termo)) pontos += 100;
-        if (nome.split(" ").some(palavra => palavra.startsWith(termo))) pontos += 80;
-        if (nome.includes(termo)) pontos += 60;
-        if (texto.includes(termo)) pontos += 40;
+  return window.produtos
+    .map(p => {
+      const nome = normalizar(p.nome).trim();
+      const palavrasNome = nome.split(/\s+/);
 
-        return { produto: p, pontos };
-      })
-      .filter(x => x.pontos > 0)
-      .sort((a, b) => b.pontos - a.pontos)
-      .slice(0, 8)
-      .map(x => x.produto);
-  }
+      let pontos = 0;
+
+      // Nome começa exatamente com o termo
+      if (nome.startsWith(termoNormalizado)) {
+        pontos += 100;
+      }
+
+      // Alguma palavra do nome começa com o termo
+      if (
+        palavrasNome.some(
+          palavra => palavra.startsWith(termoNormalizado)
+        )
+      ) {
+        pontos += 80;
+      }
+
+      // O nome contém o termo em qualquer posição
+      if (nome.includes(termoNormalizado)) {
+        pontos += 60;
+      }
+
+      return {
+        produto: p,
+        pontos
+      };
+    })
+    .filter(item => item.pontos > 0)
+    .sort((a, b) => b.pontos - a.pontos)
+    .slice(0, 8)
+    .map(item => item.produto);
+}
 
   function renderizarResultados(encontrados, resultado) {
     resultado.innerHTML = "";
