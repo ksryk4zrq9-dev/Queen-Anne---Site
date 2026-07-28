@@ -59,7 +59,7 @@ function iniciarAreaCliente() {
     }
   }
 }
-function cadastrarCliente(event) {async function cadastrarCliente(event) {
+async function cadastrarCliente(event) {
   event.preventDefault();
 
   const nome = document
@@ -114,9 +114,9 @@ function cadastrarCliente(event) {async function cadastrarCliente(event) {
         password: senha,
         options: {
           data: {
-            nome: nome,
-            telefone: telefone,
-            newsletter: newsletter
+            nome,
+            telefone,
+            newsletter
           }
         }
       });
@@ -137,12 +137,30 @@ function cadastrarCliente(event) {async function cadastrarCliente(event) {
         "Erro ao criar a conta: " +
         error.message
       );
+
       return;
     }
 
     console.log("Cadastro realizado:", data);
 
-    if (data.session) {
+    if (data.session && data.user) {
+      const clienteLogado = {
+        id: data.user.id,
+        email: data.user.email,
+        nome:
+          data.user.user_metadata?.nome ||
+          nome,
+        telefone:
+          data.user.user_metadata?.telefone ||
+          telefone,
+        newsletter
+      };
+
+      localStorage.setItem(
+        "qa_cliente_logado",
+        JSON.stringify(clienteLogado)
+      );
+
       alert("Conta criada com sucesso!");
 
       window.location.href =
@@ -166,7 +184,6 @@ function cadastrarCliente(event) {async function cadastrarCliente(event) {
       "Não foi possível conectar ao cadastro."
     );
   }
-}dow.location.href = "meus-pedidos.html";
 }
 
 async function entrarCliente(event) {
@@ -229,10 +246,34 @@ async function entrarCliente(event) {
         "Erro ao entrar: " +
         error.message
       );
+
       return;
     }
 
-    console.log("Usuário conectado:", data.user);
+    if (!data.user) {
+      alert("Não foi possível identificar sua conta.");
+      return;
+    }
+
+    const clienteLogado = {
+      id: data.user.id,
+      email: data.user.email,
+      nome:
+        data.user.user_metadata?.nome ||
+        data.user.email,
+      telefone:
+        data.user.user_metadata?.telefone ||
+        "",
+      newsletter:
+        !!data.user.user_metadata?.newsletter
+    };
+
+    localStorage.setItem(
+      "qa_cliente_logado",
+      JSON.stringify(clienteLogado)
+    );
+
+    migrarDadosVisitanteParaCliente();
 
     window.location.href =
       "meus-pedidos.html";
@@ -476,11 +517,18 @@ function preencherTexto(id, valor) {
   }
 }
 
-function sairCliente() {
+async function sairCliente() {
+  try {
+    if (window.supabaseClient) {
+      await window.supabaseClient.auth.signOut();
+    }
+  } catch (erro) {
+    console.error("Erro ao sair do Supabase:", erro);
+  }
+
   localStorage.removeItem("qa_cliente_logado");
   window.location.href = "entrar.html";
 }
-
 function toggleSenha(id) {
   const input = document.getElementById(id);
 
