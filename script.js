@@ -118,11 +118,19 @@ async function carregarProdutosDoSite() {
         ""
     }));
 
-    window.produtos = produtos;
+   window.produtos = produtos;
 
-    console.log(
-      `${produtos.length} produtos carregados do Supabase.`
-    );
+console.log(
+  `${produtos.length} produtos carregados do Supabase.`
+);
+
+window.dispatchEvent(
+  new CustomEvent("qa:produtos-carregados", {
+    detail: {
+      produtos: produtos
+    }
+  })
+);
 
    } catch (erro) {
     console.error(
@@ -135,8 +143,8 @@ async function carregarProdutosDoSite() {
   }
 
   renderProdutos();
-  montarSlider();
-  carregarProdutosParaVoce();
+carregarProdutosParaVoce();
+montarSlider();
 }
 
 carregarProdutosDoSite();
@@ -359,8 +367,16 @@ setInterval(proximoBanner, 5000);
 const linha1 = document.getElementById("linha1");
 const linha2 = document.getElementById("linha2");
 
-  function montarSlider() {
-  if (!linha1 || !linha2) return;
+ function montarSlider() {
+  const linha1 =
+    document.getElementById("linha1");
+
+  const linha2 =
+    document.getElementById("linha2");
+
+  if (!linha1 || !linha2) {
+    return;
+  }
 
   linha1.innerHTML = "";
   linha2.innerHTML = "";
@@ -379,12 +395,34 @@ const linha2 = document.getElementById("linha2");
   linha2.innerHTML += clone2;
 }
 function carregarProdutosParaVoce() {
-  const area = document.getElementById("produtosParaVoce");
-  if (!area) return;
+  const area =
+    document.getElementById(
+      "produtosParaVoce"
+    );
+
+  if (!area) {
+    return;
+  }
+
+  if (
+    !Array.isArray(produtos) ||
+    produtos.length === 0
+  ) {
+    area.innerHTML = "";
+    return;
+  }
 
   const vistos =
-  QAStorage.obterProdutosVistos();
-  const secao = area.closest(".produtos-para-voce");
+    window.QAStorage &&
+    typeof window.QAStorage.obterProdutosVistos ===
+      "function"
+      ? window.QAStorage.obterProdutosVistos()
+      : [];
+
+  const secao =
+    area.closest(
+      ".produtos-para-voce"
+    );
 
   if (secao) {
     secao.style.display = "block";
@@ -607,6 +645,17 @@ function criarWhatsFloat() {
 
 document.addEventListener("DOMContentLoaded", criarWhatsFloat);
 
+window.addEventListener(
+  "qa:produtos-carregados",
+  function () {
+    if (
+      typeof window.carregarProdutosParaVoce ===
+      "function"
+    ) {
+      window.carregarProdutosParaVoce();
+    }
+  }
+);
 document.addEventListener("click", function() {
   const box = document.getElementById("whatsFloatBox");
   if (box) box.classList.remove("ativo");
