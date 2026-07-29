@@ -6,29 +6,19 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_vBIYdnKpF1lTw-g5gP4gsw_lhyQGUBP";
 
-if (
-  !window.supabase ||
-  typeof window.supabase.createClient !== "function"
-) {
-  throw new Error(
-    "A biblioteca oficial do Supabase não foi carregada."
-  );
-}
-
-const qaSupabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
     }
-  );
+  }
+);
 
-window.supabaseClient = qaSupabaseClient;
+window.supabaseClient = supabaseClient;
 
 console.log("Supabase carregado com sucesso.");
 
