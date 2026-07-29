@@ -140,17 +140,27 @@ function mostrarCarregamentoProduto() {
 
 function esconderCarregamentoProduto() {
   const loading =
-    document.getElementById("loadingProduto");
+    document.getElementById(
+      "loadingProduto"
+    );
 
   const conteudo =
-    document.getElementById("conteudoProduto");
-
-  if (loading) {
-    loading.style.display = "none";
-  }
+    document.getElementById(
+      "conteudoProduto"
+    );
 
   if (conteudo) {
-    conteudo.classList.remove("pdp-carregando");
+    conteudo.classList.remove(
+      "pdp-carregando"
+    );
+  }
+
+  if (loading) {
+    loading.classList.add("saindo");
+
+    setTimeout(() => {
+      loading.style.display = "none";
+    }, 200);
   }
 }
 
