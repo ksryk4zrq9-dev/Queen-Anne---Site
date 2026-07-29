@@ -165,7 +165,18 @@ if (paginaAtual === "categoria.html") {
   const categoriaUrl =
     params.get("cat") || "Todos";
 
-  renderProdutos(categoriaUrl);
+  const paginaAtual =
+  window.location.pathname
+    .split("/")
+    .pop()
+    .toLowerCase();
+
+if (
+  paginaAtual !==
+  "categoria.html"
+) {
+  renderProdutos("Todos");
+}
 } else {
   renderProdutos("Todos");
 }
