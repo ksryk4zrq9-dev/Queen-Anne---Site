@@ -168,101 +168,310 @@
   <div id="footer"></div>
 
 </div>
+<script src="./cliente-storage.js"></script>
 
-<script src="supabase-api.js"></script>
-<script src="produto.js"></script>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<script src="./js/supabase-api.js"></script>
+
+<script src="./script.js"></script>
 
 <script>
-
-
-  const params = new URLSearchParams(window.location.search);
-  const categoria = params.get("cat") || "Todos";
-
-  document.getElementById("tituloCategoria").innerText =
-    categoria === "Todos" ? "Todos os produtos" : categoria;
-
-  const breadcrumb = document.getElementById("breadcrumbCategoria");
-
-  if (breadcrumb) {
-    breadcrumb.innerText = categoria;
-  }
-
-  function renderCategoria() {
-    const container = document.getElementById("listaProdutos");
-    const contador = document.getElementById("quantidadeProdutos");
-
-    if (!container || !Array.isArray(window.produtos)) return;
-
-    let lista = window.produtos.filter(p =>
-      categoria === "Todos" || p.categoria === categoria
+document.addEventListener("DOMContentLoaded", function () {
+  const params =
+    new URLSearchParams(
+      window.location.search
     );
 
-    const seletorOrdenar = document.getElementById("ordenarProdutos");
-    const ordem = seletorOrdenar ? seletorOrdenar.value : "relevancia";
+  const categoriaSelecionada =
+    params.get("cat") || "Todos";
+
+  const titulo =
+    document.getElementById(
+      "tituloCategoria"
+    );
+
+  const breadcrumb =
+    document.getElementById(
+      "breadcrumbCategoria"
+    );
+
+  const seletorOrdenar =
+    document.getElementById(
+      "ordenarProdutos"
+    );
+
+  function normalizarCategoria(texto) {
+    return String(texto || "")
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  if (titulo) {
+    titulo.textContent =
+      categoriaSelecionada === "Todos"
+        ? "Todos os produtos"
+        : categoriaSelecionada;
+  }
+
+  if (breadcrumb) {
+    breadcrumb.textContent =
+      categoriaSelecionada === "Todos"
+        ? "Todos os produtos"
+        : categoriaSelecionada;
+  }
+
+  async function carregarCategoria() {
+    const container =
+      document.getElementById(
+        "listaProdutos"
+      );
+
+    const contador =
+      document.getElementById(
+        "quantidadeProdutos"
+      );
+
+    if (!container) {
+      return;
+    }
+
+    container.innerHTML = `
+      <p class="categoria-carregando">
+        Carregando produtos...
+      </p>
+    `;
+
+    try {
+      if (
+        typeof window.getProdutos !==
+        "function"
+      ) {
+        throw new Error(
+          "A função getProdutos não foi carregada."
+        );
+      }
+
+      const dados =
+        await window.getProdutos();
+
+      const produtos =
+        Array.isArray(dados)
+          ? dados.map(produto => ({
+              ...produto,
+
+              id:
+                Number(produto.id),
+
+              preco:
+                Number(produto.preco) ||
+                0,
+
+              images: [
+                produto.imagem ||
+                produto.images?.[0] ||
+                "img/placeholder.jpg"
+              ],
+
+              desc:
+                produto.descricao ||
+                produto.desc ||
+                ""
+            }))
+          : [];
+
+      window.produtos = produtos;
+
+      renderizarCategoria(produtos);
+
+    } catch (erro) {
+      console.error(
+        "Erro ao carregar a categoria:",
+        erro
+      );
+
+      container.innerHTML = `
+        <div class="nenhum-produto">
+          <h3>
+            Não foi possível carregar os produtos
+          </h3>
+
+          <p>
+            Atualize a página e tente novamente.
+          </p>
+        </div>
+      `;
+
+      if (contador) {
+        contador.textContent = "0";
+      }
+    }
+  }
+
+  function renderizarCategoria(produtos) {
+    const container =
+      document.getElementById(
+        "listaProdutos"
+      );
+
+    const contador =
+      document.getElementById(
+        "quantidadeProdutos"
+      );
+
+    if (!container) {
+      return;
+    }
+
+    const categoriaNormalizada =
+      normalizarCategoria(
+        categoriaSelecionada
+      );
+
+    let lista =
+      produtos.filter(produto => {
+        if (
+          categoriaNormalizada ===
+          "todos"
+        ) {
+          return true;
+        }
+
+        const categoriaProduto =
+          normalizarCategoria(
+            produto.categoria
+          );
+
+        return (
+          categoriaProduto ===
+          categoriaNormalizada
+        );
+      });
+
+    const ordem =
+      seletorOrdenar
+        ? seletorOrdenar.value
+        : "relevancia";
+
+    lista = [...lista];
 
     if (ordem === "menor-preco") {
-      lista.sort((a, b) => Number(a.preco) - Number(b.preco));
+      lista.sort(
+        (a, b) =>
+          Number(a.preco) -
+          Number(b.preco)
+      );
     }
 
     if (ordem === "maior-preco") {
-      lista.sort((a, b) => Number(b.preco) - Number(a.preco));
+      lista.sort(
+        (a, b) =>
+          Number(b.preco) -
+          Number(a.preco)
+      );
     }
 
     if (ordem === "nome") {
-      lista.sort((a, b) => String(a.nome).localeCompare(String(b.nome)));
+      lista.sort((a, b) =>
+        String(a.nome || "")
+          .localeCompare(
+            String(b.nome || ""),
+            "pt-BR"
+          )
+      );
     }
-
-    container.innerHTML = "";
-
-    lista.forEach(p => {
-      const link =
-        typeof gerarLinkProduto === "function"
-          ? gerarLinkProduto(p)
-          : `produto.html?id=${p.id}`;
-
-      const img =
-        p.images && p.images[0]
-          ? p.images[0]
-          : "img/placeholder.jpg";
-
-      container.innerHTML += `
-        <div class="produto-card">
-          <a href="${link}">
-            <img src="${img}" alt="${p.nome}">
-          </a>
-
-          <h3>${p.nome}</h3>
-
-          <p class="preco">U$ ${Number(p.preco).toFixed(2)}</p>
-
-          <a href="${link}" class="btn-ver">
-            Ver produto
-          </a>
-        </div>
-      `;
-    });
 
     if (contador) {
-      contador.innerText = lista.length;
+      contador.textContent =
+        String(lista.length);
     }
-  }
 
-  const seletorOrdenar = document.getElementById("ordenarProdutos");
+    if (lista.length === 0) {
+      container.innerHTML = `
+        <div class="nenhum-produto">
+          <h3>
+            Nenhum produto encontrado
+          </h3>
+
+          <p>
+            Ainda não há produtos cadastrados
+            nesta categoria.
+          </p>
+        </div>
+      `;
+
+      return;
+    }
+
+    container.innerHTML =
+      lista.map(produto => {
+        const imagem =
+          produto.images?.[0] ||
+          produto.imagem ||
+          "img/placeholder.jpg";
+
+        const link =
+          `produto.html?id=${produto.id}`;
+
+        return `
+          <div class="produto-card">
+            <a href="${link}">
+              <img
+                src="${imagem}"
+                alt="${produto.nome || "Produto"}"
+              >
+            </a>
+
+            <h3>
+              ${produto.nome || "Produto"}
+            </h3>
+
+            <p class="preco">
+              U$ ${Number(
+                produto.preco || 0
+              ).toFixed(2)}
+            </p>
+
+            <a
+              href="${link}"
+              class="btn-ver"
+            >
+              Ver produto
+            </a>
+          </div>
+        `;
+      }).join("");
+  }
 
   if (seletorOrdenar) {
-    seletorOrdenar.addEventListener("change", renderCategoria);
+    seletorOrdenar.addEventListener(
+      "change",
+      function () {
+        const produtos =
+          Array.isArray(
+            window.produtos
+          )
+            ? window.produtos
+            : [];
+
+        renderizarCategoria(
+          produtos
+        );
+      }
+    );
   }
 
-  setTimeout(renderCategoria, 300);
-  setTimeout(renderCategoria, 800);
+  carregarCategoria();
+});
 </script>
 
 <script src="./cliente-storage.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="./js/supabase-api.js"></script>
-
+<script src="./script.js"></script>
 <script src="./produto.js"></script>
 <script src="./busca-inteligente.js"></script>
 
