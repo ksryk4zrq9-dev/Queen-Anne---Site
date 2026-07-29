@@ -185,7 +185,15 @@ carregarProdutosParaVoce();
 montarSlider();
 }
 
-carregarProdutosDoSite();
+const paginaAtual =
+  window.location.pathname
+    .split("/")
+    .pop()
+    .toLowerCase();
+
+if (paginaAtual !== "categoria.html") {
+  carregarProdutosDoSite();
+}
 
   // ===== CONTADOR CARRINHO =====
 // Menu lateral de categorias (usado no header)
@@ -397,7 +405,6 @@ function reiniciarBannerAutomatico() {
     clearInterval(bannerTimer);
   }
 
-  bannerTimer = setInterval(proximoBanner, 5000);
 }
 
 if (btnNext) {
@@ -432,25 +439,53 @@ setInterval(proximoBanner, 5000);
     return [...lista].sort(() => Math.random() - 0.5);
   }
 
-  function criarCardProduto(p) {
-  const link = `produto.html?id=${p.id}`;
+ function criarCardProduto(p, prioridade = false) {
+  const link =
+    `produto.html?id=${p.id}`;
+
+  const imagem =
+    p.images?.[0] ||
+    p.imagem ||
+    "img/placeholder.jpg";
+
+  const carregamentoImagem =
+    prioridade
+      ? `
+        loading="eager"
+        fetchpriority="high"
+      `
+      : `
+        loading="lazy"
+        fetchpriority="low"
+      `;
 
   return `
     <div class="produto-card">
       <a href="${link}">
         <img
-          src="${p.images?.[0] || p.imagem || "img/placeholder.jpg"}"
-          alt="${p.nome}"
+          src="${imagem}"
+          alt="${p.nome || "Produto"}"
+          ${carregamentoImagem}
+          decoding="async"
+          width="300"
+          height="300"
         >
       </a>
 
-      <h3>${p.nome}</h3>
+      <h3>
+        ${p.nome || "Produto"}
+      </h3>
 
       <p class="preco">
-        U$ ${Number(p.preco).toFixed(2)}
+        U$ ${Number(
+          p.preco || 0
+        ).toFixed(2)}
       </p>
 
-      <a href="${link}" class="btn-ver">
+      <a
+        href="${link}"
+        class="btn-ver"
+      >
         Ver produto
       </a>
     </div>
@@ -477,8 +512,22 @@ const linha2 = document.getElementById("linha2");
   const lista = embaralhar(produtos);
 
   lista.forEach((p, i) => {
-    (i % 2 === 0 ? linha1 : linha2).innerHTML += criarCardProduto(p);
-  });
+  const destino =
+    i % 2 === 0
+      ? linha1
+      : linha2;
+
+  const prioridade =
+    i < 12;
+
+  destino.insertAdjacentHTML(
+    "beforeend",
+    criarCardProduto(
+      p,
+      prioridade
+    )
+  );
+});
 
   // clona os cards para loop real
   const clone1 = linha1.innerHTML;
@@ -487,6 +536,19 @@ const linha2 = document.getElementById("linha2");
   linha1.innerHTML += clone1;
   linha2.innerHTML += clone2;
 }
+const imagensLinha1 =
+  linha1.querySelectorAll("img");
+
+const imagensLinha2 =
+  linha2.querySelectorAll("img");
+
+[...imagensLinha1, ...imagensLinha2]
+  .forEach((imagem, indice) => {
+    if (indice >= 12) {
+      imagem.loading = "lazy";
+      imagem.fetchPriority = "low";
+    }
+  });
 function carregarProdutosParaVoce() {
   const area =
     document.getElementById(
@@ -753,3 +815,39 @@ document.addEventListener("click", function() {
   const box = document.getElementById("whatsFloatBox");
   if (box) box.classList.remove("ativo");
 });
+document.addEventListener(
+  "mouseover",
+  function (event) {
+    const link =
+      event.target.closest(
+        'a[href^="produto.html?id="]'
+      );
+
+    if (!link) {
+      return;
+    }
+
+    const href =
+      link.getAttribute("href");
+
+    if (!href) {
+      return;
+    }
+
+    if (
+      document.querySelector(
+        `link[rel="prefetch"][href="${href}"]`
+      )
+    ) {
+      return;
+    }
+
+    const prefetch =
+      document.createElement("link");
+
+    prefetch.rel = "prefetch";
+    prefetch.href = href;
+
+    document.head.appendChild(prefetch);
+  }
+);
