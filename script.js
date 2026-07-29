@@ -142,7 +142,34 @@ window.dispatchEvent(
     window.produtos = [];
   }
 
-  renderProdutos();
+  const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const categoriaUrl =
+  params.get("cat") || "Todos";
+
+const paginaAtual =
+  window.location.pathname
+    .split("/")
+    .pop()
+    .toLowerCase();
+
+if (paginaAtual === "categoria.html") {
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const categoriaUrl =
+    params.get("cat") || "Todos";
+
+  renderProdutos(categoriaUrl);
+} else {
+  renderProdutos("Todos");
+}
+
 carregarProdutosParaVoce();
 montarSlider();
 }
@@ -195,7 +222,15 @@ atualizarContadorCarrinho();
 
   // ===== ELEMENTOS =====
   const listaProdutos = document.getElementById("listaProdutos");
-  const botoesCategorias = document.querySelectorAll(".categorias-lateral button");
+  botoesCategorias.forEach(botao => {
+  botao.addEventListener("click", function () {
+    const categoria =
+      this.dataset.categoria ||
+      this.textContent.trim();
+
+    renderProdutos(categoria);
+  });
+});
   const campoBusca = document.getElementById("buscaProduto");
 
   // ===== NORMALIZAR TEXTO =====
@@ -204,31 +239,78 @@ atualizarContadorCarrinho();
   }
 
   // ===== RENDER PRODUTOS =====
-  function renderProdutos(cat = "Todos", termo = "") {
-    if (!listaProdutos) return;
-    listaProdutos.innerHTML = "";
+   function renderProdutos(cat = "Todos", termo = "") {
+  if (!listaProdutos) return;
 
-    produtos
-      .filter(p =>
-        (cat === "Todos" || p.categoria === cat) &&
-        normalizar(p.nome).includes(normalizar(termo))
-      )
-      .forEach(p => {
-        let link = `produto.html?id=${p.id}`;
-       
+  listaProdutos.innerHTML = "";
 
-        listaProdutos.innerHTML += `
-          <div class="produto-card">
-            <a href="${link}">
-              <img src="${p.images[0]}" alt="${p.nome}">
-            </a>
-            <h3>${p.nome}</h3>
-            <p class="preco">U$ ${p.preco.toFixed(2)}</p>
-            <a href="${link}" class="btn-ver">Ver produto</a>
-          </div>
-        `;
-      });
+  const categoriaSelecionada =
+    normalizar(String(cat || "Todos").trim());
+
+  const termoBusca =
+    normalizar(String(termo || "").trim());
+
+  const produtosFiltrados = produtos.filter(p => {
+    const categoriaProduto =
+      normalizar(
+        String(p.categoria || "").trim()
+      );
+
+    const nomeProduto =
+      normalizar(
+        String(p.nome || "").trim()
+      );
+
+    const correspondeCategoria =
+      categoriaSelecionada === "todos" ||
+      categoriaProduto === categoriaSelecionada;
+
+    const correspondeBusca =
+      nomeProduto.includes(termoBusca);
+
+    return (
+      correspondeCategoria &&
+      correspondeBusca
+    );
+  });
+
+  produtosFiltrados.forEach(p => {
+    const link =
+      `produto.html?id=${p.id}`;
+
+    listaProdutos.innerHTML += `
+      <div class="produto-card">
+        <a href="${link}">
+          <img
+            src="${p.images?.[0] || p.imagem || "img/placeholder.jpg"}"
+            alt="${p.nome}"
+          >
+        </a>
+
+        <h3>${p.nome}</h3>
+
+        <p class="preco">
+          U$ ${Number(p.preco).toFixed(2)}
+        </p>
+
+        <a href="${link}" class="btn-ver">
+          Ver produto
+        </a>
+      </div>
+    `;
+  });
+
+  if (produtosFiltrados.length === 0) {
+    listaProdutos.innerHTML = `
+      <div class="nenhum-produto">
+        <h3>Nenhum produto encontrado</h3>
+        <p>
+          Ainda não há produtos cadastrados nesta categoria.
+        </p>
+      </div>
+    `;
   }
+}
 
 
 
