@@ -1446,6 +1446,14 @@ Controle: DualSense sem fio
 let produtos = [];
 window.produtos = [];
 
+function normalizarChaveProduto(valor) {
+  return String(valor || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
 // Atualiza lista de produtos a partir do Supabase (se estiver configurado)
 async function carregarProdutosSupabase() {
   try {
@@ -1457,22 +1465,70 @@ async function carregarProdutosSupabase() {
 
     const dados = await window.getProdutos();
 
-    produtos = dados.map(produto => ({
-      ...produto,
+    const fallbackPorNome = new Map(
+      produtosFallback.map(produto => [
+        normalizarChaveProduto(produto.nome),
+        produto
+      ])
+    );
 
-      id: Number(produto.id),
+    const fallbackPorImagem = new Map(
+      produtosFallback
+        .filter(produto => produto.images?.[0])
+        .map(produto => [
+          normalizarChaveProduto(
+            produto.images[0]
+          ),
+          produto
+        ])
+    );
 
-      preco: Number(produto.preco) || 0,
+    produtos = dados.map(produto => {
+      const detalhesLocais =
+        fallbackPorNome.get(
+          normalizarChaveProduto(produto.nome)
+        ) ||
+        fallbackPorImagem.get(
+          normalizarChaveProduto(
+            produto.imagem
+          )
+        ) ||
+        null;
 
-      images: [
+      const imagemPrincipal =
         produto.imagem ||
-        "img/placeholder.jpg"
-      ],
+        detalhesLocais?.images?.[0] ||
+        "img/placeholder.jpg";
 
-      desc:
-        produto.descricao ||
-        ""
-    }));
+      return {
+        ...(detalhesLocais || {}),
+        ...produto,
+
+        id: Number(produto.id),
+
+        preco:
+          Number(produto.preco) ||
+          Number(detalhesLocais?.preco) ||
+          0,
+
+        categoria:
+          produto.categoria ||
+          detalhesLocais?.categoria ||
+          "Produto",
+
+        images: [imagemPrincipal],
+
+        desc:
+          detalhesLocais?.desc ||
+          produto.descricao ||
+          "",
+
+        especificacoes:
+          produto.especificacoes ||
+          detalhesLocais?.especificacoes ||
+          ""
+      };
+    });
 
     window.produtos = produtos;
 
