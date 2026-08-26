@@ -3,7 +3,7 @@ const produtosFallback = [
   {
     id: 1,
     nome: "PlayStation 5 (PS5)Slim 1TB",
-    preco: 497.90,
+    preco: 730.00,
     categoria: "Consoles",
     images: ["img/imgps5.jpg"],
 
@@ -21,7 +21,7 @@ Controle: DualSense sem fio
   {
   id: 2,
   nome: "TV LED Samsung 32 Smart",
-  preco: 119.90,
+  preco: 1137.00,
   categoria: "TVs",
   images: ["img/tv-samsung-32.jpg"],
   desc: "A Smart TV Samsung 32 é indicada para quem busca uma televisão compacta, moderna e prática para quartos, salas menores, cozinhas ou ambientes secundários. Modelos Samsung de 32 polegadas podem oferecer resolução HD ou Full HD, recursos Smart TV, acesso a canais e aplicativos, HDR em linhas recentes e sistema voltado para uso simples no dia a dia.",
@@ -36,7 +36,7 @@ Controle: DualSense sem fio
   {
     id: 4,
     nome: "Ar Gree 24000 BTU",
-  preco: 599.00,
+  preco: 540.00,
   categoria: "Eletrodomésticos",
   images: ["img/ar-gree-24000.jpg"],
   desc: "O Ar-Condicionado Gree 24000 BTU é indicado para quem busca alta capacidade de climatização em ambientes amplos. Reconhecida mundialmente pela qualidade e eficiência energética, a Gree oferece equipamentos com excelente desempenho, baixo nível de ruído e recursos que proporcionam mais conforto no dia a dia. Ideal para residências, escritórios e espaços comerciais.",
@@ -52,7 +52,7 @@ Controle: DualSense sem fio
   {
     id: 5,
     nome: "Ar Smartfy 12000 BTU",
-  preco: 234.99,
+  preco: 256.00,
   categoria: "Eletrodomésticos",
   images: ["img/ar-smartfy-12000.jpg"],
   desc: "O Ar-Condicionado Smartfy 12000 BTU é uma excelente opção para quem deseja conforto térmico aliado à praticidade. Com climatização eficiente e funcionamento silencioso, é ideal para quartos, salas e escritórios de pequeno e médio porte. Seu design moderno combina com diversos ambientes e proporciona uma experiência agradável em qualquer estação do ano.",
@@ -69,7 +69,7 @@ Controle: DualSense sem fio
   {
   id: 6,
   nome: "TV LED 32” Marson MAS32 Smart Android",
-  preco: 79.99,
+  preco: 95.00,
   categoria: "TVs",
   images: ["img/tv-32-marson.jpg"],
   desc: "A TV LED 32” Marson MAS32 Smart Android é uma opção prática e funcional para quem busca entretenimento com conectividade no dia a dia. Com tela LED de 32 polegadas e sistema Smart Android, permite acessar aplicativos, vídeos, filmes, séries e conteúdos online com facilidade. Seu tamanho compacto é ideal para quartos, salas menores, escritórios e ambientes onde uma TV moderna e versátil faz toda a diferença.",
@@ -87,7 +87,7 @@ Controle: DualSense sem fio
   {
     id: 7,
     nome: "Panela de Arroz Smartfy",
-  preco: 17.50,
+  preco: 21.50,
   categoria: "Eletrodomésticos",
   images: ["img/panela-arroz.jpg"],
   desc: "A Panela de Arroz Smartfy é indicada para quem busca praticidade e eficiência no preparo das refeições. Com funcionamento automático, ela cozinha o arroz de forma uniforme e mantém os alimentos aquecidos após o preparo. Seu recipiente antiaderente facilita a limpeza e torna o dia a dia muito mais simples.",
@@ -103,7 +103,7 @@ Controle: DualSense sem fio
   {
     id: 8,
     nome: "Perfume Intrude EDP",
-  preco: 13.99,
+  preco: 12.49,
   categoria: "Perfumes",
   images: ["img/intrude.jpg"],
   desc: "O Perfume Intrude Eau de Parfum é indicado para mulheres que buscam uma fragrância elegante e marcante para diversas ocasiões. Sua composição combina notas florais e frutadas que proporcionam frescor, feminilidade e sofisticação. Ideal para quem deseja deixar uma impressão memorável por onde passa.",
@@ -118,7 +118,7 @@ Controle: DualSense sem fio
   {
     id: 9,
     nome: "Perfume Mont Blanc Signature",
-  preco: 38.50,
+  preco: 46.00,
   categoria: "Perfumes",
   images: ["img/montblanc.jpg"],
   desc: "O Montblanc Signature Eau de Parfum é uma fragrância sofisticada criada para mulheres modernas que valorizam elegância e autenticidade. Com notas florais, orientais e levemente adocicadas, oferece uma experiência olfativa envolvente e refinada, perfeita para destacar sua personalidade em qualquer ocasião.",
@@ -134,7 +134,7 @@ Controle: DualSense sem fio
   {
     id: 10,
     nome: "Chave de Impacto Dewalt",
-  preco: 249.99,
+  preco: 268.00,
   categoria: "Ferramentas",
   images: ["img/dewalt.jpg"],
   desc: "A Chave de Impacto Dewalt é indicada para profissionais e usuários que necessitam de potência, resistência e praticidade em trabalhos de montagem e manutenção. Desenvolvida com materiais de alta qualidade, oferece desempenho confiável para aplicações em oficinas, construções e serviços diversos.",
@@ -150,7 +150,7 @@ Controle: DualSense sem fio
   {
     id: 11,
      nome: "Amazon Fire TV Stick",
-  preco: 20.00,
+  preco: 30.00,
   categoria: "Eletrônicos",
   images: ["img/fire-tv.jpg"],
   desc: "O Amazon Fire TV Stick é indicado para quem deseja transformar qualquer TV compatível em uma Smart TV completa. Com acesso rápido aos principais aplicativos de streaming, oferece uma navegação intuitiva, excelente desempenho e praticidade para assistir filmes, séries, músicas e muito mais.",
@@ -167,8 +167,8 @@ Controle: DualSense sem fio
   {
     id: 12,
     nome: "Robot Xiaomi X20",
-  preco: 520.00,
-  categoria: "Eletrônicos",
+  preco: 530.00,
+  categoria: "Casa e Cozinha",
   images: ["img/robot-xiaomi.jpg"],
   desc: "O Aspirador Robô Xiaomi X20 é indicado para quem busca praticidade na limpeza diária da casa. Equipado com navegação inteligente e alta potência de sucção, ele mapeia os ambientes com precisão e realiza a limpeza de forma eficiente. Ideal para manter pisos limpos com o mínimo de esforço.",
   especificacoes: `
@@ -203,7 +203,7 @@ Controle: DualSense sem fio
   {
     id: 14,
       nome: "Samsung A36",
-  preco: 279.00,
+  preco: 295.00,
   categoria: "Celulares",
   images: ["img/samsung-a36.jpg"],
   desc: "O Samsung Galaxy A36 foi desenvolvido para oferecer uma experiência equilibrada entre desempenho, design e conectividade. Com tela ampla de alta qualidade, câmeras versáteis e bateria de longa duração, é ideal para quem utiliza redes sociais, aplicativos de produtividade, vídeos e jogos. Seu design moderno aliado à interface One UI proporciona praticidade e conforto durante o uso diário, tornando-o uma excelente opção para quem busca tecnologia confiável da Samsung.",
@@ -221,7 +221,7 @@ Controle: DualSense sem fio
   {
     id: 15,
     nome: "Ventilador Mondial",
-  preco: 29.00,
+  preco: 31.00,
   categoria: "Eletrodomésticos",
   images: ["img/ventilador-mondial.jpg"],
   desc: "O Ventilador Mondial 40cm é indicado para quem busca conforto e ventilação eficiente em qualquer ambiente. Com hélices de alto desempenho e diferentes níveis de velocidade, proporciona excelente circulação de ar para residências, escritórios e estabelecimentos comerciais. Seu design funcional permite direcionar o fluxo de vento de acordo com a necessidade, oferecendo mais praticidade e bem-estar durante os dias mais quentes.",
@@ -237,7 +237,7 @@ Controle: DualSense sem fio
   {
     id: 17,
     nome: "Soundbar JBL Bar 500",
-  preco: 325.00,
+  preco: 335.00,
   categoria: "Áudio",
   images: ["img/soundbar-jbl-bar-500.jpg"],
   desc: "A JBL Bar 500 é indicada para quem deseja transformar a experiência sonora da televisão em um verdadeiro cinema em casa. Equipada com tecnologia Dolby Atmos® e MultiBeam™, oferece som surround tridimensional sem a necessidade de caixas traseiras adicionais. Seus 590W de potência total proporcionam áudio envolvente para filmes, séries, esportes e jogos, enquanto o subwoofer sem fio de 10 polegadas entrega graves profundos e impactantes. Além disso, conta com Wi-Fi integrado, Chromecast Built-in™, AirPlay e Alexa Multi-Room Music, permitindo reproduzir músicas e conteúdos diretamente dos principais serviços de streaming. A tecnologia PureVoice melhora a clareza dos diálogos, garantindo que cada detalhe seja ouvido com precisão.",
@@ -255,7 +255,7 @@ Controle: DualSense sem fio
   {
     id: 18,
     nome: "Amazon Fire TV Stick HD (2024)",
-  preco: 30.50,
+  preco: 32.50,
   categoria: "Eletrônicos",
   images: ["img/fire-tv-2024.jpg"],
   desc: "O Amazon Fire TV Stick HD 2024 transforma qualquer televisão compatível em uma Smart TV completa. Com acesso rápido aos principais aplicativos de streaming, oferece uma experiência intuitiva para assistir filmes, séries, esportes e conteúdos online. Seu controle remoto com comando de voz facilita a navegação e a busca por conteúdos, enquanto o desempenho otimizado garante reprodução fluida e rápida instalação em qualquer ambiente.",
@@ -288,7 +288,7 @@ Controle: DualSense sem fio
   {
     id: 20,
     nome: "Projetor Smartfy PJ01W",
-  preco: 49.00,
+  preco: 38.24,
   categoria: "Eletrônicos",
   images: ["img/projetor-smartfy.jpg"],
   desc: "O Projetor Smartfy PJ01W é ideal para quem deseja criar uma experiência de cinema em casa ou realizar apresentações de forma prática e eficiente. Compacto e fácil de transportar, permite projetar imagens, vídeos e apresentações em telas de grandes dimensões. Sua versatilidade o torna uma excelente opção tanto para entretenimento quanto para uso profissional e educacional.",
@@ -321,7 +321,7 @@ Controle: DualSense sem fio
   {
     id: 22,
     nome: "Microfone Audisat X Vlog",
-  preco: 18.00,
+  preco: 25.00,
   categoria: "Eletrônicos",
   images: ["img/microfone-audisat.jpg"],
   desc: "O Microfone Audisat X Vlog foi desenvolvido para criadores de conteúdo, vloggers, streamers e profissionais que desejam melhorar a qualidade das gravações. Compacto e fácil de utilizar, proporciona captação clara da voz, reduzindo ruídos indesejados e garantindo maior qualidade para vídeos, transmissões ao vivo, entrevistas e apresentações.",
@@ -354,7 +354,7 @@ Controle: DualSense sem fio
   {
     id: 24,
     nome: "Ar Climax 18000 BTU Inverter",
-  preco: 455.00,
+  preco: 425.00,
   categoria: "Eletrodomésticos",
   images: ["img/ar-climax-18000.jpg"],
   desc: "O Ar-Condicionado Climax 18000 BTU Inverter é indicado para quem busca climatização eficiente com menor consumo de energia. Sua tecnologia Inverter ajuda a manter a temperatura estável, proporcionando mais conforto e economia ao longo do dia. Ideal para ambientes residenciais e comerciais de médio porte, oferece excelente desempenho e funcionamento silencioso.",
@@ -370,7 +370,7 @@ Controle: DualSense sem fio
   {
     id: 25,
     nome: "Air Fryer RCA 3L",
-  preco: 20.00,
+  preco: 24.00,
   categoria: "Eletrodomésticos",
   images: ["img/airfryer-rca.jpg"],
   desc: "A Air Fryer RCA 3L é a escolha ideal para quem deseja preparar refeições mais práticas utilizando pouco ou nenhum óleo. Com circulação de ar quente em alta velocidade, proporciona alimentos crocantes por fora e macios por dentro. Seu design compacto é perfeito para cozinhas de todos os tamanhos, permitindo preparar diversos tipos de receitas com rapidez e praticidade.",
@@ -451,7 +451,7 @@ Controle: DualSense sem fio
 {
   id: 30,
   nome: "Parafusadeira Dewalt DCD796D2",
-  preco: 240.00,
+  preco: 285.00,
   categoria: "Ferramentas",
   images: ["img/parafusadeira-dewalt.jpg"],
   desc: "A Parafusadeira/Furadeira Dewalt DCD796D2 é uma ferramenta versátil desenvolvida para trabalhos profissionais de perfuração e fixação. Equipada com motor Brushless de alta eficiência, oferece maior autonomia, desempenho e durabilidade. Seu sistema de impacto permite perfurar alvenaria, madeira e metal com facilidade, tornando-a uma excelente escolha para profissionais exigentes.",
@@ -500,7 +500,7 @@ Controle: DualSense sem fio
 {
   id: 33,
   nome: "Azzaro Pour Homme EDT",
-  preco: 24.39,
+  preco: 26.50,
   categoria: "Perfumes",
   images: ["img/azzaro.jpg"],
   desc: "Azzaro Pour Homme Eau de Toilette é um clássico da perfumaria masculina mundial. Sua fragrância sofisticada combina notas aromáticas, amadeiradas e especiadas, criando uma assinatura elegante e atemporal. Ideal para homens que valorizam personalidade, confiança e estilo em qualquer ocasião.",
@@ -516,7 +516,7 @@ Controle: DualSense sem fio
 {
   id: 34,
   nome: "Sistelle Paris Venitiene",
-  preco: 22.90,
+  preco: 29.50,
   categoria: "Perfumes",
   images: ["img/sistelle.jpg"],
   desc: "Sistelle Paris Venitiene é uma fragrância feminina elegante e envolvente, inspirada na sofisticação da perfumaria francesa. Sua composição harmoniosa proporciona um aroma delicado e marcante, ideal para mulheres que desejam destacar sua personalidade com charme e requinte.",
@@ -532,7 +532,7 @@ Controle: DualSense sem fio
 {
   id: 35,
   nome: "Lattafa Queen of Arabia",
-  preco: 24.50,
+  preco: 58.00,
   categoria: "Perfumes",
   images: ["img/lattafa-queen.jpg"],
   desc: "Lattafa Queen of Arabia é uma fragrância feminina inspirada na riqueza e na sofisticação da perfumaria árabe. Seu aroma combina notas doces, florais e orientais, criando uma experiência olfativa luxuosa e envolvente. Ideal para mulheres que desejam uma presença marcante e elegante.",
@@ -548,7 +548,7 @@ Controle: DualSense sem fio
 {
   id: 36,
   nome: "Lattafa Khamrah",
-  preco: 14.75,
+  preco: 18.50,
   categoria: "Perfumes",
   images: ["img/lattafa-khamrah.jpg"],
   desc: "Lattafa Khamrah é uma das fragrâncias árabes mais desejadas da atualidade. Conhecida por seu aroma intenso e sofisticado, combina notas especiadas, doces e amadeiradas que proporcionam excelente projeção e fixação. Uma escolha perfeita para quem busca um perfume marcante, elegante e memorável.",
@@ -565,7 +565,7 @@ Controle: DualSense sem fio
   {
   id: 37,
   nome: "Camiseta Adidas",
-  preco: 22.00,
+  preco: 31.50,
   categoria: "Outros",
   images: ["img/camiseta-adidas.jpg"],
   desc: "A Camiseta Adidas é indicada para quem busca conforto, estilo e versatilidade no dia a dia. Produzida com materiais de qualidade, oferece excelente respirabilidade e ajuste confortável para atividades esportivas, momentos de lazer ou uso casual. Seu design moderno e a tradição da marca Adidas fazem desta peça uma excelente escolha para quem valoriza desempenho e estilo.",
@@ -581,7 +581,7 @@ Controle: DualSense sem fio
 {
   id: 38,
   nome: "Tênis Adidas Infantil",
-  preco: 33.00,
+  preco: 50.00,
   categoria: "Outros",
   images: ["img/tenis-adidas-infantil.jpg"],
   desc: "O Tênis Adidas Infantil foi desenvolvido para acompanhar as crianças em todas as atividades do dia a dia. Com design confortável, solado resistente e excelente ajuste aos pés, oferece segurança e praticidade para brincar, passear e praticar atividades físicas. Uma combinação perfeita entre conforto, qualidade e estilo.",
@@ -612,7 +612,7 @@ Controle: DualSense sem fio
 {
   id: 41,
   nome: "Colchão Inflável Intex",
-  preco: 16.99,
+  preco: 14.00,
   categoria: "Outros",
   images: ["img/colchao-intex.jpg"],
   desc: "O Colchão Inflável Intex é uma excelente solução para acomodar visitas ou proporcionar mais conforto durante viagens e acampamentos. Fabricado com materiais resistentes e superfície confortável, oferece praticidade no transporte, armazenamento e utilização. Ideal para uso residencial ou atividades ao ar livre.",
@@ -628,7 +628,7 @@ Controle: DualSense sem fio
 {
   id: 42,
   nome: "TV LED 40” Marson MAS40 Smart Android",
-  preco: 122.99,
+  preco: 135.00,
   categoria: "TVs",
   images: ["img/tv-40-marson.jpg"],
   desc: "A Smart TV Marson MAS40 de 40 polegadas é indicada para quem busca entretenimento completo com excelente custo-benefício. Equipada com sistema Android, permite acessar aplicativos de streaming, vídeos, músicas e conteúdos online diretamente na televisão. Sua tela LED proporciona imagens nítidas e cores vibrantes, tornando filmes, séries e programas ainda mais envolventes.",
@@ -645,7 +645,7 @@ Controle: DualSense sem fio
 {
   id: 43,
   nome: "TV LED 50” Marson MAS50 Smart Android",
-  preco: 199.99,
+  preco: 230.00,
   categoria: "TVs",
   images: ["img/tv-50-marson.jpg"],
   desc: "A Smart TV Marson MAS50 de 50 polegadas oferece uma experiência completa de entretenimento para toda a família. Com tela ampla, sistema Android integrado e acesso aos principais aplicativos de streaming, proporciona imagens envolventes e navegação intuitiva. Ideal para salas e ambientes que exigem uma experiência visual mais imersiva.",
@@ -696,7 +696,7 @@ Controle: DualSense sem fio
 {
   id: 46,
   nome: "Ar Clímax 18000 BTU Inverter com Kit",
-  preco: 455.00,
+  preco: 425.00,
   categoria: "Ar Condicionado",
   images: ["img/ar-climax-18000.jpg"],
   desc: "O Ar-Condicionado Clímax 18000 BTU Inverter foi desenvolvido para oferecer climatização eficiente e economia de energia em ambientes de médio e grande porte. Sua tecnologia Inverter proporciona funcionamento mais silencioso e controle preciso da temperatura, garantindo conforto durante todas as estações do ano. Acompanha kit de instalação.",
@@ -714,7 +714,7 @@ Controle: DualSense sem fio
   id: 47,
   nome: "Omeleteira Britânia 220V",
   preco: 15.50,
-  categoria: "Eletroportáteis",
+  categoria: "Casa e Cozinha",
   images: ["img/omeleteira-britania.jpg"],
   desc: "A Omeleteira Britânia 220V é perfeita para quem busca praticidade na cozinha e deseja preparar refeições rápidas de forma simples. Com chapas antiaderentes e aquecimento uniforme, permite preparar omeletes, ovos e diversas receitas com rapidez e facilidade. Compacta e eficiente, é ideal para o dia a dia.",
   especificacoes: `
@@ -730,7 +730,7 @@ Controle: DualSense sem fio
   id: 48,
   nome: "Air Fryer Instant 25 Litros",
   preco: 65.00,
-  categoria: "Eletroportáteis",
+  categoria: "Casa e Cozinha",
   images: ["img/airfryer-instant-25l.jpg"],
   desc: "A Air Fryer Instant de 25 litros é ideal para famílias que buscam praticidade e versatilidade na cozinha. Com ampla capacidade interna, permite preparar grandes porções de alimentos, assar, gratinar, aquecer e fritar com pouco ou nenhum óleo. Seu sistema de circulação de ar quente proporciona cozimento uniforme, garantindo alimentos crocantes por fora e macios por dentro.",
   especificacoes: `
@@ -745,8 +745,8 @@ Controle: DualSense sem fio
 {
   id: 49,
   nome: "Air Fryer RCA 5 Litros 110V",
-  preco: 23.00,
-  categoria: "Eletroportáteis",
+  preco: 24.00,
+  categoria: "Casa e Cozinha",
   images: ["img/airfryer-rca-5l.jpg"],
   desc: "A Air Fryer RCA 5 Litros é perfeita para quem deseja preparar refeições mais saudáveis de forma rápida e prática. Com capacidade ideal para o dia a dia, utiliza circulação de ar quente para cozinhar os alimentos com pouco ou nenhum óleo, preservando sabor e textura. Seu design moderno combina eficiência e praticidade para qualquer cozinha.",
   especificacoes: `
@@ -761,7 +761,7 @@ Controle: DualSense sem fio
 {
   id: 50,
   nome: "Escova Giratória Smartfy ES01P 1200W",
-  preco: 20.00,
+  preco: 22.00,
   categoria: "Beleza",
   images: ["img/escova-smartfy.jpg"],
   desc: "A Escova Giratória Smartfy ES01P foi desenvolvida para quem deseja secar, modelar e dar volume aos cabelos de forma prática e rápida. Com potência de 1200W e rotação automática, facilita a criação de penteados enquanto reduz o tempo de finalização. Ideal para uso diário, proporciona cabelos mais alinhados e com acabamento profissional.",
@@ -793,7 +793,7 @@ Controle: DualSense sem fio
 {
   id: 52,
   nome: "Aparador de Barba Quanta QTCAS21",
-  preco: 19.00,
+  preco: 19.50,
   categoria: "Beleza",
   images: ["img/aparador-quanta.jpg"],
   desc: "O Aparador de Barba Quanta QTCAS21 foi desenvolvido para proporcionar cortes precisos e acabamento uniforme. Compacto e fácil de utilizar, permite aparar barba, bigode e detalhes com praticidade, garantindo um visual sempre bem cuidado. Ideal para uso doméstico e manutenção diária.",
@@ -809,7 +809,7 @@ Controle: DualSense sem fio
 {
   id: 53,
   nome: "Chapinha Britânia Titanium Blue",
-  preco: 20.00,
+  preco: 19.00,
   categoria: "Beleza",
   images: ["img/chapinha-britania.jpg"],
   desc: "A Chapinha Britânia Titanium Blue oferece aquecimento rápido e excelente desempenho para alisar os cabelos com praticidade. Suas placas revestidas ajudam a distribuir o calor de forma uniforme, proporcionando fios mais alinhados, brilhantes e com acabamento profissional. Ideal para quem deseja resultados rápidos e duradouros.",
@@ -825,7 +825,7 @@ Controle: DualSense sem fio
 {
   id: 54,
   nome: "Secador Mondial SC-32 Rose 2000W",
-  preco: 19.00,
+  preco: 24.00,
   categoria: "Beleza",
   images: ["img/secador-mondial.jpg"],
   desc: "O Secador Mondial SC-32 Rose combina potência, praticidade e design moderno para o cuidado diário dos cabelos. Com 2000W de potência, proporciona secagem rápida e eficiente, reduzindo o tempo de finalização. Seus ajustes de temperatura e velocidade permitem adaptar o uso às diferentes necessidades dos fios.",
@@ -841,7 +841,7 @@ Controle: DualSense sem fio
 {
   id: 55,
   nome: "Ondulador Onida ON-057 28mm",
-  preco: 18.00,
+  preco: 17.50,
   categoria: "Beleza",
   images: ["img/ondulador-onida.jpg"],
   desc: "O Ondulador Onida ON-057 foi desenvolvido para criar ondas definidas e naturais com facilidade. Seu barril de 28mm permite modelar os cabelos de forma uniforme, proporcionando um visual elegante e moderno. Ideal para quem deseja variar os penteados sem abrir mão da praticidade.",
@@ -857,7 +857,7 @@ Controle: DualSense sem fio
 {
   id: 56,
   nome: "Máscara Karseell 500ml",
-  preco: 5.29,
+  preco: 6.50,
   categoria: "Beleza",
   images: ["img/mascara-karseell.jpg"],
   desc: "A Máscara Capilar Karseell 500ml foi desenvolvida para proporcionar hidratação profunda, nutrição e recuperação dos fios. Sua fórmula auxilia na redução do ressecamento, melhora a maciez e contribui para cabelos mais saudáveis, brilhantes e fáceis de pentear. Ideal para todos os tipos de cabelo que necessitam de cuidados intensivos.",
@@ -889,7 +889,7 @@ Controle: DualSense sem fio
 {
   id: 58,
   nome: "Tênis Masculino Adidas Runfalcon",
-  preco: 56.00,
+  preco: 67.00,
   categoria: "Calçados",
   images: ["img/tenis-runfalcon.jpg"],
   desc: "O Adidas Runfalcon Masculino é um tênis versátil desenvolvido para corrida, caminhada e uso diário. Seu cabedal leve proporciona conforto durante todo o dia, enquanto o solado oferece estabilidade e aderência em diferentes superfícies. Ideal para quem busca desempenho, conforto e estilo em um único calçado.",
@@ -905,7 +905,7 @@ Controle: DualSense sem fio
 {
   id: 59,
   nome: "Viva Bike Aro 29",
-  preco: 235.00,
+  preco: 300.00,
   categoria: "Esportes",
   images: ["img/bike-aro29.jpg"],
   desc: "A Viva Bike Aro 29 é ideal para quem busca uma bicicleta versátil para passeios urbanos, deslocamentos diários e trilhas leves. Seu aro 29 proporciona maior estabilidade, melhor absorção de obstáculos e mais conforto durante a pedalada. Com estrutura resistente e geometria projetada para o conforto do ciclista, é uma excelente opção para lazer e atividades esportivas.",
@@ -921,7 +921,7 @@ Controle: DualSense sem fio
 {
   id: 60,
   nome: "Patinete Interbras 10.5 Pro Max",
-  preco: 267.99,
+  preco: 270.00,
   categoria: "Esportes",
   images: ["img/patinete-promax.jpg"],
   desc: "O Patinete Interbras 10.5 Pro Max foi desenvolvido para oferecer mobilidade moderna, conforto e praticidade. Equipado com rodas de 10,5 polegadas e estrutura robusta, proporciona uma condução estável em diferentes tipos de terreno. Ideal para deslocamentos urbanos, combina desempenho, autonomia e tecnologia para tornar os trajetos mais rápidos e agradáveis.",
@@ -1001,7 +1001,7 @@ Controle: DualSense sem fio
 {
   id: 65,
   nome: "Soprador Térmico UHG160078",
-  preco: 14.99,
+  preco: 21.00,
   categoria: "Ferramentas",
   images: ["img/soprador-termico.jpg"],
   desc: "O Soprador Térmico UHG160078 é uma ferramenta versátil indicada para aplicações como remoção de tintas, moldagem de materiais, secagem rápida e manutenção em geral. Seu fluxo de ar aquecido permite realizar diversos trabalhos com eficiência e praticidade, sendo uma excelente opção para profissionais e usuários domésticos.",
@@ -1016,7 +1016,7 @@ Controle: DualSense sem fio
 {
   id: 66,
   nome: "Lattafa Al Noble Wazeer 100ml",
-  preco: 17.99,
+  preco: 17.50,
   categoria: "Perfumes",
   images: ["img/lattafa-wazeer.jpg"],
   desc: "Lattafa Al Noble Wazeer é uma fragrância sofisticada inspirada na tradição da perfumaria árabe. Sua composição combina notas amadeiradas, aromáticas e especiadas que criam uma presença marcante e elegante. Ideal para quem aprecia perfumes intensos, refinados e com excelente fixação.",
@@ -1032,7 +1032,7 @@ Controle: DualSense sem fio
 {
   id: 67,
   nome: "Lattafa Yara Elixir EDP 100ml",
-  preco: 22.00,
+  preco: 23.50,
   categoria: "Perfumes",
   images: ["img/lattafa-yara.jpg"],
   desc: "Lattafa Yara Elixir Eau de Parfum é uma fragrância feminina moderna, envolvente e sofisticada. Sua combinação de notas doces, florais e cremosas proporciona uma experiência olfativa elegante e marcante, perfeita para mulheres que desejam destacar sua personalidade com delicadeza e charme.",
@@ -1064,7 +1064,7 @@ Controle: DualSense sem fio
 {
   id: 69,
   nome: "Chanel Allure Homme Sport 100ml",
-  preco: 106.00,
+  preco: 127.00,
   categoria: "Perfumes",
   images: ["img/chanel-allure.jpg"],
   desc: "Chanel Allure Homme Sport é uma fragrância masculina elegante e energética que combina frescor, sofisticação e intensidade. Suas notas cítricas, amadeiradas e especiadas criam um perfume versátil, ideal para homens ativos que desejam transmitir confiança e estilo em qualquer ocasião.",
@@ -1097,7 +1097,7 @@ Controle: DualSense sem fio
 {
   id: 71,
   nome: "Kenzo Amour EDP 100ml",
-  preco: 47.00,
+  preco: 52.50,
   categoria: "Perfumes",
   images: ["img/kenzo-amour.jpg"],
   desc: "Kenzo Amour Eau de Parfum é uma fragrância feminina inspirada em uma viagem sensorial pelo Oriente. Delicado, envolvente e sofisticado, combina notas florais, cremosas e amadeiradas que transmitem conforto, feminilidade e elegância. Sua composição marcante cria uma experiência olfativa única, perfeita para mulheres que apreciam perfumes refinados e memoráveis.",
@@ -1114,7 +1114,7 @@ Controle: DualSense sem fio
 {
   id: 72,
   nome: "Arqus La Bella EDP 100ml",
-  preco: 8.90,
+  preco: 12.50,
   categoria: "Perfumes",
   images: ["img/arqus-labella.jpg"],
   desc: "Arqus La Bella Eau de Parfum é uma fragrância feminina moderna e envolvente, criada para mulheres que desejam transmitir elegância e personalidade. Sua combinação de notas doces e florais proporciona um aroma agradável e sofisticado, ideal para acompanhar diferentes momentos do dia com charme e delicadeza.",
@@ -1130,7 +1130,7 @@ Controle: DualSense sem fio
 },
 {
   id: 73,
-  nome: "Espumante Villa Sandi Rosé 750ml",
+  nome: "  Rosé 750ml",
   preco: 8.99,
   categoria: "Bebidas",
   images: ["img/villa-sandi.jpg"],
@@ -1163,7 +1163,7 @@ Controle: DualSense sem fio
 {
   id: 75,
   nome: "Espumante Freixenet Ice Blanco 750ml",
-  preco: 10.20,
+  preco: 9.50,
   categoria: "Bebidas",
   images: ["img/freixenet-ice.jpg"],
   desc: "Freixenet Ice Blanco foi desenvolvido especialmente para ser apreciado com gelo, proporcionando uma experiência refrescante e moderna. Seus aromas frutados e florais combinam perfeitamente com dias quentes, encontros descontraídos e celebrações especiais. Um espumante versátil que une sofisticação e leveza.",
@@ -1228,7 +1228,7 @@ Controle: DualSense sem fio
 {
   id: 79,
   nome: "Vinho Catena Cabernet Sauvignon 750ml",
-  preco: 11.99,
+  preco: 11.50,
   categoria: "Bebidas",
   images: ["img/catena.jpg"],
   desc: "O Catena Cabernet Sauvignon é um dos vinhos mais prestigiados da Argentina, produzido pela renomada vinícola Catena Zapata. Elaborado com uvas cultivadas em altitude, apresenta excelente estrutura, notas de frutas escuras, especiarias e taninos equilibrados. Uma escolha perfeita para apreciadores de vinhos elegantes e expressivos.",
@@ -1244,7 +1244,7 @@ Controle: DualSense sem fio
 {
   id: 80,
   nome: "Vinho Bramare Cabernet Sauvignon 750ml",
-  preco: 29.50,
+  preco: 30.50,
   categoria: "Bebidas",
   images: ["img/bramare.jpg"],
   desc: "Bramare Cabernet Sauvignon é um vinho premium produzido pela Viña Cobos, reconhecida internacionalmente por seus rótulos de alta qualidade. Elaborado com uvas selecionadas de Mendoza, apresenta aromas complexos, excelente concentração e grande potencial de envelhecimento. Uma experiência sofisticada para apreciadores de vinhos de alta gama.",
@@ -1261,7 +1261,7 @@ Controle: DualSense sem fio
 {
   id: 81,
   nome: "Xiaomi Poco C85 8GB/256GB",
-  preco: 112.99,
+  preco: 158.00,
   categoria: "Celulares",
   images: ["img/poco-c85.jpg"],
   desc: "O Xiaomi Poco C85 é um smartphone desenvolvido para quem busca desempenho, armazenamento amplo e excelente custo-benefício. Com 8GB de memória RAM e 256GB de armazenamento interno, oferece fluidez para multitarefas, redes sociais, jogos e aplicativos do dia a dia. Sua tela ampla proporciona uma experiência confortável para vídeos, navegação e entretenimento.",
@@ -1278,7 +1278,7 @@ Controle: DualSense sem fio
 {
   id: 82,
   nome: "Oppo Reno 13 5G 12GB/512GB",
-  preco: 457.99,
+  preco: 505.00,
   categoria: "Celulares",
   images: ["img/oppo-reno13.jpg"],
   desc: "O Oppo Reno 13 5G combina tecnologia avançada, design moderno e alto desempenho. Equipado com 12GB de RAM e generosos 512GB de armazenamento interno, oferece excelente velocidade para multitarefas, jogos e produtividade. Sua conectividade 5G garante navegação rápida e uma experiência premium para usuários exigentes.",
@@ -1295,7 +1295,7 @@ Controle: DualSense sem fio
 {
   id: 83,
   nome: "Phone 17 Pro 256GB Orange",
-  preco: 1199.00,
+  preco: 1160.00,
   categoria: "Celulares",
   images: ["img/iphone-17pro.jpg"],
   desc: "O Phone 17 Pro foi desenvolvido para oferecer desempenho de alto nível, recursos avançados e uma experiência premium em todos os momentos. Com 256GB de armazenamento, proporciona amplo espaço para fotos, vídeos, aplicativos e documentos. Seu design sofisticado na cor Orange destaca-se pela elegância e exclusividade.",
@@ -1360,7 +1360,7 @@ Controle: DualSense sem fio
 {
   id: 87,
   nome: "Multimídia Hetzer Argon Max HB20",
-  preco: 199.99,
+  preco: 202.00,
   categoria: "Automotivo",
   images: ["img/argon-max.jpg"],
   desc: "A Central Multimídia Hetzer Argon Max para HB20 foi desenvolvida para modernizar o sistema de entretenimento do veículo. Com interface intuitiva e recursos multimídia avançados, proporciona mais praticidade durante as viagens, permitindo acesso a músicas, vídeos, navegação e conectividade com dispositivos móveis.",
@@ -1376,7 +1376,7 @@ Controle: DualSense sem fio
 {
   id: 88,
   nome: "JBL PartyBox Encore 100W (2 Mic)",
-  preco: 275.90,
+  preco: 300.00,
   categoria: "Áudio",
   images: ["img/jbl-encore.jpg"],
   desc: "A JBL PartyBox Encore entrega som potente e muita diversão para festas, eventos e encontros com amigos. Com potência de 100W e dois microfones sem fio inclusos, é ideal para karaokês e apresentações. Seu áudio de alta qualidade e design portátil transformam qualquer ambiente em uma verdadeira celebração.",
@@ -1408,7 +1408,7 @@ Controle: DualSense sem fio
 {
   id: 90,
   nome: "Câmera Corporal Satellite Body CS06",
-  preco: 40.00,
+  preco: 50.00,
   categoria: "Segurança",
   images: ["img/body-cs06.jpg"],
   desc: "A Câmera Corporal Satellite Body CS06 foi desenvolvida para registrar atividades em campo com praticidade e mobilidade. Seu formato portátil permite utilização em diferentes contextos profissionais, auxiliando na documentação de eventos e operações. Compacta e fácil de transportar, oferece uma solução eficiente para gravações em movimento.",
