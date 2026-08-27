@@ -1294,7 +1294,7 @@ Controle: DualSense sem fio
 },
 {
   id: 83,
-  nome: "Phone 17 Pro 256GB Orange",
+  nome: "IPhone 17 Pro 256GB Orange",
   preco: 1160.00,
   categoria: "Celulares",
   images: ["img/iphone-17pro.jpg"],
