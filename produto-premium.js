@@ -10,6 +10,51 @@ function getIdFromUrl() {
   return id ? Number(id) : null;
 }
 
+// Aguarda o produto.js terminar de combinar os dados do Supabase
+// com as descrições, imagens e especificações completas locais.
+async function aguardarProdutoCompleto(id) {
+  const localizar = () => {
+    const lista = Array.isArray(window.produtos)
+      ? window.produtos
+      : [];
+
+    return lista.find(item =>
+      String(item?.id) === String(id)
+    ) || null;
+  };
+
+  const produtoDisponivel = localizar();
+
+  if (produtoDisponivel) {
+    return produtoDisponivel;
+  }
+
+  await new Promise(resolve => {
+    let finalizado = false;
+
+    const concluir = () => {
+      if (finalizado) return;
+      finalizado = true;
+      window.removeEventListener(
+        "qa:produtos-carregados",
+        concluir
+      );
+      resolve();
+    };
+
+    window.addEventListener(
+      "qa:produtos-carregados",
+      concluir,
+      { once: true }
+    );
+
+    // Evita deixar a página presa caso o carregamento externo falhe.
+    setTimeout(concluir, 8000);
+  });
+
+  return localizar();
+}
+
 // Title Case pt-BR
 function titleCasePtBR(str) {
   const keepLower = new Set([
@@ -210,6 +255,16 @@ async function loadProduct() {
       );
 
       return;
+    }
+
+    const produtoCompleto =
+      await aguardarProdutoCompleto(id);
+
+    if (produtoCompleto) {
+      p = {
+        ...p,
+        ...produtoCompleto
+      };
     }
 
     p = {
