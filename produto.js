@@ -1298,9 +1298,9 @@ Controle: DualSense sem fio
   preco: 1160.00,
   categoria: "Celulares",
   images: ["img/iphone-17pro.jpg"],
-  desc: "O Phone 17 Pro foi desenvolvido para oferecer desempenho de alto nível, recursos avançados e uma experiência premium em todos os momentos. Com 256GB de armazenamento, proporciona amplo espaço para fotos, vídeos, aplicativos e documentos. Seu design sofisticado na cor Orange destaca-se pela elegância e exclusividade.",
+  desc: "O IPhone 17 Pro foi desenvolvido para oferecer desempenho de alto nível, recursos avançados e uma experiência premium em todos os momentos. Com 256GB de armazenamento, proporciona amplo espaço para fotos, vídeos, aplicativos e documentos. Seu design sofisticado na cor Orange destaca-se pela elegância e exclusividade.",
   especificacoes: `
-  Modelo: Phone 17 Pro
+  Modelo: IPhone 17 Pro
   Armazenamento: 256GB
   Cor: Orange
   Tela: Alta definição
