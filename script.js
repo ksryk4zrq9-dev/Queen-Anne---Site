@@ -776,11 +776,6 @@ function criarWhatsFloat() {
         <div><strong>Assistência</strong><span>+595 985 902141</span></div>
       </a>
 
-      <a href="https://wa.me/595982104768" target="_blank" rel="noopener">
-        <i class="fa-brands fa-whatsapp"></i>
-        <div><strong>Gerente</strong><span>+595 982 104768</span></div>
-      </a>
-
     </div>
   `;
 
