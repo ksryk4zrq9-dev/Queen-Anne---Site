@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ativarMascaraTelefoneCliente();
 });
 
-function iniciarAreaCliente() {
+async function iniciarAreaCliente() {
   const formLogin = document.getElementById("formLogin");
   const formCadastro = document.getElementById("formCadastro");
 
@@ -49,15 +49,39 @@ function iniciarAreaCliente() {
     formCadastro.addEventListener("submit", cadastrarCliente);
   }
 
-  carregarDadosClienteNaTela();
-
   if (window.location.pathname.includes("meus-pedidos.html")) {
-    const clienteLogado = JSON.parse(localStorage.getItem("qa_cliente_logado"));
+    let clienteLogado = obterClienteLogado();
+
+    if (!clienteLogado && window.supabaseClient) {
+      const {
+        data: { session }
+      } = await window.supabaseClient.auth.getSession();
+
+      if (session?.user) {
+        const usuario = session.user;
+
+        clienteLogado = {
+          id: usuario.id,
+          email: usuario.email,
+          nome: usuario.user_metadata?.nome || "",
+          telefone: usuario.user_metadata?.telefone || "",
+          newsletter: usuario.user_metadata?.newsletter || false
+        };
+
+        localStorage.setItem(
+          "qa_cliente_logado",
+          JSON.stringify(clienteLogado)
+        );
+      }
+    }
 
     if (!clienteLogado) {
       window.location.href = "entrar.html";
+      return;
     }
   }
+
+  carregarDadosClienteNaTela();
 }
 async function cadastrarCliente(event) {
   event.preventDefault();
