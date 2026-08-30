@@ -3688,18 +3688,31 @@ body.pagina-produto .resultado-busca{
   padding-right:46px;
 }
 
-.cliente-password button{
-  position:absolute;
-  right:8px;
-  top:50%;
-  transform:translateY(-50%);
-  width:34px;
-  height:34px;
-  background:transparent !important;
-  color:#777 !important;
-  border:none !important;
-  box-shadow:none !important;
-  padding:0 !important;
+.cliente-password button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 34px;
+  height: 34px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  color: #555;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.cliente-password button:hover {
+  color: #d80000;
 }
 
 .cliente-login-options{
