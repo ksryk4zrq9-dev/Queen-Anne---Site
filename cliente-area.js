@@ -534,10 +534,23 @@ function toggleSenha(id) {
 
   if (!input) return;
 
+  const botao = input.parentElement.querySelector("button");
+  const icone = botao?.querySelector("i");
+
   if (input.type === "password") {
     input.type = "text";
+
+    if (icone) {
+      icone.classList.remove("fa-eye");
+      icone.classList.add("fa-eye-slash");
+    }
   } else {
     input.type = "password";
+
+    if (icone) {
+      icone.classList.remove("fa-eye-slash");
+      icone.classList.add("fa-eye");
+    }
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
