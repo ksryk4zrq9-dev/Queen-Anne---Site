@@ -113,12 +113,13 @@ async function cadastrarCliente(event) {
         email,
         password: senha,
         options: {
-          data: {
-            nome,
-            telefone,
-            newsletter
-          }
-        }
+  emailRedirectTo: `${window.location.origin}/meus-pedidos.html`,
+  data: {
+    nome,
+    telefone,
+    newsletter
+  }
+}
       });
 
     if (error) {
