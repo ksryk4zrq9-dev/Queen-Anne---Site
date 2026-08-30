@@ -15,7 +15,17 @@ function obterChaveProdutosVistos() {
   return email
     ? `qa_produtos_vistos_${email}`
     : "qa_produtos_vistos_visitante";
-}document.addEventListener("DOMContentLoaded", async function () {
+}
+
+// Carrega as estatísticas anônimas em todas as páginas que usam o script global.
+if (!document.querySelector('script[src$="analytics-site.js"]')) {
+  const qaAnalyticsScript = document.createElement("script");
+  qaAnalyticsScript.src = "./analytics-site.js";
+  qaAnalyticsScript.defer = true;
+  document.head.appendChild(qaAnalyticsScript);
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
   // ===== CARREGAR HEADER E FOOTER =====
   const headerEl = document.getElementById("header");
   const footerEl = document.getElementById("footer");

@@ -1,0 +1,40 @@
+QUEEN ANNE - ATIVAÇÃO DAS ESTATÍSTICAS ANÔNIMAS
+
+1. SUPABASE
+Abra SQL Editor > New query.
+Cole todo o conteúdo de 01_CRIAR_ANALYTICS_SUPABASE.sql e clique em Run.
+
+2. CHAVE PRIVADA DO SUPABASE
+No Supabase, abra Project Settings > API Keys.
+Copie uma chave Secret ou a chave service_role da área Legacy API Keys.
+Ela é secreta: não coloque no GitHub e não envie para ninguém.
+
+3. VERCEL
+Abra o projeto > Settings > Environment Variables e crie:
+
+SUPABASE_URL
+https://elcqvwnsoucbhuqhwify.supabase.co
+
+SUPABASE_SERVICE_ROLE_KEY
+Cole aqui a chave service_role do Supabase.
+
+Marque Production, Preview e Development. Salve e faça um novo deploy.
+
+4. VERCEL WEB ANALYTICS
+Abra o projeto na Vercel > Analytics e clique em Enable.
+
+5. TESTE
+Abra o site publicado, pesquise um produto, abra a página dele e clique no WhatsApp.
+No Supabase, abra Table Editor > eventos_site para conferir os registros.
+
+RELATÓRIOS NO SQL EDITOR
+
+select * from public.resumo_pesquisas_site order by quantidade desc;
+
+select * from public.resumo_produtos_site order by visualizacoes desc;
+
+select * from public.resumo_localizacoes_site order by acessos desc;
+
+PRIVACIDADE
+O sistema não grava o IP completo, nome, telefone ou e-mail do visitante anônimo.
+A localização é aproximada e fornecida pela infraestrutura da Vercel.
