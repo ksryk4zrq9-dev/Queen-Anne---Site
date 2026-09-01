@@ -125,6 +125,11 @@
     <button onclick="location.href='categoria.html?cat=Brinquedos'">Brinquedos</button>
     <button onclick="location.href='categoria.html?cat=Informática'">Informática</button>
     <button onclick="location.href='categoria.html?cat=Automotivo'">Automotivo</button>
+    <button onclick="location.href='categoria.html?cat=Casa e Cozinha'">Casa e Cozinha</button>
+    <button onclick="location.href='categoria.html?cat=Vestuário'">Vestuário</button>
+    <button onclick="location.href='categoria.html?cat=Relógios e Acessórios'">Relógios e Acessórios</button>
+    <button onclick="location.href='categoria.html?cat=Pesca'">Pesca</button>
+    <button onclick="location.href='categoria.html?cat=Bebidas'">Bebidas</button>
   </div>
 
   <section class="categoria-page qa-categoria-page">
@@ -178,6 +183,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+  if (typeof window.getCatalogoPagina === "function") return;
   const params =
     new URLSearchParams(
       window.location.search
@@ -466,6 +472,8 @@ document.addEventListener("DOMContentLoaded", function () {
   carregarCategoria();
 });
 </script>
+
+<script src="./catalogo-categoria.js"></script>
 
 <script src="./cliente-storage.js"></script>
 
