@@ -73,6 +73,14 @@
     .pdp-longdesc h3 { margin: 0 0 10px; font-size: 18px; }
     .pdp-longdesc p { margin: 0; line-height: 1.75; color: rgba(255,255,255,.78); }
 
+    .pdp-destaques {
+      margin: 22px 0 0;
+      padding-left: 22px;
+      color: rgba(255,255,255,.78);
+      line-height: 1.75;
+    }
+    .pdp-destaques li { margin-bottom: 7px; }
+
     .pdp-video { padding: 18px 0 0; }
     .pdp-video h3 { margin: 0 0 12px; font-size: 18px; }
     .pdp-video-box {
@@ -171,6 +179,7 @@
 
 <div class="pdp-longdesc reveal">
   <p id="pdpDescFull"></p>
+  <ul id="pdpDestaques" class="pdp-destaques" hidden></ul>
 </div>
 
         <div class="pdp-video reveal" id="pdpVideoWrap" style="display:none;">
@@ -224,6 +233,7 @@
 
 <script src="./produto.js"></script>
 <script src="./produto-premium.js"></script>
+<script src="./catalogo-produto.js"></script>
 <script src="./script.js"></script>
 
 </body>
