@@ -28,7 +28,6 @@
     if (specs) {
       const especificacoesProduto = Object.entries(produto.especificacoes || {});
       const linhasVariante = [
-        ["Código", variante.numero_cadastro],
         ["Cor", variante.cor],
         ["Tamanho", variante.tamanho],
         ["Memória", variante.memoria],
@@ -47,7 +46,7 @@
       specs.innerHTML = `<h3>Especificações</h3>${linhas.map(([nome, valor]) => `<div><strong>${escapar(nome)}</strong><span>${escapar(valor)}</span></div>`).join("")}`;
     }
 
-    const mensagem = encodeURIComponent(`Olá! Tenho interesse no produto: ${variante.nome} (código ${variante.numero_cadastro}) - ${money(variante.preco)}`);
+    const mensagem = encodeURIComponent(`Olá! Tenho interesse no produto: ${variante.nome} - ${money(variante.preco)}`);
     document.getElementById("btnWhats").href = `https://wa.me/595987374159?text=${mensagem}`;
   }
 
