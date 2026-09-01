@@ -708,6 +708,7 @@ if (
 document.addEventListener(
   "DOMContentLoaded",
   () => {
+    if (new URLSearchParams(location.search).has("produto")) return;
     setupReveal();
 
     loadProduct().catch(erro => {
