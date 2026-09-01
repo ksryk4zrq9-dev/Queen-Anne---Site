@@ -1,4 +1,5 @@
 (function () {
+  if (typeof window.buscarCatalogo === "function") return;
   let buscaAtivada = false;
 
   function normalizar(txt) {
