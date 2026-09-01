@@ -20,6 +20,85 @@
   --qa-red-gradient:linear-gradient(to bottom,#ff1a1a 0%,#e00000 35%,#c40000 70%,#9e0000 100%);
 }
 
+/* =====================================================
+   CATÁLOGO EM LARGA ESCALA
+   Complementos que reutilizam a identidade visual atual.
+===================================================== */
+.produto-variacoes {
+  display: inline-block;
+  margin: 8px 0 0;
+  padding: 5px 9px;
+  border: 1px solid rgba(212, 175, 55, .55);
+  border-radius: 999px;
+  color: #d4af37;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.catalogo-paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 38px auto 20px;
+  color: inherit;
+}
+
+.catalogo-paginacao button {
+  min-width: 108px;
+  padding: 11px 18px;
+  border: 1px solid #d4af37;
+  border-radius: 8px;
+  background: #8f0018;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.catalogo-paginacao button:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+
+.catalogo-variantes {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.catalogo-variantes label {
+  color: #d4af37;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.catalogo-variantes select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(212, 175, 55, .65);
+  border-radius: 9px;
+  background: #141414;
+  color: #fff;
+  font: inherit;
+}
+
+.busca-item {
+  text-decoration: none;
+}
+
+@media (max-width: 620px) {
+  .catalogo-paginacao {
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .catalogo-paginacao button {
+    min-width: 88px;
+    padding: 10px 12px;
+  }
+}
+
 *,
 *::before,
 *::after{
