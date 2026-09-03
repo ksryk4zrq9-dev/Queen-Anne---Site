@@ -158,7 +158,7 @@ async function getCatalogoProduto(produtoChave) {
 
   const { data: variantes, error: erroVariantes } = await supabaseClient
     .from("catalogo_variantes")
-    .select("numero_cadastro,nome,descricao,cor,tamanho,memoria,capacidade,modelo,preco,estoque")
+    .select("numero_cadastro,nome,descricao,cor,tamanho,memoria,capacidade,modelo,imagem,preco,estoque")
     .eq("produto_chave", produtoChave)
     .eq("ativo", true)
     .gt("estoque", 0)
