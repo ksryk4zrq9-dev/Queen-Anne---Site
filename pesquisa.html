@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisa | Queen Anne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .categoria-page { min-height: 60vh; }
+    .footer-qa { margin-top: 70px; }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div id="header"></div>
+    <section class="categoria-page qa-categoria-page">
+      <div class="categoria-breadcrumb">
+        <a href="index.html">Início</a><span>/</span><span id="breadcrumbCategoria">Pesquisa</span>
+      </div>
+      <h1 id="tituloCategoria" class="categoria-titulo">Pesquisa</h1>
+      <div class="categoria-info"><p>Encontramos <strong id="quantidadeProdutos">0</strong> produtos</p></div>
+      <div class="categoria-barra"></div>
+      <div class="categoria-controles">
+        <div class="ordenar-box">
+          <strong>Ordenar:</strong>
+          <select id="ordenarProdutos">
+            <option value="relevancia">Mais relacionados</option>
+            <option value="menor-preco">Menor preço</option>
+            <option value="maior-preco">Maior preço</option>
+            <option value="nome">Nome</option>
+          </select>
+        </div>
+      </div>
+      <div id="listaProdutos" class="produtos-container"></div>
+      <nav id="catalogoPaginacao" class="catalogo-paginacao" aria-label="Paginação dos resultados"></nav>
+    </section>
+    <div id="footer"></div>
+  </div>
+  <script src="./cliente-storage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="./js/supabase-api.js"></script>
+  <script src="./catalogo-busca.js"></script>
+  <script src="./script.js"></script>
+  <script src="./pesquisa.js"></script>
+</body>
+</html>
