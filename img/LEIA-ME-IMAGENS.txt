@@ -1,0 +1,11 @@
+IMAGENS DO LOTE 3 — PARTE 3 (ITENS 41–60)
+
+Encontradas e conferidas: 12 imagens.
+Pendentes: 8 imagens, listadas em IMAGENS_NAO_ENCONTRADAS.txt.
+
+Para publicar:
+1. Abra a pasta principal img do repositório no GitHub.
+2. Envie os arquivos JPG diretamente dentro dessa pasta.
+3. Não crie outra pasta img dentro dela.
+4. Mantenha os nomes dos arquivos exatamente como estão.
+5. Aguarde a implantação da Vercel ficar com status Ready.
