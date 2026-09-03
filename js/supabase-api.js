@@ -123,7 +123,7 @@ async function getCatalogoPagina(opcoes = {}) {
   if (busca) {
     const termoSeguro = busca.replace(/[,%()]/g, " ").trim();
     if (termoSeguro) {
-      query = query.or(`nome.ilike.%${termoSeguro}%,descricao.ilike.%${termoSeguro}%,marca.ilike.%${termoSeguro}%`);
+      query = query.ilike("nome", `%${termoSeguro}%`);
     }
   }
 
