@@ -24,6 +24,16 @@
     return produtosAntigosPromise;
   }
 
+  function pontuarNome(nome, termo) {
+    const nomeNormalizado = normalizar(nome).trim();
+    const termoNormalizado = normalizar(termo).trim();
+
+    if (!termoNormalizado || !nomeNormalizado.includes(termoNormalizado)) return 0;
+    if (nomeNormalizado.startsWith(termoNormalizado)) return 300;
+    if (nomeNormalizado.split(/\s+/).some(palavra => palavra.startsWith(termoNormalizado))) return 200;
+    return 100;
+  }
+
   async function buscarEmTodosOsProdutos(termo, limite = 8) {
     const [novos, antigos] = await Promise.all([
       typeof window.buscarCatalogo === "function"
@@ -32,13 +42,13 @@
       carregarProdutosAntigos()
     ]);
 
-    const termoNormalizado = normalizar(termo);
     const antigosEncontrados = (Array.isArray(antigos) ? antigos : [])
-      .filter(produto => normalizar(`${produto.nome} ${produto.descricao || produto.desc || ""} ${produto.categoria || ""}`).includes(termoNormalizado))
-      .map(produto => ({ ...produto, origemBusca: "antigo" }));
+      .map(produto => ({ ...produto, origemBusca: "antigo", relevanciaBusca: pontuarNome(produto.nome, termo) }))
+      .filter(produto => produto.relevanciaBusca > 0);
 
     const novosEncontrados = (Array.isArray(novos) ? novos : [])
-      .map(produto => ({ ...produto, origemBusca: "catalogo" }));
+      .map(produto => ({ ...produto, origemBusca: "catalogo", relevanciaBusca: pontuarNome(produto.nome, termo) }))
+      .filter(produto => produto.relevanciaBusca > 0);
 
     const vistos = new Set();
     return [...novosEncontrados, ...antigosEncontrados]
@@ -50,6 +60,7 @@
         vistos.add(identificador);
         return true;
       })
+      .sort((a, b) => b.relevanciaBusca - a.relevanciaBusca || String(a.nome).localeCompare(String(b.nome), "pt-BR"))
       .slice(0, limite);
   }
 
