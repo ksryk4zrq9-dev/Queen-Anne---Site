@@ -58,8 +58,7 @@
         ["Tamanho", variante.tamanho],
         ["Memória", variante.memoria],
         ["Capacidade", variante.capacidade],
-        ["Opção", variante.modelo],
-        ["Disponibilidade", "Em estoque"]
+        ["Opção", variante.modelo]
       ].filter(([, valor]) => valor);
 
       const nomesVariante = new Set(linhasVariante.map(([nome]) => nome.toLocaleLowerCase("pt-BR")));
