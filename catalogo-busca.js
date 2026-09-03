@@ -28,16 +28,47 @@
     const nomeNormalizado = normalizar(nome).trim();
     const termoNormalizado = normalizar(termo).trim();
 
-    if (!termoNormalizado || !nomeNormalizado.includes(termoNormalizado)) return 0;
+    if (!termoNormalizado) return 0;
     if (nomeNormalizado.startsWith(termoNormalizado)) return 300;
     if (nomeNormalizado.split(/\s+/).some(palavra => palavra.startsWith(termoNormalizado))) return 200;
-    return 100;
+    if (nomeNormalizado.includes(termoNormalizado)) return 150;
+
+    function distancia(a, b) {
+      const anterior = Array.from({ length: b.length + 1 }, (_, indice) => indice);
+      for (let i = 1; i <= a.length; i += 1) {
+        const atual = [i];
+        for (let j = 1; j <= b.length; j += 1) {
+          atual[j] = Math.min(
+            atual[j - 1] + 1,
+            anterior[j] + 1,
+            anterior[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+          );
+        }
+        for (let j = 0; j < atual.length; j += 1) anterior[j] = atual[j];
+      }
+      return anterior[b.length];
+    }
+
+    const tolerancia = termoNormalizado.length <= 4 ? 1 : termoNormalizado.length <= 8 ? 2 : 3;
+    const palavras = nomeNormalizado.split(/\s+/).filter(Boolean);
+    const melhorDistancia = Math.min(
+      distancia(nomeNormalizado, termoNormalizado),
+      ...palavras.map(palavra => distancia(palavra, termoNormalizado))
+    );
+    return melhorDistancia <= tolerancia ? 100 - melhorDistancia : 0;
   }
 
   async function buscarEmTodosOsProdutos(termo, limite = 8) {
+    const termoNormalizado = normalizar(termo).trim();
+    const prefixo = termoNormalizado.length >= 4 ? termoNormalizado.slice(0, 3) : termoNormalizado.slice(0, 2);
     const [novos, antigos] = await Promise.all([
       typeof window.buscarCatalogo === "function"
-        ? window.buscarCatalogo(termo, limite).catch(() => [])
+        ? Promise.all([
+            window.buscarCatalogo(termo, Math.min(48, Math.max(limite, 24))).catch(() => []),
+            prefixo && prefixo !== termoNormalizado
+              ? window.buscarCatalogo(prefixo, 48).catch(() => [])
+              : Promise.resolve([])
+          ]).then(listas => listas.flat())
         : Promise.resolve([]),
       carregarProdutosAntigos()
     ]);
@@ -63,6 +94,8 @@
       .sort((a, b) => b.relevanciaBusca - a.relevanciaBusca || String(a.nome).localeCompare(String(b.nome), "pt-BR"))
       .slice(0, limite);
   }
+
+  window.QABusca = { buscar: buscarEmTodosOsProdutos, linkProduto, normalizar, pontuarNome };
 
   function linkProduto(produto) {
     return produto.produto_chave
@@ -91,8 +124,8 @@
           window.QAAnalytics.track("pesquisa_realizada", { termo_pesquisado: termo, total_resultados: produtos.length });
         }
 
-        if (navegar && produtos[0]) {
-          location.href = linkProduto(produtos[0]);
+        if (navegar) {
+          location.href = `pesquisa.html?q=${encodeURIComponent(termo)}`;
           return;
         }
 
