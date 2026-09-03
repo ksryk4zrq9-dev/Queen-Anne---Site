@@ -4,6 +4,7 @@
 
   let produto;
   let varianteSelecionada;
+  let imagemSelecionada = "img/placeholder.jpg";
 
   function money(valor) {
     return `U$ ${Number(valor || 0).toFixed(2)}`;
@@ -20,8 +21,33 @@
     return atributos.length ? atributos.join(" · ") : variante.nome;
   }
 
+  function atualizarImagem(variante) {
+    imagemSelecionada = variante.imagem || produto.imagem || "img/placeholder.jpg";
+
+    const hero = document.getElementById("pdpHeroImg");
+    if (hero) {
+      hero.src = imagemSelecionada;
+      hero.alt = variante.nome || produto.nome;
+      hero.onerror = () => {
+        hero.onerror = null;
+        hero.src = "img/placeholder.jpg";
+      };
+    }
+
+    const miniatura = document.querySelector("#pdpThumbs img");
+    if (miniatura) {
+      miniatura.src = imagemSelecionada;
+      miniatura.alt = variante.nome || produto.nome;
+      miniatura.onerror = () => {
+        miniatura.onerror = null;
+        miniatura.src = "img/placeholder.jpg";
+      };
+    }
+  }
+
   function atualizarVariante(variante) {
     varianteSelecionada = variante;
+    atualizarImagem(variante);
     document.getElementById("pdpPrice").textContent = money(variante.preco);
 
     const specs = document.getElementById("pdpSpecsResumo");
@@ -97,7 +123,7 @@
         listaDestaques.innerHTML = destaques.map(item => `<li>${escapar(item)}</li>`).join("");
         listaDestaques.hidden = destaques.length === 0;
       }
-      const imagem = produto.imagem || "img/placeholder.jpg";
+      const imagem = produto.imagem || produto.variantes[0]?.imagem || "img/placeholder.jpg";
       const hero = document.getElementById("pdpHeroImg");
       hero.src = imagem;
       hero.alt = produto.nome;
@@ -115,7 +141,7 @@
           produto_chave: produto.produto_chave,
           nome: varianteSelecionada.nome,
           preco: Number(varianteSelecionada.preco),
-          imagem
+          imagem: imagemSelecionada
         });
         QAStorage.salvarCarrinho(carrinho);
         if (typeof atualizarContadorCarrinho === "function") atualizarContadorCarrinho();
