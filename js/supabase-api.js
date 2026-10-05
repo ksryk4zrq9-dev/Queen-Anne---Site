@@ -161,7 +161,6 @@ async function getCatalogoProduto(produtoChave) {
     .select("numero_cadastro,nome,descricao,cor,tamanho,memoria,capacidade,modelo,imagem,preco,estoque")
     .eq("produto_chave", produtoChave)
     .eq("ativo", true)
-    .gt("estoque", 0)
     .order("preco", { ascending: true });
 
   if (erroVariantes) throw erroVariantes;
