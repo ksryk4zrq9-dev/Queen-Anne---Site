@@ -1579,6 +1579,12 @@ function gerarLinkProduto(p) {
 
 // ===== RENDER PRODUTOS =====
 function renderProdutos(cat = "Todos", termo = "") {
+    if (
+    window.location.pathname.toLowerCase().endsWith("/categoria.html") &&
+    typeof window.getCatalogoPagina === "function"
+  ) {
+    return;
+  }
   if (!listaProdutos) return;
 
   listaProdutos.innerHTML = "";
