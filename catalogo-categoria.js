@@ -3,6 +3,10 @@
   const categoria = params.get("cat") || "Todos";
   let paginaAtual = Math.max(1, Number(params.get("pagina")) || 1);
 
+  // Reutiliza as consultas durante a navegação nesta categoria.
+  let produtosAntigosPromise;
+  let catalogoPromise;
+
   function escapar(valor) {
     const div = document.createElement("div");
     div.textContent = String(valor || "");
@@ -26,44 +30,71 @@
   }
 
   function aguardarProdutosAntigos() {
-    if (Array.isArray(window.produtos) && window.produtos.length) {
-      return Promise.resolve(window.produtos);
+    if (!produtosAntigosPromise) {
+      // Consulta diretamente, sem aguardar o evento de outro script.
+      produtosAntigosPromise = Promise.resolve()
+        .then(() => window.getProdutos())
+        .catch(erro => {
+          produtosAntigosPromise = null;
+          throw erro;
+        });
     }
 
-    return new Promise(resolve => {
-      let finalizado = false;
-      const concluir = () => {
-        if (finalizado) return;
-        finalizado = true;
-        window.removeEventListener("qa:produtos-carregados", concluir);
-        resolve(Array.isArray(window.produtos) ? window.produtos : []);
-      };
-
-      window.addEventListener("qa:produtos-carregados", concluir, { once: true });
-      setTimeout(concluir, 5000);
-    });
+    return produtosAntigosPromise;
   }
 
   async function carregarCatalogoNovo() {
-    const primeira = await window.getCatalogoPagina({
-      categoria,
-      pagina: 1,
-      limite: 48,
-      ordem: "nome"
-    });
-    const produtos = [...primeira.produtos];
+    if (!catalogoPromise) {
+      catalogoPromise = (async () => {
+        const primeira = await window.getCatalogoPagina({
+          categoria,
+          pagina: 1,
+          limite: 48,
+          ordem: "nome"
+        });
+        const produtos = [...primeira.produtos];
 
-    for (let pagina = 2; pagina <= primeira.totalPaginas; pagina += 1) {
-      const resultado = await window.getCatalogoPagina({
-        categoria,
-        pagina,
-        limite: 48,
-        ordem: "nome"
+        // Carrega até quatro páginas simultaneamente.
+        for (
+          let inicio = 2;
+          inicio <= primeira.totalPaginas;
+          inicio += 4
+        ) {
+          const consultas = [];
+
+          for (
+            let pagina = inicio;
+            pagina < inicio + 4 && pagina <= primeira.totalPaginas;
+            pagina += 1
+          ) {
+            consultas.push(
+              window.getCatalogoPagina({
+                categoria,
+                pagina,
+                limite: 48,
+                ordem: "nome"
+              })
+            );
+          }
+
+          const resultados = await Promise.all(consultas);
+
+          for (const resultado of resultados) {
+            produtos.push(...resultado.produtos);
+          }
+        }
+
+        return produtos.map(produto => ({
+          ...produto,
+          origem: "catalogo"
+        }));
+      })().catch(erro => {
+        catalogoPromise = null;
+        throw erro;
       });
-      produtos.push(...resultado.produtos);
     }
 
-    return produtos.map(produto => ({ ...produto, origem: "catalogo" }));
+    return catalogoPromise;
   }
 
   function prepararProdutosAntigos(produtos) {
@@ -132,6 +163,7 @@
     if (!container) return;
 
     container.innerHTML = '<p class="categoria-carregando">Carregando produtos...</p>';
+    if (contador) contador.textContent = "…";
 
     try {
       const [novos, antigosOriginais] = await Promise.all([
