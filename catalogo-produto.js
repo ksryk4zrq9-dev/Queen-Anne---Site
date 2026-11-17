@@ -126,7 +126,10 @@
       const hero = document.getElementById("pdpHeroImg");
       hero.src = imagem;
       hero.alt = produto.nome;
-      hero.onerror = () => { hero.src = "img/placeholder.jpg"; };
+     hero.onerror = () => {
+  hero.onerror = null;
+  hero.src = "img/placeholder.jpg";
+};
       document.getElementById("pdpThumbs").innerHTML = `<button class="pdp-thumb active" type="button"><img src="${escapar(imagem)}" alt="${escapar(produto.nome)}" onerror="this.src='img/placeholder.jpg'"></button>`;
 
       renderizarSeletor();
