@@ -130,7 +130,7 @@
   hero.onerror = null;
   hero.src = "img/placeholder.jpg";
 };
-      document.getElementById("pdpThumbs").innerHTML = `<button class="pdp-thumb active" type="button"><img src="${escapar(imagem)}" alt="${escapar(produto.nome)}" onerror="this.src='img/placeholder.jpg'"></button>`;
+      document.getElementById("pdpThumbs").innerHTML = `<button class="pdp-thumb active" type="button"><img src="${escapar(imagem)}" alt="${escapar(produto.nome)}" onerror="this.onerror=null;this.src='img/placeholder.jpg'"></button>`;
 
       renderizarSeletor();
       atualizarVariante(produto.variantes[0]);
