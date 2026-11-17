@@ -156,48 +156,74 @@
     });
   }
 
-  async function carregar() {
+    async function carregar() {
     const container = document.getElementById("listaProdutos");
     const contador = document.getElementById("quantidadeProdutos");
     const ordenar = document.getElementById("ordenarProdutos");
     if (!container) return;
 
-    container.innerHTML = '<p class="categoria-carregando">Carregando produtos...</p>';
+    const requisicaoAtual = (carregar.requisicao || 0) + 1;
+    carregar.requisicao = requisicaoAtual;
+
+    container.innerHTML =
+      '<p class="categoria-carregando">Carregando produtos...</p>';
+
+    container.setAttribute("aria-busy", "true");
+
     if (contador) contador.textContent = "…";
 
+    const paginacao = document.getElementById("catalogoPaginacao");
+    if (paginacao) paginacao.innerHTML = "";
+
     try {
-      const [novos, antigosOriginais] = await Promise.all([
-        carregarCatalogoNovo(),
-        aguardarProdutosAntigos()
-      ]);
+      const resultado = await window.getCategoriaPagina({
+        categoria,
+        pagina: paginaAtual,
+        limite: 24,
+        ordem: ordenar?.value || "relevancia"
+      });
 
-      const antigos = prepararProdutosAntigos(antigosOriginais);
-      const nomesNovos = new Set(novos.map(produto => normalizar(produto.nome)));
-      const combinados = ordenarProdutos(
-        [...novos, ...antigos.filter(produto => !nomesNovos.has(normalizar(produto.nome)))],
-        ordenar?.value || "relevancia"
-      );
-      const limite = 24;
-      const totalPaginas = Math.max(1, Math.ceil(combinados.length / limite));
-      if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
-      const inicio = (paginaAtual - 1) * limite;
-      const produtosPagina = combinados.slice(inicio, inicio + limite);
+      if (carregar.requisicao !== requisicaoAtual) return;
 
-      if (contador) contador.textContent = String(combinados.length);
+      paginaAtual = Number(resultado.pagina);
+      atualizarUrl();
+
+      const produtosPagina = resultado.produtos;
+      const totalPaginas = Number(resultado.totalPaginas);
+
+      if (contador) {
+        contador.textContent = String(resultado.total);
+      }
 
       if (!produtosPagina.length) {
-        container.innerHTML = '<div class="nenhum-produto"><h3>Nenhum produto encontrado</h3><p>Ainda não há produtos cadastrados nesta categoria.</p></div>';
+        container.innerHTML =
+          '<div class="nenhum-produto">' +
+          '<h3>Nenhum produto encontrado</h3>' +
+          '<p>Ainda não há produtos cadastrados nesta categoria.</p>' +
+          '</div>';
+
         renderizarPaginacao(1);
         return;
       }
 
-      container.innerHTML = produtosPagina.map(produto => {
+      container.innerHTML = produtosPagina.map((produto, indice) => {
         const link = produto.origem === "antigo"
           ? `produto.html?id=${encodeURIComponent(produto.id)}`
           : `produto.html?produto=${encodeURIComponent(produto.produto_chave)}`;
+
         return `
           <div class="produto-card">
-            <a href="${link}"><img src="${escapar(produto.imagem || "img/placeholder.jpg")}" alt="${escapar(produto.nome)}" onerror="this.src='img/placeholder.jpg'"></a>
+            <a href="${link}">
+              <img
+                src="${escapar(produto.imagem || "img/placeholder.jpg")}"
+                alt="${escapar(produto.nome)}"
+                loading="${indice < 8 ? "eager" : "lazy"}"
+                decoding="async"
+                width="300"
+                height="300"
+                onerror="this.onerror=null;this.src='img/placeholder.jpg'"
+              >
+            </a>
             <h3>${escapar(produto.nome || "Produto")}</h3>
             <p class="preco">${preco(produto)}</p>
             <a href="${link}" class="btn-ver">Ver produto</a>
@@ -206,12 +232,23 @@
 
       renderizarPaginacao(totalPaginas);
     } catch (erro) {
-      console.error("Erro ao carregar o novo catálogo:", erro);
-      container.innerHTML = '<div class="nenhum-produto"><h3>Catálogo em preparação</h3><p>Conclua a importação no Supabase e atualize esta página.</p></div>';
+      if (carregar.requisicao !== requisicaoAtual) return;
+
+      console.error("Erro ao carregar a categoria:", erro);
+
+      container.innerHTML =
+        '<div class="nenhum-produto">' +
+        '<h3>Não foi possível carregar os produtos</h3>' +
+        '<p>Atualize a página e tente novamente.</p>' +
+        '</div>';
+
       if (contador) contador.textContent = "0";
+    } finally {
+      if (carregar.requisicao === requisicaoAtual) {
+        container.setAttribute("aria-busy", "false");
+      }
     }
   }
-
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tituloCategoria").textContent = categoria === "Todos" ? "Todos os produtos" : categoria;
     document.getElementById("breadcrumbCategoria").textContent = categoria === "Todos" ? "Todos os produtos" : categoria;
