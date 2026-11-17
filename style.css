@@ -7030,3 +7030,6 @@ body.pagina-termos-premium{
 .btn-ver-produtos:hover {
   background: #b80000;
 }
+.catalogo-variantes label {
+  color: #e00000;
+}
