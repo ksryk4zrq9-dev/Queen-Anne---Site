@@ -76,7 +76,7 @@
   }
 
   function renderizarSeletor() {
-    if (!produto.variantes.length) return;
+  if (produto.variantes.length <= 1) return;
 
     const area = document.createElement("div");
     area.className = "catalogo-variantes";
