@@ -99,7 +99,7 @@
       const lista = resultado.produtos.filter(item => item.produto_chave !== produto.produto_chave).slice(0, 8);
       box.innerHTML = lista.map(item => `
         <a href="produto.html?produto=${encodeURIComponent(item.produto_chave)}" class="pdp-rel-inner">
-          <img src="${escapar(item.imagem || "img/placeholder.jpg")}" alt="${escapar(item.nome)}" onerror="this.src='img/placeholder.jpg'">
+         <img src="${escapar(item.imagem || "img/placeholder.jpg")}" alt="${escapar(item.nome)}" onerror="this.onerror=null;this.src='img/placeholder.jpg'">
           <h4>${escapar(item.nome)}</h4><p>${money(item.preco_min)}</p>
         </a>`).join("");
     } catch (erro) {
