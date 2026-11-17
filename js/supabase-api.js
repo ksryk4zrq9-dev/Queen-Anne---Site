@@ -176,3 +176,34 @@ async function buscarCatalogo(termo, limite = 8) {
 window.getCatalogoPagina = getCatalogoPagina;
 window.getCatalogoProduto = getCatalogoProduto;
 window.buscarCatalogo = buscarCatalogo;
+async function getCategoriaPagina(opcoes = {}) {
+  const inteiroPositivo = (valor, padrao) => {
+    const numero = Number(valor);
+    return Number.isFinite(numero)
+      ? Math.max(1, Math.floor(numero))
+      : padrao;
+  };
+
+  const { data, error } = await supabaseClient.rpc(
+    "qa_categoria_pagina",
+    {
+      p_categoria: String(opcoes.categoria || "Todos").trim(),
+      p_pagina: inteiroPositivo(opcoes.pagina, 1),
+      p_limite: Math.min(
+        48,
+        inteiroPositivo(opcoes.limite, 24)
+      ),
+      p_ordem: String(opcoes.ordem || "nome")
+    }
+  );
+
+  if (error) throw error;
+
+  if (!data || !Array.isArray(data.produtos)) {
+    throw new Error("Resposta inválida ao carregar a categoria.");
+  }
+
+  return data;
+}
+
+window.getCategoriaPagina = getCategoriaPagina;
