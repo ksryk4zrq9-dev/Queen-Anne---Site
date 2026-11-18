@@ -246,8 +246,8 @@ function finalizarWhatsApp() {
     `Total do pedido: U$ ${total.toFixed(2)}`
   ].join("\n");
 
-  // Somente números: 595 + número sem o zero inicial
-  const numeroWhatsApp = "5544991898884";
+ // Somente dígitos: DDI 55 + DDD 44 + número do celular
+const numeroWhatsApp = "5544991898884";
 
   const linkWhatsApp =
     `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
