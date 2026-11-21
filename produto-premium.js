@@ -257,6 +257,8 @@ async function loadProduct() {
       return;
     }
 
+    const semEstoque = p.estoque === 0 || p.estoque === "0";
+
     const produtoCompleto =
       await aguardarProdutoCompleto(id);
 
@@ -307,6 +309,14 @@ async function loadProduct() {
     if (priceEl) {
       priceEl.textContent =
         money(p.preco);
+    }
+
+    if (priceEl && semEstoque) {
+      const aviso = document.createElement("p");
+      aviso.textContent = "Produto indisponível";
+      aviso.setAttribute("role", "status");
+      aviso.style.cssText = "width:fit-content;margin:0 0 6px;padding:6px 10px;border-radius:6px;background:#fef2f2;color:#991b1b;font-size:.875rem;font-weight:700";
+      priceEl.before(aviso);
     }
 
     const desc =
@@ -401,7 +411,7 @@ async function loadProduct() {
             <strong>
               Disponibilidade
             </strong>
-            <span>Em estoque</span>
+            <span>${semEstoque ? "Produto indisponível" : "Em estoque"}</span>
           </div>
 
           <div>
