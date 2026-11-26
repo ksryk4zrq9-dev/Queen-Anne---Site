@@ -553,22 +553,23 @@ button:hover,
 
 .qa-cat-card{
   display:grid;
-  grid-template-columns:min(28%, 110px) minmax(0, 1fr);
+  grid-template-areas:"foto" "nome";
+  grid-template-columns:minmax(0, 1fr);
+  grid-template-rows:clamp(104px, 12vw, 210px) 1fr;
   align-items:center;
-  gap:clamp(8px, 1vw, 18px);
-  min-height:clamp(100px, 10vw, 170px);
-  padding:10px clamp(10px, 1.2vw, 24px);
-  border:1px solid #efdfdf;
-  border-bottom:4px solid #d00000;
-  border-radius:16px;
-  background:#fff3f2;
+  gap:8px;
+  min-width:0;
+  padding:clamp(10px, 1.2vw, 22px);
+  border:1px solid #e5e1df;
+  border-radius:14px;
+  background:#eeecea;
   box-shadow:none;
-  text-align:left;
+  text-align:center;
 }
 
 .qa-cat-card:hover{
   opacity:1;
-  background:#ffebea;
+  background:#e7e3e0;
 }
 
 .qa-cat-card:focus-visible{
@@ -577,25 +578,25 @@ button:hover,
 }
 
 .qa-cat-card span{
-  grid-column:2;
-  grid-row:1;
+  grid-area:nome;
   color:#151515;
-  font-size:clamp(13px, 1.15vw, 22px);
+  font-size:clamp(14px, 1.3vw, 24px);
   line-height:1.2;
   font-weight:800;
   overflow-wrap:normal;
 }
 
 .qa-cat-img{
-  grid-column:1;
-  grid-row:1;
+  grid-area:foto;
+  min-width:0;
+  height:100%;
   mix-blend-mode:multiply;
 }
 
 .qa-cat-img img{
   display:block;
   width:100%;
-  height:clamp(58px, 8vw, 134px);
+  height:100%;
   object-fit:contain;
 }
 
@@ -1774,10 +1775,9 @@ body.pagina-produto .resultado-busca{
 
 @media (max-width:700px){
   .qa-cat-card{
-    grid-template-columns:min(26%, 65px) minmax(0, 1fr);
+    grid-template-rows:clamp(80px, 25vw, 130px) 1fr;
     gap:6px;
-    min-height:90px;
-    padding:8px;
+    padding:10px;
   }
 }
 
