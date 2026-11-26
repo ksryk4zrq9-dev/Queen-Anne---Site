@@ -545,7 +545,7 @@ button:hover,
 }
 
 .qa-categorias-home{
-  max-width:1880px;
+  max-width:1140px;
   width:calc(100% - 20px);
   margin:4px auto 12px;
   display:flex;
@@ -556,7 +556,7 @@ button:hover,
 
 .qa-cat-card{
   position:relative;
-  width:clamp(165px, calc((100% - 90px) / 10), 220px);
+  width:clamp(200px, calc((100% - 40px) / 5), 220px);
   height:88px;
   padding:0 6px 0 14px;
   border-radius:12px;
@@ -1711,12 +1711,6 @@ body.pagina-produto .resultado-busca{
 /* =========================================================
    RESPONSIVO
 ========================================================= */
-
-@media (max-width:1200px){
-  .qa-cat-card{
-    width:220px;
-  }
-}
 
 @media (max-width:1024px){
   .produtos-container,
@@ -7030,3 +7024,6 @@ body.pagina-termos-premium{
 .catalogo-variantes label {
   color: #e00000;
 }
+
+
+
