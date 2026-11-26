@@ -549,13 +549,14 @@ button:hover,
   width:calc(100% - 20px);
   margin:4px auto 12px;
   display:flex;
+  flex-wrap:wrap;
   justify-content:center;
   gap:10px;
 }
 
 .qa-cat-card{
   position:relative;
-  width:220px;
+  width:clamp(165px, calc((100% - 90px) / 10), 220px);
   height:88px;
   padding:0 6px 0 14px;
   border-radius:12px;
@@ -1712,10 +1713,6 @@ body.pagina-produto .resultado-busca{
 ========================================================= */
 
 @media (max-width:1200px){
-  .qa-categorias-home{
-    flex-wrap:wrap;
-  }
-
   .qa-cat-card{
     width:220px;
   }
