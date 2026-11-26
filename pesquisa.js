@@ -86,6 +86,12 @@
       return;
     }
 
+    try {
+      sessionStorage.setItem("qa:ultima-busca", termo.slice(0, 120));
+    } catch {
+      // A busca continua quando o navegador bloqueia o armazenamento.
+    }
+
     container.innerHTML = '<p class="categoria-carregando">Buscando produtos...</p>';
     try {
       produtosEncontrados = await window.QABusca.buscar(termo, 240);
