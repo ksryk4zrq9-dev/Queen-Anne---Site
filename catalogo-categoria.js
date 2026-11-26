@@ -118,6 +118,71 @@
     return lista.sort((a, b) => String(a.nome).localeCompare(String(b.nome), "pt-BR"));
   }
 
+  const limitePagina = 24;
+  let produtosPorInteressePromise;
+
+  function lerInteresse() {
+    try {
+      return normalizar(sessionStorage.getItem("qa:ultima-busca")).match(/[a-z0-9]+/g) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  const interesse = lerInteresse();
+
+  async function carregarProdutosPorInteresse() {
+    const primeira = await window.getCategoriaPagina({
+      categoria, pagina: 1, limite: 48, ordem: "relevancia"
+    });
+    const produtos = [...primeira.produtos];
+
+    for (let inicio = 2; inicio <= primeira.totalPaginas; inicio += 4) {
+      const quantidade = Math.min(4, primeira.totalPaginas - inicio + 1);
+      const paginas = await Promise.all(Array.from({ length: quantidade }, (_, indice) =>
+        window.getCategoriaPagina({
+          categoria, pagina: inicio + indice, limite: 48, ordem: "relevancia"
+        })
+      ));
+      for (const pagina of paginas) produtos.push(...pagina.produtos);
+    }
+
+    const palavraPrincipal = interesse.find(palavra => /[a-z]/.test(palavra));
+    const pontuar = produto => {
+      const nome = normalizar(produto.nome).match(/[a-z0-9]+/g) || [];
+      if (!nome.includes(palavraPrincipal)) return 0;
+      return interesse.filter(palavra => nome.includes(palavra)).length;
+    };
+
+    return produtos
+      .map(produto => ({ produto, pontos: pontuar(produto) }))
+      .sort((a, b) => b.pontos - a.pontos)
+      .map(item => item.produto);
+  }
+
+  async function consultarPagina(ordem) {
+    if (ordem === "relevancia" && categoria !== "Todos" && interesse.some(palavra => /[a-z]/.test(palavra))) {
+      try {
+        produtosPorInteressePromise ||= carregarProdutosPorInteresse().catch(erro => {
+          produtosPorInteressePromise = undefined;
+          throw erro;
+        });
+        const produtos = await produtosPorInteressePromise;
+        const totalPaginas = Math.max(1, Math.ceil(produtos.length / limitePagina));
+        const pagina = Math.min(Math.trunc(paginaAtual), totalPaginas);
+        const inicio = (pagina - 1) * limitePagina;
+        return {
+          pagina, totalPaginas, total: produtos.length,
+          produtos: produtos.slice(inicio, inicio + limitePagina)
+        };
+      } catch {
+        // Se a personalização falhar, mantém a página padrão do catálogo.
+      }
+    }
+
+    return window.getCategoriaPagina({ categoria, pagina: paginaAtual, limite: limitePagina, ordem });
+  }
+
   function atualizarUrl() {
     const url = new URL(window.location.href);
     if (paginaAtual > 1) url.searchParams.set("pagina", paginaAtual);
@@ -176,12 +241,7 @@
     if (paginacao) paginacao.innerHTML = "";
 
     try {
-      const resultado = await window.getCategoriaPagina({
-        categoria,
-        pagina: paginaAtual,
-        limite: 24,
-        ordem: ordenar?.value || "relevancia"
-      });
+      const resultado = await consultarPagina(ordenar?.value || "relevancia");
 
       if (carregar.requisicao !== requisicaoAtual) return;
 
