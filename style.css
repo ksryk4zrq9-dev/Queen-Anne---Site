@@ -497,7 +497,7 @@ button:hover,
   position:relative;
   width:100%;
   height:520px;
-  margin-bottom:60px;
+  margin-bottom:14px;
   overflow:hidden;
   background:#fff;
 }
@@ -601,7 +601,11 @@ button:hover,
 .produtos-slider{
   width:100%;
   overflow:hidden;
-  margin:50px 0;
+  margin:0 0 50px;
+}
+
+.produtos-slider .linha:first-child{
+  padding-top:8px;
 }
 
 .linha{
@@ -5741,7 +5745,7 @@ body::before{
   overflow:hidden !important;
   background:#000 !important;
   padding:0 !important;
-  margin:0 0 60px !important;
+  margin:0 0 14px !important;
   border:none !important;
   box-shadow:none !important;
 }
