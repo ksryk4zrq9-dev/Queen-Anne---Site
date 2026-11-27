@@ -64,9 +64,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   atualizarContadorCarrinho();
 
   // Ativa a busca nas páginas que usam apenas script.js
-  if (!document.querySelector('script[src="catalogo-busca.js"]')) {
+  if (!document.querySelector('script[src$="catalogo-busca.js"], script[src*="catalogo-busca.js?"]')) {
     const buscaScript = document.createElement("script");
-    buscaScript.src = "catalogo-busca.js";
+    buscaScript.src = "catalogo-busca.js?v=setas-2";
     document.body.appendChild(buscaScript);
   }
 })
