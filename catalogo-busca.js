@@ -169,12 +169,13 @@
     botao?.addEventListener("click", () => executar(true));
     campo.addEventListener("keydown", event => {
       if (event.isComposing) return;
-      const itens = resultado.style.display === "block"
+      const itens = getComputedStyle(resultado).display !== "none"
         ? [...resultado.querySelectorAll(".busca-item")]
         : [];
 
       if ((event.key === "ArrowDown" || event.key === "ArrowUp") && itens.length) {
         event.preventDefault();
+        event.stopImmediatePropagation();
         const anterior = itens[indiceSelecionado];
         if (anterior) anterior.style.backgroundColor = "";
 
@@ -189,7 +190,10 @@
       } else if (event.key === "Enter") {
         event.preventDefault();
         const selecionado = itens[indiceSelecionado];
-        if (selecionado) selecionado.click();
+        if (selecionado) {
+          event.stopImmediatePropagation();
+          selecionado.click();
+        }
         else {
           fecharResultados();
           executar(true);
@@ -197,7 +201,7 @@
       } else if (event.key === "Escape") {
         fecharResultados();
       }
-    });
+    }, true);
     document.addEventListener("click", event => {
       if (!campo.contains(event.target) && !resultado.contains(event.target) && !botao?.contains(event.target)) fecharResultados();
     });
