@@ -110,6 +110,15 @@
     const botao = document.querySelector(".btn-busca-header");
     if (!campo || !resultado) return;
     ativada = true;
+    let indiceSelecionado = -1;
+    let requisicao = 0;
+
+    function fecharResultados() {
+      clearTimeout(timer);
+      requisicao += 1;
+      indiceSelecionado = -1;
+      resultado.style.display = "none";
+    }
 
     async function executar(navegar = false) {
       const termo = campo.value.trim();
@@ -118,8 +127,10 @@
         return;
       }
 
+      const atual = ++requisicao;
       try {
         const produtos = await buscarEmTodosOsProdutos(termo, 8);
+        if (atual !== requisicao) return;
         if (window.QAAnalytics) {
           window.QAAnalytics.track("pesquisa_realizada", { termo_pesquisado: termo, total_resultados: produtos.length });
         }
@@ -129,6 +140,7 @@
           return;
         }
 
+        indiceSelecionado = -1;
         resultado.innerHTML = produtos.map(produto => `
           <a class="busca-item" href="${linkProduto(produto)}">
             <img src="${escapar(produto.imagem || "img/placeholder.jpg")}" alt="${escapar(produto.nome)}" onerror="this.src='img/placeholder.jpg'">
@@ -136,25 +148,58 @@
           </a>`).join("");
         resultado.style.display = produtos.length ? "block" : "none";
       } catch (erro) {
+        if (atual !== requisicao) return;
         console.warn("Busca do catálogo indisponível.", erro);
         resultado.style.display = "none";
       }
     }
 
     campo.addEventListener("input", () => {
-      clearTimeout(timer);
+      fecharResultados();
+      const termo = campo.value.trim();
+      if (termo.length >= 2) {
+        try {
+          sessionStorage.setItem("qa:ultima-busca", termo.slice(0, 120));
+        } catch {
+          // A busca continua sem armazenamento de sessão.
+        }
+      }
       timer = setTimeout(() => executar(false), 280);
     });
     botao?.addEventListener("click", () => executar(true));
     campo.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
+      if (event.isComposing) return;
+      const itens = resultado.style.display === "block"
+        ? [...resultado.querySelectorAll(".busca-item")]
+        : [];
+
+      if ((event.key === "ArrowDown" || event.key === "ArrowUp") && itens.length) {
         event.preventDefault();
-        executar(true);
+        const anterior = itens[indiceSelecionado];
+        if (anterior) anterior.style.backgroundColor = "";
+
+        const passo = event.key === "ArrowDown" ? 1 : -1;
+        indiceSelecionado = indiceSelecionado < 0
+          ? (passo === 1 ? 0 : itens.length - 1)
+          : (indiceSelecionado + passo + itens.length) % itens.length;
+
+        const selecionado = itens[indiceSelecionado];
+        selecionado.style.backgroundColor = "#ffe6e6";
+        selecionado.scrollIntoView({ block: "nearest" });
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        const selecionado = itens[indiceSelecionado];
+        if (selecionado) selecionado.click();
+        else {
+          fecharResultados();
+          executar(true);
+        }
+      } else if (event.key === "Escape") {
+        fecharResultados();
       }
-      if (event.key === "Escape") resultado.style.display = "none";
     });
     document.addEventListener("click", event => {
-      if (!campo.contains(event.target) && !resultado.contains(event.target)) resultado.style.display = "none";
+      if (!campo.contains(event.target) && !resultado.contains(event.target) && !botao?.contains(event.target)) fecharResultados();
     });
   }
 
