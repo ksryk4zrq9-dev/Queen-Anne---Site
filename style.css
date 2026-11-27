@@ -545,7 +545,7 @@ button:hover,
 }
 
 .qa-categorias-home{
-  margin:4px 10px 12px;
+  margin:4px 10px 34px;
   display:grid;
   grid-template-columns:repeat(5, minmax(0, 1fr));
   gap:10px;
